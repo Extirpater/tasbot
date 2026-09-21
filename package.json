@@ -1,0 +1,20 @@
+{
+  "name": "evades-jev-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Experimental Evades.io browser controller with Jev decisions",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/cli.js",
+    "inspect": "node --env-file-if-exists=.env src/cli.js --inspect",
+    "baseline": "node --env-file-if-exists=.env src/cli.js --policy baseline",
+    "test": "node --test",
+    "benchmark": "node scripts/benchmark.js"
+  },
+  "dependencies": {
+    "playwright": "1.63.0"
+  }
+}

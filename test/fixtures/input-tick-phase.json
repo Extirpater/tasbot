@@ -1,0 +1,2080 @@
+{
+  "source": "artifacts/death-1789977468517.json",
+  "controllerRevision": "d9da2a562cd3",
+  "collider": 1753,
+  "beforeTurn": {
+    "frame": 196,
+    "state": {
+      "ready": true,
+      "time": 198301.40000003576,
+      "packet": 11356,
+      "tickRate": 60,
+      "area": {
+        "x": 339808,
+        "y": 0,
+        "width": 3200,
+        "height": 480,
+        "id": "Catastrophic Core:21:339808:0",
+        "number": 22,
+        "zones": [
+          {
+            "x": 339808,
+            "y": 0,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 339872,
+            "y": 0,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 340128,
+            "y": 0,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 342688,
+            "y": 0,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 342944,
+            "y": 0,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 1010,
+        "heroType": 3,
+        "x": 341086.84375,
+        "y": 297.3288269042969,
+        "radius": 15,
+        "speed": 660,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "speedMultiplier": 1,
+        "speedBonus": 150,
+        "speedBonusWithoutCandy": 0,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 16,
+        "downed": false,
+        "level": 46,
+        "energy": 25.100000381469727,
+        "maxEnergy": 30,
+        "candy": {
+          "level": 5,
+          "locked": false,
+          "disabled": false,
+          "cooldownMs": 4.983333110809326,
+          "energyCost": 5,
+          "active": true,
+          "remainingMs": 9950,
+          "boost": 150
+        },
+        "vx": 660,
+        "vy": 660
+      },
+      "hazards": [
+        {
+          "id": 18,
+          "x": 341644.59375,
+          "y": 96.4936294555664,
+          "radius": 18,
+          "vx": 237.66433238983154,
+          "vy": 33.40154528617859,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 0.13962634689801146,
+            "speed": 239.99999607876867,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 41,
+          "x": 342307.25,
+          "y": 432.8291015625,
+          "radius": 18,
+          "vx": 37.544270753860474,
+          "vy": 237.0452070236206,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 1.4137167010793892,
+            "speed": 240.00000508189646,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 54,
+          "x": 340357.9375,
+          "y": 241.702880859375,
+          "radius": 18,
+          "vx": -43.458051681518555,
+          "vy": -236.03261947631836,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.530309350262582,
+            "speed": 239.99999940167922,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 56,
+          "x": 342612.5,
+          "y": 179.32058715820312,
+          "radius": 18,
+          "vx": -215.71057319641113,
+          "vy": 105.20907640457153,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 2.687807047477838,
+            "speed": 240.0000023888067,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 59,
+          "x": 341108.09375,
+          "y": 269.3918762207031,
+          "radius": 18,
+          "vx": 24.529343247413635,
+          "vy": -238.74319553375244,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.814773356731459,
+            "speed": 240.00000436211872,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 69,
+          "x": 342658.96875,
+          "y": 266.6344299316406,
+          "radius": 18,
+          "vx": -220.92116832733154,
+          "vy": -93.77547025680542,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.543018373625436,
+            "speed": 240.00000299374616,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 80,
+          "x": 340851.4375,
+          "y": 205.7657012939453,
+          "radius": 18,
+          "vx": -12.56062924861908,
+          "vy": 239.67108249664307,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 1.623156204590268,
+            "speed": 239.99999415048734,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 81,
+          "x": 341640.84375,
+          "y": 425.3899841308594,
+          "radius": 18,
+          "vx": 201.28093242645264,
+          "vy": 130.71337223052979,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 0.575958675337179,
+            "speed": 239.99999882987336,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 99,
+          "x": 342183.5,
+          "y": 77.33390808105469,
+          "radius": 18,
+          "vx": -169.7056245803833,
+          "vy": -169.7056245803833,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.9269908169872414,
+            "speed": 239.99999589257496,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 115,
+          "x": 341570.46875,
+          "y": 332.0151672363281,
+          "radius": 18,
+          "vx": 239.96345043182373,
+          "vy": 4.188577383756638,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 125,
+          "x": 342037.21875,
+          "y": 21.108591079711914,
+          "radius": 18,
+          "vx": 151.03689193725586,
+          "vy": 186.51503562927246,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 0.8901179375122616,
+            "speed": 240.00000258719808,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 147,
+          "x": 340152.65625,
+          "y": 29.73775863647461,
+          "radius": 18,
+          "vx": 49.89880442619324,
+          "vy": 234.75543022155762,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 318,
+          "x": 340269.34375,
+          "y": 79.04459381103516,
+          "radius": 18,
+          "vx": 238.68525981903076,
+          "vy": 25.08683145046234,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 358,
+          "x": 340185.5,
+          "y": 450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 390,
+          "x": 341550.09375,
+          "y": 136,
+          "radius": 18,
+          "vx": -207.8460931777954,
+          "vy": -120,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.6651914369599043,
+            "speed": 239.99999676931833,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 410,
+          "x": 341645.5,
+          "y": 450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 436,
+          "x": 340626.90625,
+          "y": 75.3782730102539,
+          "radius": 18,
+          "vx": 70.16920566558838,
+          "vy": 229.51313495635986,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 1.2740903598862774,
+            "speed": 239.9999927942413,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 454,
+          "x": 340833.90625,
+          "y": 81.38321685791016,
+          "radius": 18,
+          "vx": -97.61679410934448,
+          "vy": -219.25090312957764,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.293509949414538,
+            "speed": 239.9999937819199,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 639,
+          "x": 341900.5,
+          "y": 30,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 798,
+          "x": 342654.09375,
+          "y": 90,
+          "radius": 18,
+          "vx": 207.8460931777954,
+          "vy": -120,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.759586523809475,
+            "speed": 239.99999676931833,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 895,
+          "x": 342071.78125,
+          "y": 93.90729522705078,
+          "radius": 18,
+          "vx": -134.20629501342773,
+          "vy": -198.9690113067627,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.118977026764094,
+            "speed": 239.99999392004548,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 938,
+          "x": 340341.84375,
+          "y": 53.41290283203125,
+          "radius": 18,
+          "vx": -78.13636064529419,
+          "vy": -226.92445278167725,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.3807764011452575,
+            "speed": 239.9999960940732,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 995,
+          "x": 341131.5625,
+          "y": 141.7264404296875,
+          "radius": 18,
+          "vx": -166.71801567077637,
+          "vy": 172.6415491104126,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1001,
+          "x": 340332.15625,
+          "y": 332.5052490234375,
+          "radius": 18,
+          "vx": -220.92116832733154,
+          "vy": 93.77547025680542,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1110,
+          "x": 340438,
+          "y": 30,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 1122,
+          "x": 340194.0625,
+          "y": 364.2955627441406,
+          "radius": 18,
+          "vx": -123.60913753509521,
+          "vy": 205.72015285491943,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1127,
+          "x": 342639.1875,
+          "y": 61.14213943481445,
+          "radius": 18,
+          "vx": 105.20907640457153,
+          "vy": 215.71057319641113,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 1.1170107206829414,
+            "speed": 240.0000023888067,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1242,
+          "x": 342378,
+          "y": 450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 1260,
+          "x": 341094.0625,
+          "y": 226.23220825195312,
+          "radius": 18,
+          "vx": -123.41187000274658,
+          "vy": -205.83855628967285,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.172295555275864,
+            "speed": 240.00000190206592,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1266,
+          "x": 341368.4375,
+          "y": 247.32212829589844,
+          "radius": 18,
+          "vx": 239.81160163879395,
+          "vy": -9.507832825183868,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 6.2435589684560435,
+            "speed": 240.00000659499,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1301,
+          "x": 341163.65625,
+          "y": 140.4994354248047,
+          "radius": 18,
+          "vx": -213.32223415374756,
+          "vy": -109.97101306915283,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.6175758295679286,
+            "speed": 239.99999854125434,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1356,
+          "x": 340860.5,
+          "y": 168.92759704589844,
+          "radius": 18,
+          "vx": -210.99769592285156,
+          "vy": 114.36771869659424,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 2.644886694637618,
+            "speed": 240.00000575961545,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1408,
+          "x": 340548.21875,
+          "y": 358.1260070800781,
+          "radius": 18,
+          "vx": 175.2147674560547,
+          "vy": -164.0115451812744,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.5308009501660536,
+            "speed": 240.00000351547612,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1472,
+          "x": 342627.75,
+          "y": 109.70338439941406,
+          "radius": 18,
+          "vx": 213.84156703948975,
+          "vy": -108.95771741867065,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.811946420827107,
+            "speed": 239.99999995623224,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1504,
+          "x": 342106.5625,
+          "y": 153.84140014648438,
+          "radius": 18,
+          "vx": 58.061256408691406,
+          "vy": 232.87097454071045,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1533,
+          "x": 342484.0625,
+          "y": 157.275390625,
+          "radius": 18,
+          "vx": 137.6583480834961,
+          "vy": -196.5964937210083,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.323254222659516,
+            "speed": 240.00000445931542,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1592,
+          "x": 342172.9375,
+          "y": 388.5425720214844,
+          "radius": 18,
+          "vx": -220.92116832733154,
+          "vy": -93.77547025680542,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.543018373625436,
+            "speed": 240.00000299374616,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1619,
+          "x": 340783.5,
+          "y": 440.4619140625,
+          "radius": 18,
+          "vx": 231.8221950531006,
+          "vy": 62.116570472717285,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1634,
+          "x": 341532.9375,
+          "y": 462.0000305175781,
+          "radius": 18,
+          "vx": -160.5913496017456,
+          "vy": -178.354754447937,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.979350671704425,
+            "speed": 240.00000000227914,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1643,
+          "x": 340390.1875,
+          "y": 143.2684326171875,
+          "radius": 18,
+          "vx": -231.8221950531006,
+          "vy": 62.116570472717285,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 2.879793263695273,
+            "speed": 239.99999676360383,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1679,
+          "x": 340943.1875,
+          "y": 52.42694854736328,
+          "radius": 18,
+          "vx": 70.16920566558838,
+          "vy": 229.51313495635986,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1752,
+          "x": 341981.78125,
+          "y": 322.101318359375,
+          "radius": 18,
+          "vx": -203.53154182434082,
+          "vy": -127.18062400817871,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.7000980190876356,
+            "speed": 239.99999925104814,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1753,
+          "x": 341235.28125,
+          "y": 320.81927490234375,
+          "radius": 18,
+          "vx": -201.28093242645264,
+          "vy": 130.71337223052979,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1782,
+          "x": 341389.59375,
+          "y": 442.9040222167969,
+          "radius": 18,
+          "vx": 175.52488803863525,
+          "vy": -163.67960929870605,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.532693719040002,
+            "speed": 240.00000171073438,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1784,
+          "x": 342335.15625,
+          "y": 440.7794494628906,
+          "radius": 18,
+          "vx": -236.35385513305664,
+          "vy": 41.67556285858154,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 2.9670597234492355,
+            "speed": 239.99999453299475,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1792,
+          "x": 342630.5,
+          "y": 30,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 1824,
+          "x": 340999.8125,
+          "y": 210.07400512695312,
+          "radius": 18,
+          "vx": 118.22787523269653,
+          "vy": 208.85921001434326,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 1.0557029104883169,
+            "speed": 240.000000187195,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1845,
+          "x": 342618.78125,
+          "y": 231.2306671142578,
+          "radius": 18,
+          "vx": 209.90873336791992,
+          "vy": -116.35430574417114,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.777039842835048,
+            "speed": 240.0000016861095,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 2180,
+          "x": 340635.875,
+          "y": 275.5928955078125,
+          "radius": 18,
+          "vx": 74.16408061981201,
+          "vy": -228.2535696029663,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 2182,
+          "x": 340915.5,
+          "y": 450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 2190,
+          "x": 341168.59375,
+          "y": 239.46368408203125,
+          "radius": 18,
+          "vx": -238.21107387542725,
+          "vy": 29.24864172935486,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 2212,
+          "x": 340695.75,
+          "y": 93.88563537597656,
+          "radius": 18,
+          "vx": 230.702805519104,
+          "vy": -66.15296602249146,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 6.003932622621823,
+            "speed": 239.99999872491338,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 2213,
+          "x": 342115.4375,
+          "y": 344.96234130859375,
+          "radius": 18,
+          "vx": -237.66433238983154,
+          "vy": -33.40154528617859,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.2812190004878046,
+            "speed": 239.99999607876867,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 2263,
+          "x": 341170.5,
+          "y": 30,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          6,
+          10,
+          3
+        ],
+        "usingGamepad": false
+      }
+    },
+    "options": {
+      "previousAction": "down_right",
+      "reactionTime": 0.16060787500001605,
+      "pendingInputs": [
+        {
+          "time": 0,
+          "action": "down_right"
+        }
+      ]
+    },
+    "recordedAction": "up_right"
+  },
+  "afterTurnQueued": {
+    "frame": 197,
+    "state": {
+      "ready": true,
+      "time": 198344.90000003576,
+      "packet": 11359,
+      "tickRate": 60,
+      "area": {
+        "x": 339808,
+        "y": 0,
+        "width": 3200,
+        "height": 480,
+        "id": "Catastrophic Core:21:339808:0",
+        "number": 22,
+        "zones": [
+          {
+            "x": 339808,
+            "y": 0,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 339872,
+            "y": 0,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 340128,
+            "y": 0,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 342688,
+            "y": 0,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 342944,
+            "y": 0,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 1010,
+        "heroType": 3,
+        "x": 341119.84375,
+        "y": 330.3288269042969,
+        "radius": 15,
+        "speed": 660,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "speedMultiplier": 1,
+        "speedBonus": 150,
+        "speedBonusWithoutCandy": 0,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 16,
+        "downed": false,
+        "level": 46,
+        "energy": 30,
+        "maxEnergy": 30,
+        "candy": {
+          "level": 5,
+          "locked": false,
+          "disabled": false,
+          "cooldownMs": 4.933333396911621,
+          "energyCost": 5,
+          "active": true,
+          "remainingMs": 14983.3330078125,
+          "boost": 150
+        },
+        "vx": 660,
+        "vy": 660
+      },
+      "hazards": [
+        {
+          "id": 18,
+          "x": 341656.46875,
+          "y": 98.16371154785156,
+          "radius": 18,
+          "vx": 237.66433238983154,
+          "vy": 33.40154528617859,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 0.13962634689801146,
+            "speed": 239.99999607876867,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 41,
+          "x": 342309.125,
+          "y": 444.6813659667969,
+          "radius": 18,
+          "vx": 37.544270753860474,
+          "vy": 237.0452070236206,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 1.4137167010793892,
+            "speed": 240.00000508189646,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 54,
+          "x": 340355.78125,
+          "y": 229.9012451171875,
+          "radius": 18,
+          "vx": -43.458051681518555,
+          "vy": -236.03261947631836,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.530309350262582,
+            "speed": 239.99999940167922,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 56,
+          "x": 342601.6875,
+          "y": 184.58103942871094,
+          "radius": 18,
+          "vx": -215.71057319641113,
+          "vy": 105.20907640457153,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 2.687807047477838,
+            "speed": 240.0000023888067,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 59,
+          "x": 341109.3125,
+          "y": 257.4571838378906,
+          "radius": 18,
+          "vx": 30.489635467529297,
+          "vy": -238.055419921875,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.839773354193095,
+            "speed": 240.00000171900638,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 69,
+          "x": 342647.90625,
+          "y": 261.9456481933594,
+          "radius": 18,
+          "vx": -220.92116832733154,
+          "vy": -93.77547025680542,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.543018373625436,
+            "speed": 240.00000299374616,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 80,
+          "x": 340850.8125,
+          "y": 217.749267578125,
+          "radius": 18,
+          "vx": -12.56062924861908,
+          "vy": 239.67108249664307,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 1.623156204590268,
+            "speed": 239.99999415048734,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 81,
+          "x": 341650.90625,
+          "y": 431.9256591796875,
+          "radius": 18,
+          "vx": 201.28093242645264,
+          "vy": 130.71337223052979,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 0.575958675337179,
+            "speed": 239.99999882987336,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 99,
+          "x": 342175.03125,
+          "y": 68.84862518310547,
+          "radius": 18,
+          "vx": -169.7056245803833,
+          "vy": -169.7056245803833,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.9269908169872414,
+            "speed": 239.99999589257496,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 115,
+          "x": 341582.46875,
+          "y": 332.2245788574219,
+          "radius": 18,
+          "vx": 239.96345043182373,
+          "vy": 4.188577383756638,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 125,
+          "x": 342044.78125,
+          "y": 30.434341430664062,
+          "radius": 18,
+          "vx": 151.03689193725586,
+          "vy": 186.51503562927246,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 0.8901179375122616,
+            "speed": 240.00000258719808,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 147,
+          "x": 340155.15625,
+          "y": 41.475528717041016,
+          "radius": 18,
+          "vx": 49.89880442619324,
+          "vy": 234.75543022155762,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 318,
+          "x": 340281.28125,
+          "y": 80.29893493652344,
+          "radius": 18,
+          "vx": 238.68525981903076,
+          "vy": 25.08683145046234,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 358,
+          "x": 340178,
+          "y": 450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 390,
+          "x": 341539.71875,
+          "y": 130,
+          "radius": 18,
+          "vx": -207.8460931777954,
+          "vy": -120,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.6651914369599043,
+            "speed": 239.99999676931833,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 410,
+          "x": 341638,
+          "y": 450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 436,
+          "x": 340630.40625,
+          "y": 86.85392761230469,
+          "radius": 18,
+          "vx": 70.16920566558838,
+          "vy": 229.51313495635986,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 1.2740903598862774,
+            "speed": 239.9999927942413,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 454,
+          "x": 340829.03125,
+          "y": 70.42066955566406,
+          "radius": 18,
+          "vx": -97.61679410934448,
+          "vy": -219.25090312957764,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.293509949414538,
+            "speed": 239.9999937819199,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 639,
+          "x": 341908,
+          "y": 30,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 798,
+          "x": 342664.46875,
+          "y": 84,
+          "radius": 18,
+          "vx": 207.8460931777954,
+          "vy": -120,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.759586523809475,
+            "speed": 239.99999676931833,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 895,
+          "x": 342065.09375,
+          "y": 83.9588394165039,
+          "radius": 18,
+          "vx": -134.20629501342773,
+          "vy": -198.9690113067627,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.118977026764094,
+            "speed": 239.99999392004548,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 938,
+          "x": 340337.9375,
+          "y": 42.06667709350586,
+          "radius": 18,
+          "vx": -78.13636064529419,
+          "vy": -226.92445278167725,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.3807764011452575,
+            "speed": 239.9999960940732,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 995,
+          "x": 341123.25,
+          "y": 150.3585205078125,
+          "radius": 18,
+          "vx": -166.71801567077637,
+          "vy": 172.6415491104126,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1001,
+          "x": 340321.09375,
+          "y": 337.19403076171875,
+          "radius": 18,
+          "vx": -220.92116832733154,
+          "vy": 93.77547025680542,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1110,
+          "x": 340445.5,
+          "y": 30,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 1122,
+          "x": 340187.875,
+          "y": 374.5815734863281,
+          "radius": 18,
+          "vx": -123.60913753509521,
+          "vy": 205.72015285491943,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1127,
+          "x": 342644.4375,
+          "y": 71.92766571044922,
+          "radius": 18,
+          "vx": 105.20907640457153,
+          "vy": 215.71057319641113,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 1.1170107206829414,
+            "speed": 240.0000023888067,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1242,
+          "x": 342370.5,
+          "y": 450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 1260,
+          "x": 341087.40625,
+          "y": 216.26361083984375,
+          "radius": 18,
+          "vx": -138.48835945129395,
+          "vy": -196.01268768310547,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 4.097295546759764,
+            "speed": 239.99999882555304,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1266,
+          "x": 341380.40625,
+          "y": 246.24827575683594,
+          "radius": 18,
+          "vx": 238.42502117156982,
+          "vy": -27.450116872787476,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 6.168558968353559,
+            "speed": 239.99999924373583,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1301,
+          "x": 341152.75,
+          "y": 135.54188537597656,
+          "radius": 18,
+          "vx": -220.96263885498047,
+          "vy": -93.6776876449585,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.5425758186206386,
+            "speed": 239.99999360888103,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1356,
+          "x": 340849.65625,
+          "y": 174.11048889160156,
+          "radius": 18,
+          "vx": -218.97407054901123,
+          "vy": 98.23621273040771,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 2.7198866811899123,
+            "speed": 239.99999388420255,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1408,
+          "x": 340556.96875,
+          "y": 349.9254455566406,
+          "radius": 18,
+          "vx": 175.2147674560547,
+          "vy": -164.0115451812744,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.5308009501660536,
+            "speed": 240.00000351547612,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1472,
+          "x": 342638.4375,
+          "y": 104.2554931640625,
+          "radius": 18,
+          "vx": 213.84156703948975,
+          "vy": -108.95771741867065,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.811946420827107,
+            "speed": 239.99999995623224,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1504,
+          "x": 342109.46875,
+          "y": 165.48495483398438,
+          "radius": 18,
+          "vx": 58.061256408691406,
+          "vy": 232.87097454071045,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1533,
+          "x": 342490.96875,
+          "y": 147.44557189941406,
+          "radius": 18,
+          "vx": 137.6583480834961,
+          "vy": -196.5964937210083,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.323254222659516,
+            "speed": 240.00000445931542,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1592,
+          "x": 342161.875,
+          "y": 383.85382080078125,
+          "radius": 18,
+          "vx": -220.92116832733154,
+          "vy": -93.77547025680542,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.543018373625436,
+            "speed": 240.00000299374616,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1619,
+          "x": 340795.09375,
+          "y": 443.5677185058594,
+          "radius": 18,
+          "vx": 231.8221950531006,
+          "vy": 62.116570472717285,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1634,
+          "x": 341524.90625,
+          "y": 453.0823059082031,
+          "radius": 18,
+          "vx": -160.5913496017456,
+          "vy": -178.354754447937,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.979350671704425,
+            "speed": 240.00000000227914,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1643,
+          "x": 340378.59375,
+          "y": 146.374267578125,
+          "radius": 18,
+          "vx": -231.8221950531006,
+          "vy": 62.116570472717285,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 2.879793263695273,
+            "speed": 239.99999676360383,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1679,
+          "x": 340946.71875,
+          "y": 63.90260696411133,
+          "radius": 18,
+          "vx": 70.16920566558838,
+          "vy": 229.51313495635986,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1752,
+          "x": 341971.59375,
+          "y": 315.7422790527344,
+          "radius": 18,
+          "vx": -203.53154182434082,
+          "vy": -127.18062400817871,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.7000980190876356,
+            "speed": 239.99999925104814,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1753,
+          "x": 341225.21875,
+          "y": 327.3549499511719,
+          "radius": 18,
+          "vx": -201.28093242645264,
+          "vy": 130.71337223052979,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 1782,
+          "x": 341398.375,
+          "y": 434.7200622558594,
+          "radius": 18,
+          "vx": 175.52488803863525,
+          "vy": -163.67960929870605,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.532693719040002,
+            "speed": 240.00000171073438,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1784,
+          "x": 342323.34375,
+          "y": 442.86322021484375,
+          "radius": 18,
+          "vx": -236.35385513305664,
+          "vy": 41.67556285858154,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 2.9670597234492355,
+            "speed": 239.99999453299475,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1792,
+          "x": 342638,
+          "y": 30,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 1824,
+          "x": 341006.25,
+          "y": 220.20635986328125,
+          "radius": 18,
+          "vx": 133.5452699661255,
+          "vy": 199.41328525543213,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 0.9807029186712235,
+            "speed": 239.99999472227012,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 1845,
+          "x": 342629.28125,
+          "y": 225.41294860839844,
+          "radius": 18,
+          "vx": 209.90873336791992,
+          "vy": -116.35430574417114,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 5.777039842835048,
+            "speed": 240.0000016861095,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 2180,
+          "x": 340639.59375,
+          "y": 264.1802062988281,
+          "radius": 18,
+          "vx": 74.16408061981201,
+          "vy": -228.2535696029663,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 2182,
+          "x": 340908,
+          "y": 450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 2190,
+          "x": 341156.6875,
+          "y": 240.92611694335938,
+          "radius": 18,
+          "vx": -238.21107387542725,
+          "vy": 29.24864172935486,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 115,
+          "square": false
+        },
+        {
+          "id": 2212,
+          "x": 340707.28125,
+          "y": 90.57798767089844,
+          "radius": 18,
+          "vx": 230.702805519104,
+          "vy": -66.15296602249146,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 6.003932622621823,
+            "speed": 239.99999872491338,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 2213,
+          "x": 342103.5625,
+          "y": 343.2922668457031,
+          "radius": 18,
+          "vx": -237.66433238983154,
+          "vy": -33.40154528617859,
+          "bounce": true,
+          "motion": "bounce",
+          "homing": {
+            "heading": 3.2812190004878046,
+            "speed": 239.99999607876867,
+            "turnRate": 1.5,
+            "range": 200,
+            "reverse": false,
+            "stunMs": 0
+          },
+          "entityType": 73,
+          "square": false
+        },
+        {
+          "id": 2263,
+          "x": 341178,
+          "y": 30,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          10,
+          19
+        ],
+        "usingGamepad": false
+      }
+    },
+    "options": {
+      "previousAction": "up_right",
+      "reactionTime": 0.16260450000001583,
+      "pendingInputs": [
+        {
+          "time": 0,
+          "action": "down_right"
+        },
+        {
+          "time": 0.11603549999999814,
+          "action": "up_right"
+        }
+      ]
+    },
+    "recordedAction": "up_right"
+  }
+}

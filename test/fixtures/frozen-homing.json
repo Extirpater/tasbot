@@ -1,0 +1,1406 @@
+{
+  "source": "death-1789977248805.json",
+  "frame": 153,
+  "note": "Reference before fully frozen homing was shared across branches; frozen bodies remain collidable.",
+  "state": {
+    "ready": true,
+    "time": 243372.19999998808,
+    "packet": 14253,
+    "tickRate": 60,
+    "area": {
+      "x": 352608,
+      "y": 0,
+      "width": 3200,
+      "height": 480,
+      "id": "Catastrophic Core:25:352608:0",
+      "number": 26,
+      "zones": [
+        {
+          "x": 352608,
+          "y": 0,
+          "width": 64,
+          "height": 480,
+          "type": 2,
+          "friction": 0.75
+        },
+        {
+          "x": 352672,
+          "y": 0,
+          "width": 256,
+          "height": 480,
+          "type": 4,
+          "friction": 0.75
+        },
+        {
+          "x": 352928,
+          "y": 0,
+          "width": 2560,
+          "height": 480,
+          "type": 0,
+          "friction": 0.75
+        },
+        {
+          "x": 355488,
+          "y": 0,
+          "width": 256,
+          "height": 480,
+          "type": 4,
+          "friction": 0.75
+        },
+        {
+          "x": 355744,
+          "y": 0,
+          "width": 64,
+          "height": 480,
+          "type": 2,
+          "friction": 0.75
+        }
+      ],
+      "walls": []
+    },
+    "player": {
+      "id": 1024,
+      "heroType": 3,
+      "x": 353860.21875,
+      "y": 44.22138595581055,
+      "radius": 15,
+      "speed": 660,
+      "mouseInput": null,
+      "baseSpeed": 510,
+      "speedMultiplier": 1,
+      "speedBonus": 150,
+      "speedBonusWithoutCandy": 0,
+      "ignoreAuras": false,
+      "immobilized": false,
+      "effectsMultiplier": 1,
+      "upgradePoints": 0,
+      "downed": false,
+      "level": 46,
+      "energy": 41.14666748046875,
+      "maxEnergy": 45,
+      "candy": {
+        "level": 5,
+        "locked": false,
+        "disabled": false,
+        "cooldownMs": 2.0833332538604736,
+        "energyCost": 5,
+        "active": true,
+        "remainingMs": 7050,
+        "boost": 150
+      },
+      "vx": 0,
+      "vy": -0.0176239013671875
+    },
+    "hazards": [
+      {
+        "id": 16,
+        "x": 353350.84375,
+        "y": 393.25,
+        "radius": 18,
+        "vx": 285.7883834838867,
+        "vy": -165,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 20,
+        "x": 353613,
+        "y": 450,
+        "radius": 30,
+        "vx": -150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 81,
+        "x": 355341.21875,
+        "y": 346.65826416015625,
+        "radius": 18,
+        "vx": 17.270865440368652,
+        "vy": -329.547758102417,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 136,
+        "x": 352963.5,
+        "y": 441.3561706542969,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": 0.15643445866883168,
+          "dy": 0.9876883416042681,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 232,
+        "x": 354738.28125,
+        "y": 19.269115447998047,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.7771459845478985,
+          "dy": 0.6293203625349155,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 390,
+        "x": 354209,
+        "y": 43.84007263183594,
+        "radius": 18,
+        "vx": 123.6201810836792,
+        "vy": -305.9706687927246,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 513,
+        "x": 354851.28125,
+        "y": 72.13803100585938,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.3907311255602507,
+          "dy": -0.9205048546957368,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 604,
+        "x": 354535.8125,
+        "y": 442.44805908203125,
+        "radius": 18,
+        "vx": -174.8733615875244,
+        "vy": 279.8558807373047,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 2.1293016842546777,
+          "speed": 330.0000099638992,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 641,
+        "x": 353309.3125,
+        "y": 269.18121337890625,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.43837115973270924,
+          "dy": -0.8987940399861358,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 686,
+        "x": 354803,
+        "y": 30,
+        "radius": 30,
+        "vx": 150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 704,
+        "x": 354662.875,
+        "y": 50.35035705566406,
+        "radius": 18,
+        "vx": -57.30389714241028,
+        "vy": -324.986572265625,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 720,
+        "x": 355078.1875,
+        "y": 221.44094848632812,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": 0.5735764308732364,
+          "dy": 0.8191520481245955,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 759,
+        "x": 355033.28125,
+        "y": 75.0413589477539,
+        "radius": 18,
+        "vx": -327.5402355194092,
+        "vy": -40.21688461303711,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 761,
+        "x": 353950.875,
+        "y": 130.90060424804688,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": 0,
+        "baseVy": 0,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 1866.6666259765625
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.052335956772365494,
+          "dy": 0.998629534726828,
+          "scale": 0
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 771,
+        "x": 355257.875,
+        "y": 39.066200256347656,
+        "radius": 18,
+        "vx": -212.11991786956787,
+        "vy": 252.7946662902832,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 895,
+        "x": 352958,
+        "y": 377.5,
+        "radius": 30,
+        "vx": 0,
+        "vy": -150,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 938,
+        "x": 353816.6875,
+        "y": 294.0134582519531,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": 288.62451553344727,
+        "baseVy": -159.98717308044434,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 1766.6666259765625
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1001,
+        "x": 353617.8125,
+        "y": 390.63909912109375,
+        "radius": 18,
+        "vx": -329.196138381958,
+        "vy": -23.019636869430542,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1015,
+        "x": 354423.03125,
+        "y": 98.36458587646484,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.9271838531256885,
+          "dy": 0.3746065969827571,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 1019,
+        "x": 353489.5625,
+        "y": 424.4649963378906,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.6691306084402111,
+          "dy": -0.7431448236033356,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 1025,
+        "x": 355160.5,
+        "y": 299.374755859375,
+        "radius": 18,
+        "vx": 252.7946662902832,
+        "vy": -212.11991786956787,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1026,
+        "x": 353949.53125,
+        "y": 375.3421325683594,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.3907311255602507,
+          "dy": -0.9205048546957368,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 1039,
+        "x": 353858.4375,
+        "y": 309.8298034667969,
+        "radius": 18,
+        "vx": 323.9369773864746,
+        "vy": -62.96696662902832,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1078,
+        "x": 355458,
+        "y": 102.5,
+        "radius": 30,
+        "vx": 0,
+        "vy": 150,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 1119,
+        "x": 355096.15625,
+        "y": 141.2327423095703,
+        "radius": 18,
+        "vx": -299.0815830230713,
+        "vy": -139.46402549743652,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1127,
+        "x": 353374.71875,
+        "y": 287.2734069824219,
+        "radius": 18,
+        "vx": 321.54212951660156,
+        "vy": -74.23384666442871,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 6.0562925137144275,
+          "speed": 330.0000076434376,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 1211,
+        "x": 354728.46875,
+        "y": 375.0685119628906,
+        "radius": 18,
+        "vx": -252.7946662902832,
+        "vy": 212.11991786956787,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1235,
+        "x": 355075.5,
+        "y": 450,
+        "radius": 30,
+        "vx": -150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 1238,
+        "x": 354520.75,
+        "y": 140.64744567871094,
+        "radius": 18,
+        "vx": 229.23726081848145,
+        "vy": 237.38213539123535,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 0.8028514617343818,
+          "speed": 329.99999992494435,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 1329,
+        "x": 355133.90625,
+        "y": 64.62740325927734,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.9975640501505768,
+          "dy": -0.06975647530643603,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 1514,
+        "x": 354073,
+        "y": 30,
+        "radius": 30,
+        "vx": 150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 1529,
+        "x": 354413.28125,
+        "y": 412.98175048828125,
+        "radius": 18,
+        "vx": 45.92712163925171,
+        "vy": -326.78847312927246,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1578,
+        "x": 353667.875,
+        "y": 218.69827270507812,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": -112.87424325942993,
+        "baseVy": -310.0958061218262,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 1116.6666259765625
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 4.363298640855323,
+          "speed": 330.0000057056578,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 1592,
+        "x": 353034.15625,
+        "y": 397.2126159667969,
+        "radius": 18,
+        "vx": 62.96696662902832,
+        "vy": -323.9369773864746,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1615,
+        "x": 354294.21875,
+        "y": 63.32969284057617,
+        "radius": 18,
+        "vx": -288.62451553344727,
+        "vy": 159.98717308044434,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 2.635447192644392,
+          "speed": 330.0000098745289,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 1619,
+        "x": 353940.125,
+        "y": 227.88864135742188,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": -218.36071014404297,
+        "baseVy": 247.42392539978027,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 1866.6666259765625
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 2.29387902569103,
+          "speed": 329.99999787097994,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 1629,
+        "x": 354964.53125,
+        "y": 200.5756072998047,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": 0.2756373576368784,
+          "dy": 0.961261695416477,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 1639,
+        "x": 355271.40625,
+        "y": 68.20925903320312,
+        "radius": 18,
+        "vx": 139.46402549743652,
+        "vy": -299.0815830230713,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1698,
+        "x": 354622.375,
+        "y": 67.88227081298828,
+        "radius": 18,
+        "vx": -323.9369773864746,
+        "vy": -62.96696662902832,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1752,
+        "x": 355090.75,
+        "y": 97.93905639648438,
+        "radius": 18,
+        "vx": -203.16829204559326,
+        "vy": -260.0435543060303,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 4.049163862715147,
+          "speed": 330.0000076194496,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 1753,
+        "x": 353444.875,
+        "y": 214.36074829101562,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": 0.6560590317032815,
+          "dy": 0.7547095778645933,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 1792,
+        "x": 353209.53125,
+        "y": 375.6763610839844,
+        "radius": 18,
+        "vx": -329.196138381958,
+        "vy": -23.019636869430542,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 3.211405824903721,
+          "speed": 330.0000018290813,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 1901,
+        "x": 353340.5,
+        "y": 30,
+        "radius": 30,
+        "vx": 150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 1908,
+        "x": 354031.09375,
+        "y": 18.537973403930664,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": 0,
+        "baseVy": 0,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 1866.6666259765625
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.2079116873945451,
+          "dy": 0.9781476014614323,
+          "scale": 0
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 1953,
+        "x": 353867.6875,
+        "y": 244.60426330566406,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": -327.5402355194092,
+        "baseVy": -40.21688461303711,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 1866.6666259765625
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 1957,
+        "x": 355162.25,
+        "y": 345.2680969238281,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": 0.4848096130071921,
+          "dy": 0.8746197111521192,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 1990,
+        "x": 354870.25,
+        "y": 414.2827453613281,
+        "radius": 18,
+        "vx": 328.19223403930664,
+        "vy": -34.494391679763794,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 6.178465558385904,
+          "speed": 330.0000083955574,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 2002,
+        "x": 355029.625,
+        "y": 281.4369812011719,
+        "radius": 18,
+        "vx": 313.8486385345459,
+        "vy": 101.97560548782349,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 0.31415926879450584,
+          "speed": 329.99998791605475,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 2057,
+        "x": 354654.6875,
+        "y": 286.1391296386719,
+        "radius": 18,
+        "vx": 279.8558807373047,
+        "vy": 174.8733615875244,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 0.5585053574597802,
+          "speed": 330.0000099638992,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 2066,
+        "x": 353676.5,
+        "y": 105.45626831054688,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": 329.547758102417,
+        "baseVy": 17.270865440368652,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 1866.6666259765625
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 2176,
+        "x": 354222.25,
+        "y": 263.7793884277344,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": 0.5446390590481381,
+          "dy": 0.8386705523381386,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 2182,
+        "x": 354330.65625,
+        "y": 20.367097854614258,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 0,
+          "resting": 200,
+          "peak": 330,
+          "dx": -0.9816271828968979,
+          "dy": 0.19080899820999092,
+          "scale": 1
+        },
+        "entityType": 29,
+        "square": false
+      },
+      {
+        "id": 2213,
+        "x": 354343,
+        "y": 450,
+        "radius": 30,
+        "vx": -150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 2269,
+        "x": 353568.59375,
+        "y": 176.17422485351562,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": 11.516834199428558,
+        "baseVy": -329.7989845275879,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 566.6666870117188
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      },
+      {
+        "id": 2300,
+        "x": 354020.0625,
+        "y": 155.96841430664062,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": -287.2533416748047,
+        "baseVy": 162.4362087249756,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 1866.6666259765625
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 2.6269418383958456,
+          "speed": 330.00000637619075,
+          "turnRate": 1.5,
+          "range": 200,
+          "reverse": false,
+          "stunMs": 0
+        },
+        "entityType": 73,
+        "square": false
+      },
+      {
+        "id": 2329,
+        "x": 353863.375,
+        "y": 328.6321105957031,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "baseVx": 165,
+        "baseVy": -285.7883834838867,
+        "motionEffects": [
+          {
+            "name": "sugarRushTimeLeft",
+            "scale": 0,
+            "remainingMs": 1733.3333740234375
+          }
+        ],
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 115,
+        "square": false
+      }
+    ],
+    "auras": [],
+    "input": {
+      "heldKeys": [],
+      "usingGamepad": false
+    }
+  },
+  "options": {
+    "previousAction": "stay",
+    "reactionTime": 0.16889787499999512,
+    "pendingInputs": [
+      {
+        "time": 0,
+        "action": "stay"
+      }
+    ]
+  },
+  "expected": [
+    {
+      "action": "stay",
+      "score": 107.73710414580188,
+      "collision": false,
+      "physicalClearance": 33.391420979641524,
+      "closestHazard": 1908,
+      "closestAt": 1.05,
+      "path": [
+        "stay",
+        "right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "down_right"
+      ]
+    },
+    {
+      "action": "up",
+      "score": 74.48239934942804,
+      "collision": false,
+      "physicalClearance": 35.30002922338603,
+      "closestHazard": 1908,
+      "closestAt": 0.8833333333333333,
+      "path": [
+        "up",
+        "up",
+        "right",
+        "stay",
+        "stay",
+        "stay",
+        "stay"
+      ]
+    },
+    {
+      "action": "down",
+      "score": 72.55087578456241,
+      "collision": false,
+      "physicalClearance": 35.30002922338603,
+      "closestHazard": 1908,
+      "closestAt": 0.8833333333333333,
+      "path": [
+        "down",
+        "up",
+        "right",
+        "stay",
+        "stay",
+        "stay",
+        "stay"
+      ]
+    },
+    {
+      "action": "left",
+      "score": 52.160871923583535,
+      "collision": false,
+      "physicalClearance": 60.02563620806055,
+      "closestHazard": 1908,
+      "closestAt": 1.0833333333333333,
+      "path": [
+        "left",
+        "right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "up_right"
+      ]
+    },
+    {
+      "action": "right",
+      "score": 110.69457599362094,
+      "collision": false,
+      "physicalClearance": 37.07117095522652,
+      "closestHazard": 1908,
+      "closestAt": 1.0833333333333333,
+      "path": [
+        "right",
+        "up",
+        "up",
+        "up",
+        "up",
+        "up",
+        "down_right"
+      ]
+    },
+    {
+      "action": "up_left",
+      "score": 52.040054973034835,
+      "collision": false,
+      "physicalClearance": 60.02563620806055,
+      "closestHazard": 1908,
+      "closestAt": 1.0833333333333333,
+      "path": [
+        "up_left",
+        "right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "right"
+      ]
+    },
+    {
+      "action": "up_right",
+      "score": 110.87621957765977,
+      "collision": false,
+      "physicalClearance": 37.07117095522652,
+      "closestHazard": 1908,
+      "closestAt": 1.0833333333333333,
+      "path": [
+        "up_right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "down_right"
+      ]
+    },
+    {
+      "action": "down_left",
+      "score": 51.80722851508076,
+      "collision": false,
+      "physicalClearance": 60.02563620806055,
+      "closestHazard": 1908,
+      "closestAt": 1.0833333333333333,
+      "path": [
+        "down_left",
+        "up_right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "right"
+      ]
+    },
+    {
+      "action": "down_right",
+      "score": -109408.35920004745,
+      "collision": true,
+      "physicalClearance": -0.8198076034822392,
+      "closestHazard": 761,
+      "closestAt": 0.26666666666666666,
+      "path": [
+        "down_right",
+        "down_right",
+        "down_right",
+        "down_right",
+        "down_right",
+        "down_right",
+        "down_right"
+      ]
+    },
+    {
+      "action": "focus_up",
+      "score": 74.48468728137276,
+      "collision": false,
+      "physicalClearance": 35.30002922338603,
+      "closestHazard": 1908,
+      "closestAt": 0.8833333333333333,
+      "path": [
+        "focus_up",
+        "focus_up",
+        "right",
+        "stay",
+        "stay",
+        "stay",
+        "stay"
+      ]
+    },
+    {
+      "action": "focus_down",
+      "score": 75.25473003898324,
+      "collision": false,
+      "physicalClearance": 35.30002922338603,
+      "closestHazard": 1908,
+      "closestAt": 0.7333333333333333,
+      "path": [
+        "focus_down",
+        "up_right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "stay"
+      ]
+    },
+    {
+      "action": "focus_left",
+      "score": 79.68195366809357,
+      "collision": false,
+      "physicalClearance": 38.19819197636407,
+      "closestHazard": 1908,
+      "closestAt": 1.0833333333333333,
+      "path": [
+        "focus_left",
+        "up_right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "down_right"
+      ]
+    },
+    {
+      "action": "focus_right",
+      "score": 93.5708268627848,
+      "collision": false,
+      "physicalClearance": 53.909626236446044,
+      "closestHazard": 761,
+      "closestAt": 0.7166666666666667,
+      "path": [
+        "focus_right",
+        "focus_right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "stay"
+      ]
+    },
+    {
+      "action": "focus_up_left",
+      "score": 79.62174286450751,
+      "collision": false,
+      "physicalClearance": 38.19819197636407,
+      "closestHazard": 1908,
+      "closestAt": 1.0833333333333333,
+      "path": [
+        "focus_up_left",
+        "right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "down_right"
+      ]
+    },
+    {
+      "action": "focus_up_right",
+      "score": 93.41332027760537,
+      "collision": false,
+      "physicalClearance": 53.613955718779664,
+      "closestHazard": 1908,
+      "closestAt": 0.7166666666666667,
+      "path": [
+        "focus_up_right",
+        "focus_up_right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "stay"
+      ]
+    },
+    {
+      "action": "focus_down_left",
+      "score": 79.61095546002885,
+      "collision": false,
+      "physicalClearance": 38.19819197636407,
+      "closestHazard": 1908,
+      "closestAt": 1.0833333333333333,
+      "path": [
+        "focus_down_left",
+        "up_right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "down_right"
+      ]
+    },
+    {
+      "action": "focus_down_right",
+      "score": 74.06588500397328,
+      "collision": false,
+      "physicalClearance": 45.77634259128895,
+      "closestHazard": 761,
+      "closestAt": 0.26666666666666666,
+      "path": [
+        "focus_down_right",
+        "up",
+        "up",
+        "up",
+        "up",
+        "up",
+        "right"
+      ]
+    }
+  ],
+  "reference": "Exhaustive collision checks and eager per-branch homing; tick-end input timing. Reference from the pre-optimization planner with only its input timing corrected."
+}

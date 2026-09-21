@@ -1,0 +1,1033 @@
+{
+  "trace": "artifacts/death-1789980648310.json",
+  "frame": 111,
+  "previousAction": "focus_up_right",
+  "previousAppliedAt": 328151.129583,
+  "observedAt": 328272.8725,
+  "candidates": [
+    {
+      "action": "stay",
+      "clearance": 3.144516728208842,
+      "progress": 115.89126105816604,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 33.64451672820884,
+      "clearanceCapped": false,
+      "closestHazard": 153,
+      "closestAt": 1.05,
+      "blocked": false,
+      "firstMovement": 1.9911978493410487,
+      "firstProgress": 2.6024145193898676,
+      "ineffective": false,
+      "exitProgress": -63.89884480108606,
+      "score": 82.97003527273029,
+      "path": ["stay", "down_left", "up", "up", "stay", "stay", "stay"],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "stay"
+          },
+          {
+            "tick": 14,
+            "action": "down_left"
+          },
+          {
+            "tick": 23,
+            "action": "up"
+          },
+          {
+            "tick": 32,
+            "action": "up"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "stay"
+          }
+        ]
+      }
+    },
+    {
+      "action": "up",
+      "clearance": -10.56687721811101,
+      "progress": 206.07586530715162,
+      "collision": true,
+      "risk": "predicted collision",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 19.93312278188899,
+      "clearanceCapped": false,
+      "closestHazard": 1656,
+      "closestAt": 0.23333333333333334,
+      "blocked": false,
+      "firstMovement": 50.719546867431724,
+      "firstProgress": 67.00762944063536,
+      "ineffective": false,
+      "exitProgress": 134.00714571908316,
+      "score": -10079.018940535667,
+      "path": ["up", "right", "stay", "up_right", "stay", "stay", "left"],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "up"
+          },
+          {
+            "tick": 14,
+            "action": "right"
+          },
+          {
+            "tick": 23,
+            "action": "stay"
+          },
+          {
+            "tick": 32,
+            "action": "up_right"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "left"
+          }
+        ]
+      }
+    },
+    {
+      "action": "down",
+      "clearance": 1.473888079257847,
+      "progress": 118.58803491796493,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 31.973888079257847,
+      "clearanceCapped": false,
+      "closestHazard": 153,
+      "closestAt": 1.05,
+      "blocked": false,
+      "firstMovement": 49.66371259279863,
+      "firstProgress": -58.3605241628145,
+      "ineffective": false,
+      "exitProgress": -64.13312030357622,
+      "score": 68.0239399516621,
+      "path": ["down", "up_left", "stay", "up", "stay", "stay", "stay"],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "down"
+          },
+          {
+            "tick": 14,
+            "action": "up_left"
+          },
+          {
+            "tick": 23,
+            "action": "stay"
+          },
+          {
+            "tick": 32,
+            "action": "up"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "stay"
+          }
+        ]
+      }
+    },
+    {
+      "action": "left",
+      "clearance": 2.9329561644423023,
+      "progress": 108.7194797743698,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 33.4329561644423,
+      "clearanceCapped": false,
+      "closestHazard": 1656,
+      "closestAt": 0.9833333333333333,
+      "blocked": false,
+      "firstMovement": 57.311048005610964,
+      "firstProgress": -49.02037172778819,
+      "ineffective": false,
+      "exitProgress": -60.24267525326388,
+      "score": 64.01444625046209,
+      "path": ["left", "up_left", "stay", "right", "stay", "stay", "stay"],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "left"
+          },
+          {
+            "tick": 14,
+            "action": "up_left"
+          },
+          {
+            "tick": 23,
+            "action": "stay"
+          },
+          {
+            "tick": 32,
+            "action": "right"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "stay"
+          }
+        ]
+      }
+    },
+    {
+      "action": "right",
+      "clearance": -10.195488517570809,
+      "progress": 197.52036447708088,
+      "collision": true,
+      "risk": "predicted collision",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 20.30451148242919,
+      "clearanceCapped": false,
+      "closestHazard": 1435,
+      "closestAt": 0.23333333333333334,
+      "blocked": false,
+      "firstMovement": 50.71954686750162,
+      "firstProgress": 13.171398988434703,
+      "ineffective": false,
+      "exitProgress": 126.85380687993427,
+      "score": -10092.152592996741,
+      "path": [
+        "right",
+        "left",
+        "up_right",
+        "right",
+        "up_right",
+        "down_left",
+        "up"
+      ],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "right"
+          },
+          {
+            "tick": 14,
+            "action": "left"
+          },
+          {
+            "tick": 23,
+            "action": "up_right"
+          },
+          {
+            "tick": 32,
+            "action": "right"
+          },
+          {
+            "tick": 41,
+            "action": "up_right"
+          },
+          {
+            "tick": 50,
+            "action": "down_left"
+          },
+          {
+            "tick": 59,
+            "action": "up"
+          }
+        ]
+      }
+    },
+    {
+      "action": "up_left",
+      "clearance": -10.986180087240186,
+      "progress": 113.82894803057229,
+      "collision": true,
+      "risk": "predicted collision",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 19.513819912759814,
+      "clearanceCapped": false,
+      "closestHazard": 1656,
+      "closestAt": 0.55,
+      "blocked": false,
+      "firstMovement": 81.77589063448853,
+      "firstProgress": 18.800005900766564,
+      "ineffective": false,
+      "exitProgress": -64.29962990893034,
+      "score": -10201.01521022626,
+      "path": [
+        "up_left",
+        "left",
+        "right",
+        "up_left",
+        "stay",
+        "stay",
+        "down_right"
+      ],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "up_left"
+          },
+          {
+            "tick": 14,
+            "action": "left"
+          },
+          {
+            "tick": 23,
+            "action": "right"
+          },
+          {
+            "tick": 32,
+            "action": "up_left"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "down_right"
+          }
+        ]
+      }
+    },
+    {
+      "action": "up_right",
+      "clearance": 15.33391552926139,
+      "progress": 143.86748867394635,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 45.83391552926139,
+      "clearanceCapped": false,
+      "closestHazard": 1435,
+      "closestAt": 0.4,
+      "blocked": false,
+      "firstMovement": 71.70062761236525,
+      "firstProgress": 72.32374468487114,
+      "ineffective": false,
+      "exitProgress": 84.71356332737139,
+      "score": 157.51965220579555,
+      "path": ["up_right", "stay", "stay", "stay", "stay", "stay", "stay"],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "up_right"
+          },
+          {
+            "tick": 14,
+            "action": "stay"
+          },
+          {
+            "tick": 23,
+            "action": "stay"
+          },
+          {
+            "tick": 32,
+            "action": "stay"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "stay"
+          }
+        ]
+      }
+    },
+    {
+      "action": "down_left",
+      "clearance": 7.360658749062921,
+      "progress": 96.96365924597717,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 37.86065874906292,
+      "clearanceCapped": false,
+      "closestHazard": 153,
+      "closestAt": 1.05,
+      "blocked": false,
+      "firstMovement": 77.5865284760845,
+      "firstProgress": -96.68774256410529,
+      "ineffective": false,
+      "exitProgress": -74.17712757399624,
+      "score": 41.687710427606284,
+      "path": [
+        "down_left",
+        "up_left",
+        "right",
+        "up_left",
+        "stay",
+        "stay",
+        "right"
+      ],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "down_left"
+          },
+          {
+            "tick": 14,
+            "action": "up_left"
+          },
+          {
+            "tick": 23,
+            "action": "right"
+          },
+          {
+            "tick": 32,
+            "action": "up_left"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "right"
+          }
+        ]
+      }
+    },
+    {
+      "action": "down_right",
+      "clearance": -21.754723430710435,
+      "progress": 475.20658441522505,
+      "collision": true,
+      "risk": "predicted collision",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 8.745276569289565,
+      "clearanceCapped": false,
+      "closestHazard": 1435,
+      "closestAt": 0.25,
+      "blocked": false,
+      "firstMovement": 70.957676921314,
+      "firstProgress": -48.110333937532005,
+      "ineffective": false,
+      "exitProgress": 24.127569624705075,
+      "score": -10720.893012922365,
+      "path": [
+        "down_right",
+        "up_left",
+        "right",
+        "up",
+        "up_left",
+        "up",
+        "up_right"
+      ],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "down_right"
+          },
+          {
+            "tick": 14,
+            "action": "up_left"
+          },
+          {
+            "tick": 23,
+            "action": "right"
+          },
+          {
+            "tick": 32,
+            "action": "up"
+          },
+          {
+            "tick": 41,
+            "action": "up_left"
+          },
+          {
+            "tick": 50,
+            "action": "up"
+          },
+          {
+            "tick": 59,
+            "action": "up_right"
+          }
+        ]
+      }
+    },
+    {
+      "action": "focus_up",
+      "clearance": 5.236577832843878,
+      "progress": 111.4707469288146,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 35.73657783284388,
+      "clearanceCapped": false,
+      "closestHazard": 1656,
+      "closestAt": 1.05,
+      "blocked": false,
+      "firstMovement": 25.38907116137999,
+      "firstProgress": 30.809114546082583,
+      "ineffective": false,
+      "exitProgress": -63.52103349761933,
+      "score": 88.38713906596622,
+      "path": ["focus_up", "down_left", "up", "up", "stay", "stay", "stay"],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "focus_up"
+          },
+          {
+            "tick": 14,
+            "action": "down_left"
+          },
+          {
+            "tick": 23,
+            "action": "up"
+          },
+          {
+            "tick": 32,
+            "action": "up"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "stay"
+          }
+        ]
+      }
+    },
+    {
+      "action": "focus_down",
+      "clearance": 3.4230293858457514,
+      "progress": 112.13455085255487,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 33.92302938584575,
+      "clearanceCapped": false,
+      "closestHazard": 153,
+      "closestAt": 1.05,
+      "blocked": false,
+      "firstMovement": 24.334517120750828,
+      "firstProgress": -28.02321662389386,
+      "ineffective": false,
+      "exitProgress": -66.4242308699977,
+      "score": 71.25612061974108,
+      "path": ["focus_down", "down_left", "up", "up", "stay", "stay", "stay"],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "focus_down"
+          },
+          {
+            "tick": 14,
+            "action": "down_left"
+          },
+          {
+            "tick": 23,
+            "action": "up"
+          },
+          {
+            "tick": 32,
+            "action": "up"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "stay"
+          }
+        ]
+      }
+    },
+    {
+      "action": "focus_left",
+      "clearance": 2.5133589464168296,
+      "progress": 148.81415931538595,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 33.01335894641683,
+      "clearanceCapped": false,
+      "closestHazard": 1656,
+      "closestAt": 0.7833333333333333,
+      "blocked": false,
+      "firstMovement": 24.33451712064613,
+      "firstProgress": -14.920909305385521,
+      "ineffective": false,
+      "exitProgress": 63.80961627180852,
+      "score": 95.94999073123626,
+      "path": [
+        "focus_left",
+        "focus_left",
+        "up_left",
+        "right",
+        "down_right",
+        "right",
+        "up_right"
+      ],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "focus_left"
+          },
+          {
+            "tick": 14,
+            "action": "focus_left"
+          },
+          {
+            "tick": 23,
+            "action": "up_left"
+          },
+          {
+            "tick": 32,
+            "action": "right"
+          },
+          {
+            "tick": 41,
+            "action": "down_right"
+          },
+          {
+            "tick": 50,
+            "action": "right"
+          },
+          {
+            "tick": 59,
+            "action": "up_right"
+          }
+        ]
+      }
+    },
+    {
+      "action": "focus_right",
+      "clearance": 1.676493925464186,
+      "progress": 82.21078003332673,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 32.176493925464186,
+      "clearanceCapped": false,
+      "closestHazard": 1656,
+      "closestAt": 0.9833333333333333,
+      "blocked": false,
+      "firstMovement": 25.38907116124037,
+      "firstProgress": 11.309080379900252,
+      "ineffective": false,
+      "exitProgress": -81.10314954953901,
+      "score": 59.90470736232723,
+      "path": [
+        "focus_right",
+        "left",
+        "up_left",
+        "right",
+        "left",
+        "right",
+        "left"
+      ],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "focus_right"
+          },
+          {
+            "tick": 14,
+            "action": "left"
+          },
+          {
+            "tick": 23,
+            "action": "up_left"
+          },
+          {
+            "tick": 32,
+            "action": "right"
+          },
+          {
+            "tick": 41,
+            "action": "left"
+          },
+          {
+            "tick": 50,
+            "action": "right"
+          },
+          {
+            "tick": 59,
+            "action": "left"
+          }
+        ]
+      }
+    },
+    {
+      "action": "focus_up_left",
+      "clearance": 7.5379663290241865,
+      "progress": 96.25574124463924,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 38.03796632902419,
+      "clearanceCapped": false,
+      "closestHazard": 1656,
+      "closestAt": 0.25,
+      "blocked": false,
+      "firstMovement": 36.91411114409148,
+      "firstProgress": 8.313331461047937,
+      "ineffective": false,
+      "exitProgress": -64.79624788155343,
+      "score": 70.65824982545763,
+      "path": ["focus_up_left", "left", "stay", "up", "stay", "stay", "right"],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "focus_up_left"
+          },
+          {
+            "tick": 14,
+            "action": "left"
+          },
+          {
+            "tick": 23,
+            "action": "stay"
+          },
+          {
+            "tick": 32,
+            "action": "up"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "right"
+          }
+        ]
+      }
+    },
+    {
+      "action": "focus_up_right",
+      "clearance": 8.13432348168321,
+      "progress": 163.85739119415575,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 38.63432348168321,
+      "clearanceCapped": false,
+      "closestHazard": 1656,
+      "closestAt": 1.05,
+      "blocked": false,
+      "firstMovement": 35.85031380605927,
+      "firstProgress": 40.6560438898116,
+      "ineffective": false,
+      "exitProgress": 70.92308385037722,
+      "score": 153.7747476506389,
+      "path": [
+        "focus_up_right",
+        "focus_up_right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "left"
+      ],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "focus_up_right"
+          },
+          {
+            "tick": 14,
+            "action": "focus_up_right"
+          },
+          {
+            "tick": 23,
+            "action": "stay"
+          },
+          {
+            "tick": 32,
+            "action": "stay"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "left"
+          }
+        ]
+      }
+    },
+    {
+      "action": "focus_down_left",
+      "clearance": 2.240563289250801,
+      "progress": 152.79062085023816,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 32.7405632892508,
+      "clearanceCapped": false,
+      "closestHazard": 1435,
+      "closestAt": 0.35,
+      "blocked": false,
+      "firstMovement": 34.356550730827365,
+      "firstProgress": -43.54690160110772,
+      "ineffective": false,
+      "exitProgress": 63.31142723423784,
+      "score": 117.13707337735342,
+      "path": [
+        "focus_down_left",
+        "up_right",
+        "stay",
+        "stay",
+        "stay",
+        "stay",
+        "left"
+      ],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "focus_down_left"
+          },
+          {
+            "tick": 14,
+            "action": "up_right"
+          },
+          {
+            "tick": 23,
+            "action": "stay"
+          },
+          {
+            "tick": 32,
+            "action": "stay"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "left"
+          }
+        ]
+      }
+    },
+    {
+      "action": "focus_down_right",
+      "clearance": 3.5142824249743114,
+      "progress": 109.54600464765895,
+      "collision": false,
+      "risk": "tight clearance",
+      "progressLabel": "toward exit",
+      "firstCollision": 1.05,
+      "physicalClearance": 34.01428242497431,
+      "clearanceCapped": false,
+      "closestHazard": 1435,
+      "closestAt": 0.23333333333333334,
+      "blocked": false,
+      "firstMovement": 35.11137691768043,
+      "firstProgress": -19.8927305433524,
+      "ineffective": false,
+      "exitProgress": -65.14773093067413,
+      "score": 67.6063219167191,
+      "path": [
+        "focus_down_right",
+        "down_left",
+        "up_left",
+        "up_right",
+        "stay",
+        "stay",
+        "stay"
+      ],
+      "firstDuration": 0.1,
+      "plan": {
+        "areaId": "Catastrophic Core:34:381408:0",
+        "packet": 19245,
+        "tickRate": 60,
+        "inputs": [
+          {
+            "tick": 8,
+            "action": "focus_down_right"
+          },
+          {
+            "tick": 14,
+            "action": "down_left"
+          },
+          {
+            "tick": 23,
+            "action": "up_left"
+          },
+          {
+            "tick": 32,
+            "action": "up_right"
+          },
+          {
+            "tick": 41,
+            "action": "stay"
+          },
+          {
+            "tick": 50,
+            "action": "stay"
+          },
+          {
+            "tick": 59,
+            "action": "stay"
+          }
+        ]
+      }
+    }
+  ]
+}
