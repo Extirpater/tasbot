@@ -203,7 +203,8 @@ export class Navigation {
         const a = h.positions[tick],
           b = h.positions[tick + 1];
         const reach =
-          (h.radii ? Math.max(h.radii[tick], h.radii[tick + 1]) : h.radius) +
+          (h.queryRadius ??
+            (h.radii ? Math.max(h.radii[tick], h.radii[tick + 1]) : h.radius)) +
           routeBuffer;
         const x0 = Math.max(
           0,

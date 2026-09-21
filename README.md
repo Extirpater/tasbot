@@ -69,6 +69,7 @@ For a browser already exposing a local debugging port, use `npm run baseline -- 
 - Share exact no-target homing motion until a candidate enters targeting range, then keep private pursuit state for that candidate. Spatial bounds include targeting range as well as collision radius. This avoids repeatedly simulating every distant pursuer during each dodge search.
 - Preserve enemy stop/slow effects, including Sugar Rush, Spark, Stomp, poison, and Vengeance. Forecast timed expirations and keep dash phases advancing during a stop. If a dasher's measured motion contradicts its phase model, respect the measured suppression instead of assuming it moves out of the way.
 - Keep harmless enemies in tracking and predict when their observed timers expire. Forecast Sizing radius changes, Turning motion, and Pumpkin dormancy, windup and charge duration. The [enemy directory and coverage notes](docs/enemy-catalog.md) distinguish the 231 catalog entries from fully modeled behavior.
+- Predict Star and Teleporting enemies from their pause timers and jump distances. Check each stationary interval and landing, including multiple jumps within a coarse forecast step.
 - Learn regular Wacky movement from recent observations: fit turning speed and its change, or a repeating velocity cycle validated against newer samples. Use a smaller error allowance for a good fit; fall back to a broader region when data is missing or the pattern changes. This replaces persistent retreating caused by treating every future direction as equally likely.
 - Read Slippery auras and predict their locked movement angle, including ignored turns and Shift braking. Prefer routes that retain steering before entering them.
 - Reconcile commanded keys with the game's local held-key state and re-press a movement key if it drops.
@@ -78,6 +79,8 @@ For a browser already exposing a local debugging port, use `npm run baseline -- 
 - Ask Jev at most four times a second when multiple safe choices exist. Reject stale answers and unnecessary waiting or slowing when a better safe advancing route is available. Full-speed forward shortcuts use the local controller immediately.
 
 ## Validation and diagnosis
+
+Run the [enemy simulation suite](docs/enemy-simulations.md) with `npm run simulate:enemies` (or `npm run simulate:enemies -- --seeds 10`). It runs the regression tests, generated normal/dasher courses and recorded Wacky encounter comparisons with input timing variations. The report at `artifacts/enemy-suite.json` lists the checks attached to each catalog type and all types without separate validation. These partial checks do not establish survival against every enemy or a complete live level.
 
 `npm test` covers movement, route planning out of pockets, crowded lanes, wall stalls, stable dodge commitments and emergency overrides, queued inputs, latency fitting, ability speed bonuses, dasher launches, full-speed progress after Shift, collision checks, upgrades, model guards, and pause/key release.
 

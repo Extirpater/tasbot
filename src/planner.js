@@ -105,6 +105,33 @@ export function trajectoryClearance(p0, p1, h0, h1, trajectory, step, dt) {
   const radius = trajectory.radii
     ? Math.max(trajectory.radii[step - 1], trajectory.radii[step])
     : trajectory.radius;
+  if (h1.jumps?.length) {
+    const start = end - dt;
+    const playerAt = (time) => {
+      const f = clamp((time - start) / dt, 0, 1);
+      return { x: p0.x + (p1.x - p0.x) * f, y: p0.y + (p1.y - p0.y) * f };
+    };
+    let at = start,
+      body = h0,
+      gap = Infinity;
+    for (const jump of [...h1.jumps, { time: end, x: h1.x, y: h1.y }]) {
+      const active = Math.max(at, trajectory.activeFrom ?? 0);
+      if (jump.time >= active)
+        gap = Math.min(
+          gap,
+          sweptClearance(
+            playerAt(active),
+            playerAt(jump.time),
+            body,
+            body,
+            radius,
+          ),
+        );
+      at = jump.time;
+      body = jump;
+    }
+    return Math.min(gap, sweptClearance(p1, p1, h1, h1, radius));
+  }
   if (trajectory.activeFrom > end - dt) {
     const fraction = clamp((trajectory.activeFrom - (end - dt)) / dt, 0, 1);
     p0 = {
@@ -157,6 +184,15 @@ export function forecastHazard(
       0,
       (hazard.harmlessUntilMs ?? 0) / 1000 - 1 / tickRate,
     ),
+    ...(hazard.teleport
+      ? {
+          queryRadius:
+            playerRadius +
+            hazard.radius * shapeScale +
+            hazard.teleport.distance *
+              (1 + Math.ceil((dt * 1000) / hazard.teleport.intervalMs)),
+        }
+      : {}),
   };
 }
 
@@ -542,6 +578,50 @@ function learnedPath(hazard, area, steps, dt, tickRate) {
   return path;
 }
 
+function teleportPath(hazard, area, steps, dt) {
+  const phase = hazard.teleport,
+    zone = area.zones.find((z) => z.type === 0);
+  let x = hazard.x,
+    y = hazard.y,
+    dx = phase.dx,
+    dy = phase.dy;
+  let nextJump = phase.remainingMs / 1000;
+  const interval = phase.intervalMs / 1000;
+  const path = [{ x, y }];
+  for (let i = 1; i <= steps; i++) {
+    const jumps = [];
+    while (nextJump <= i * dt + 1e-9) {
+      const rawX = x + dx * phase.distance,
+        rawY = y + dy * phase.distance;
+      x = zone
+        ? clamp(
+            rawX,
+            zone.x + hazard.radius,
+            zone.x + zone.width - hazard.radius,
+          )
+        : rawX;
+      y = zone
+        ? clamp(
+            rawY,
+            zone.y + hazard.radius,
+            zone.y + zone.height - hazard.radius,
+          )
+        : rawY;
+      if (phase.pingPong) {
+        dx = -dx;
+        dy = -dy;
+      } else {
+        if (x !== rawX) dx = -dx;
+        if (y !== rawY) dy = -dy;
+      }
+      jumps.push({ time: nextJump, x, y });
+      nextJump += interval;
+    }
+    path.push({ x, y, ...(jumps.length ? { jumps } : {}) });
+  }
+  return path;
+}
+
 function pumpkinPath(hazard, area, steps, dt) {
   const phase = hazard.pumpkin,
     effects = hazard.motionEffects ?? [];
@@ -586,6 +666,7 @@ export function predictHazardPath(
   tickRate = 60,
 ) {
   const effects = hazard.motionEffects;
+  if (hazard.teleport) return teleportPath(hazard, area, steps, dt);
   if (hazard.pumpkin) return pumpkinPath(hazard, area, steps, dt);
   if (hazard.sizing || hazard.turning)
     return changingBodyPath(hazard, area, steps, dt, tickRate);
@@ -982,6 +1063,10 @@ export function planActions(
             h.pumpkin ? Math.hypot(h.pumpkin.vx, h.pumpkin.vy) : 0,
           )) *
           totalTime +
+          (h.teleport
+            ? h.teleport.distance *
+              (1 + Math.ceil((totalTime * 1000) / h.teleport.intervalMs))
+            : 0) +
           p.radius +
           Math.max(
             h.radius,

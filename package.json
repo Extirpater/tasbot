@@ -12,7 +12,8 @@
     "inspect": "node --env-file-if-exists=.env src/cli.js --inspect",
     "baseline": "node --env-file-if-exists=.env src/cli.js --policy baseline",
     "test": "node --test",
-    "benchmark": "node scripts/benchmark.js"
+    "benchmark": "node scripts/benchmark.js",
+    "simulate:enemies": "node scripts/simulate-enemies.js"
   },
   "dependencies": {
     "playwright": "1.63.0"

@@ -93,6 +93,28 @@ export function observeGame(enemyTypes = {}) {
   ];
   const motionFor = (e) => {
     const type = enemyTypes[e.entityType];
+    const teleportSpeed = Math.hypot(e.velocityX ?? 0, e.velocityY ?? 0);
+    const pingPong = type?.name === "star_enemy";
+    const teleport =
+      Number.isFinite(e.pauseTime) &&
+      e.pauseInterval > 0 &&
+      (pingPong || type?.name === "teleporting_enemy")
+        ? {
+            remainingMs: Math.max(0, e.pauseTime),
+            intervalMs: e.pauseInterval,
+            distance:
+              e.teleportDistance ?? e._pred?.teleportDist ?? teleportSpeed,
+            dx:
+              (pingPong ? -1 : 1) *
+              (e._pred?.teleportDirX ??
+                (teleportSpeed ? e.velocityX / teleportSpeed : 0)),
+            dy:
+              (pingPong ? -1 : 1) *
+              (e._pred?.teleportDirY ??
+                (teleportSpeed ? e.velocityY / teleportSpeed : 0)),
+            pingPong,
+          }
+        : undefined;
     const pumpkin =
       type?.name === "pumpkin_enemy" || typeof e.pumpkinActivated === "boolean"
         ? {
@@ -152,7 +174,8 @@ export function observeGame(enemyTypes = {}) {
           : "bounce",
       typeName: type?.name,
       pumpkin,
-      uncertainMotion: type?.uncertainMotion || undefined,
+      teleport,
+      uncertainMotion: (type?.uncertainMotion && !teleport) || undefined,
       uncertainSpeed: type?.uncertainMotion
         ? Math.hypot(e.velocityX ?? 0, e.velocityY ?? 0) * tickRate
         : undefined,

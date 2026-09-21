@@ -1,0 +1,332 @@
+{
+  "region": "Monumental Migration",
+  "purpose": "Enemy-family reference and simulation coverage inventory, not a live spawn table or movement model.",
+  "video": {
+    "url": "https://www.youtube.com/watch?v=wnRV3TGMMsA",
+    "title": "Evades.io // Monumental Migration Solo With Rameses to 120 //",
+    "author": "Fortish",
+    "published": "2019-05-01",
+    "durationSeconds": 1022,
+    "hero": "Rameses",
+    "review": "102 frames sampled about ten seconds apart; timestamps below are approximate. Enemy identities after area 44 are visual matches to the public client catalog, not live entity IDs.",
+    "frameIndex": "artifacts/mm-reference/frame-areas.json"
+  },
+  "currentEvidence": {
+    "source": "artifacts/mm-reference/live-area-evidence.json",
+    "observedAreas": [1, 44],
+    "note": "Current logs cover areas 1–44, including the empty area 41 checkpoint. Older observations omitted harmless bodies, so their counts are incomplete. No later loop is validated by these logs."
+  },
+  "repetition": {
+    "source": "User-reported enemy-type repetition every 120 areas through 480.",
+    "periodAreas": 120,
+    "blocks": [
+      [1, 120],
+      [121, 240],
+      [241, 360],
+      [361, 480]
+    ],
+    "verifiedByVideo": [1, 120],
+    "note": "Use as a family grouping for test planning. Do not infer identical positions, speeds, radii, counts, phases or checkpoint contents. Live entity flags and phase fields remain authoritative."
+  },
+  "groups": [
+    {
+      "areas": [1, 5],
+      "enemyTypes": ["normal_enemy", "wall_enemy"],
+      "videoSeconds": 45,
+      "sampleArea": 4,
+      "liveTypesAvailable": true
+    },
+    {
+      "areas": [6, 10],
+      "enemyTypes": ["dasher_enemy", "normal_enemy", "wall_enemy"],
+      "videoSeconds": 55,
+      "sampleArea": 9,
+      "liveTypesAvailable": true
+    },
+    {
+      "areas": [11, 15],
+      "enemyTypes": [
+        "homing_enemy",
+        "normal_enemy",
+        "dasher_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 65,
+      "sampleArea": 15,
+      "liveTypesAvailable": true
+    },
+    {
+      "areas": [16, 20],
+      "enemyTypes": [
+        "slowing_enemy",
+        "normal_enemy",
+        "homing_enemy",
+        "dasher_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 95,
+      "sampleArea": 20,
+      "liveTypesAvailable": true
+    },
+    {
+      "areas": [21, 25],
+      "enemyTypes": ["draining_enemy", "homing_enemy", "wall_enemy"],
+      "videoSeconds": 135,
+      "sampleArea": 25,
+      "liveTypesAvailable": true
+    },
+    {
+      "areas": [26, 30],
+      "enemyTypes": [
+        "wavy_enemy",
+        "zigzag_enemy",
+        "homing_enemy",
+        "slowing_enemy",
+        "draining_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 165,
+      "sampleArea": 28,
+      "liveTypesAvailable": true
+    },
+    {
+      "areas": [31, 35],
+      "enemyTypes": [
+        "spiral_enemy",
+        "zoning_enemy",
+        "normal_enemy",
+        "dasher_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 205,
+      "sampleArea": 33,
+      "liveTypesAvailable": true
+    },
+    {
+      "areas": [36, 40],
+      "enemyTypes": [
+        "oscillating_enemy",
+        "normal_enemy",
+        "homing_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 275,
+      "sampleArea": 40,
+      "liveTypesAvailable": true
+    },
+    {
+      "areas": [41, 45],
+      "enemyTypes": [
+        "switch_enemy",
+        "normal_enemy",
+        "homing_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 305,
+      "sampleArea": 45,
+      "liveTypesAvailable": true,
+      "note": "Area 41 is a checkpoint. Current live type IDs cover areas 42–44; the Homing identification in area 45 comes from the video."
+    },
+    {
+      "areas": [46, 50],
+      "enemyTypes": [
+        "sizing_enemy",
+        "homing_enemy",
+        "slowing_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 355,
+      "sampleArea": 50,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [51, 55],
+      "enemyTypes": ["turning_enemy", "wall_enemy"],
+      "videoSeconds": 395,
+      "sampleArea": 53,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [56, 60],
+      "enemyTypes": [
+        "freezing_enemy",
+        "normal_enemy",
+        "homing_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 455,
+      "sampleArea": 60,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [61, 65],
+      "enemyTypes": ["sniper_enemy", "wall_enemy"],
+      "videoSeconds": 495,
+      "sampleArea": 65,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [66, 70],
+      "enemyTypes": ["speed_sniper_enemy", "regen_sniper_enemy", "wall_enemy"],
+      "videoSeconds": 535,
+      "sampleArea": 70,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [71, 75],
+      "enemyTypes": ["liquid_enemy", "wall_enemy"],
+      "videoSeconds": 565,
+      "sampleArea": 74,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [76, 80],
+      "enemyTypes": ["icicle_enemy", "normal_enemy", "wall_enemy"],
+      "videoSeconds": 605,
+      "sampleArea": 80,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [81, 85],
+      "enemyTypes": ["slippery_enemy", "normal_enemy", "wall_enemy"],
+      "videoSeconds": 635,
+      "sampleArea": 84,
+      "liveTypesAvailable": false,
+      "note": "The ten-second sampling skips area 81; do not assign these enemies to a checkpoint."
+    },
+    {
+      "areas": [86, 90],
+      "enemyTypes": [
+        "ice_sniper_enemy",
+        "normal_enemy",
+        "slowing_enemy",
+        "draining_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 675,
+      "sampleArea": 90,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [91, 95],
+      "enemyTypes": [
+        "liquid_enemy",
+        "icicle_enemy",
+        "freezing_enemy",
+        "ice_sniper_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 735,
+      "sampleArea": 95,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [96, 100],
+      "enemyTypes": ["immune_enemy", "wall_enemy"],
+      "videoSeconds": 755,
+      "sampleArea": 98,
+      "liveTypesAvailable": false,
+      "note": "Tiny black bodies visually match Immune. Their immunity is not established by these sampled frames."
+    },
+    {
+      "areas": [101, 105],
+      "enemyTypes": [
+        "wavy_enemy",
+        "zigzag_enemy",
+        "spiral_enemy",
+        "zoning_enemy",
+        "oscillating_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 805,
+      "sampleArea": 105,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [106, 110],
+      "enemyTypes": ["radiating_bullets_enemy", "normal_enemy", "wall_enemy"],
+      "videoSeconds": 865,
+      "sampleArea": 108,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [111, 115],
+      "enemyTypes": ["regen_sniper_enemy", "speed_sniper_enemy", "wall_enemy"],
+      "videoSeconds": 935,
+      "sampleArea": 113,
+      "liveTypesAvailable": false
+    },
+    {
+      "areas": [116, 120],
+      "enemyTypes": [
+        "disabling_enemy",
+        "normal_enemy",
+        "homing_enemy",
+        "wall_enemy"
+      ],
+      "videoSeconds": 995,
+      "sampleArea": 120,
+      "liveTypesAvailable": false
+    }
+  ],
+  "priorityMechanics": [
+    {
+      "types": [
+        "sniper_enemy",
+        "speed_sniper_enemy",
+        "regen_sniper_enemy",
+        "ice_sniper_enemy",
+        "radiating_bullets_enemy"
+      ],
+      "gap": "Current tracking includes existing projectiles but does not forecast new attacks before their first observation or model every projectile effect.",
+      "requires": [
+        "live firing timers",
+        "target selection and aim",
+        "projectile spawn and lifetime",
+        "speed/regen/freeze effects on the player"
+      ]
+    },
+    {
+      "types": ["liquid_enemy", "icicle_enemy"],
+      "gap": "Observed-speed uncertainty regions do not establish exact phase motion or bound unseen acceleration.",
+      "requires": [
+        "phase and acceleration rules",
+        "turn and pause timing",
+        "held-out full-cycle trajectories"
+      ]
+    },
+    {
+      "types": ["draining_enemy", "disabling_enemy", "immune_enemy"],
+      "gap": "Body avoidance alone does not validate energy loss, ability suppression or immunity interactions.",
+      "requires": [
+        "live aura/effect fields",
+        "hero-dependent interactions",
+        "ability expiry and disabled states"
+      ]
+    },
+    {
+      "types": [
+        "slippery_enemy",
+        "freezing_enemy",
+        "wavy_enemy",
+        "zigzag_enemy",
+        "spiral_enemy",
+        "zoning_enemy",
+        "oscillating_enemy"
+      ],
+      "gap": "Existing movement checks do not validate all MM mixed encounters or later repetitions.",
+      "requires": [
+        "simultaneous fields and projectiles",
+        "phase changes near walls",
+        "density/size/speed variations",
+        "input delay and snapshot age variations"
+      ]
+    }
+  ],
+  "limitations": [
+    "Each range lists a union of identified types across sampled encounters, not the contents of every area.",
+    "The video is edited and has visible motion trails; video time must not be treated as server time when fitting speeds or phase periods.",
+    "Successful Rameses routes may depend on hero abilities; they do not establish collision-free routes for other heroes.",
+    "No controller physics or numeric difficulty multipliers are inferred from this manifest."
+  ]
+}

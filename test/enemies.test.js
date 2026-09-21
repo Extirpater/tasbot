@@ -613,3 +613,131 @@ test("learned Wacky patterns advance faster with fewer turns in the recorded enc
   assert.ok(learned.turns < old.turns);
   assert.equal(learned.focusFraction, 0);
 });
+
+test("Star telemetry predicts alternating landings instead of treating its direction as velocity", () => {
+  const h = observe([
+    {
+      id: 1,
+      entityType: 210,
+      isEnemy: true,
+      x: 300,
+      y: 200,
+      radius: 20,
+      velocityX: -2,
+      velocityY: 0,
+      pauseTime: 100,
+      pauseInterval: 350,
+      teleportDistance: 120,
+    },
+  ]).hazards[0];
+  assert.equal(h.teleport.dx, 1);
+  const path = predictHazardPath(h, state().area, 36, 1 / 60);
+  assert.equal(path[5].x, 300);
+  assert.equal(path[6].x, 420);
+  assert.equal(path[26].x, 420);
+  assert.equal(path[27].x, 300);
+});
+
+test("teleport collision checks landings without blocking the empty space crossed", () => {
+  const s = state(),
+    h = {
+      x: 200,
+      y: 250,
+      radius: 10,
+      vx: 0,
+      vy: 0,
+      teleport: {
+        remainingMs: 50,
+        intervalMs: 350,
+        distance: 200,
+        dx: 1,
+        dy: 0,
+        pingPong: true,
+      },
+    };
+  const f = forecastHazard(h, 10, s.area, 1, 0.1);
+  const middle = { x: 300, y: 250 },
+    landing = { x: 400, y: 250 };
+  assert.equal(
+    trajectoryClearance(
+      middle,
+      middle,
+      f.positions[0],
+      f.positions[1],
+      f,
+      1,
+      0.1,
+    ),
+    80,
+  );
+  assert.equal(
+    trajectoryClearance(
+      landing,
+      landing,
+      f.positions[0],
+      f.positions[1],
+      f,
+      1,
+      0.1,
+    ),
+    -20,
+  );
+  // Both jumps occur between coarse samples, and the final position is back
+  // at the start. The intermediate landing must remain a collision.
+  const coarse = forecastHazard(h, 10, s.area, 1, 0.5);
+  assert.equal(coarse.positions[1].x, 200);
+  assert.equal(
+    trajectoryClearance(
+      landing,
+      landing,
+      coarse.positions[0],
+      coarse.positions[1],
+      coarse,
+      1,
+      0.5,
+    ),
+    -20,
+  );
+  s.player = { ...s.player, ...landing, speed: 0 };
+  s.hazards = [h];
+  assert.ok(
+    planActions(s, { reactionTime: 0, horizon: 0.5, fastPath: false }).every(
+      (c) => c.physicalClearance <= 0,
+    ),
+  );
+});
+
+test("Elite Expanse Star reconstruction avoids committing to its next landing", () => {
+  const f = fixture("elite-star");
+  const old = planActions(f.state, f.options);
+  assert.ok(old.find((c) => c.action === f.originalAction).clearance > 0);
+  f.state.hazards.find((h) => h.id === f.enemyId).teleport =
+    f.reconstructedTeleport;
+  const c = planActions(f.state, f.options);
+  assert.ok(c.find((c) => c.action === f.originalAction).clearance < 0);
+  assert.ok(
+    c.find((candidate) => candidate.action === bestAction(c)).clearance > 0,
+  );
+});
+
+test("forward teleporting clamps its landing and reverses at an outer zone boundary", () => {
+  const h = {
+    x: 950,
+    y: 250,
+    radius: 10,
+    vx: 0,
+    vy: 0,
+    teleport: {
+      remainingMs: 50,
+      intervalMs: 100,
+      distance: 100,
+      dx: 1,
+      dy: 0,
+      pingPong: false,
+    },
+  };
+  const path = predictHazardPath(h, state().area, 3, 0.1);
+  assert.equal(path[1].x, 990);
+  assert.equal(path[2].x, 890);
+  assert.equal(path[3].x, 790);
+});
