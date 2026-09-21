@@ -1,0 +1,218 @@
+# TAS project handoff — September 21, 2026
+
+## Start here
+
+The user wants to repeatedly run Monumental Migration (MM), analyze each death, fix its underlying cause, add a meaningful regression where the evidence permits, and retry. Preserve fast forward progress: excessive retreating, Shift use and unnecessary turns have also been recurring complaints. Successful short replays are evidence for a particular encounter, not proof of a full clear or elimination of every failure mode.
+
+The latest request was to prepare this handoff before switching machines. Work on the run-and-review loop was interrupted at the investigation stage. **No automatic MM restart, death-watching daemon, or unattended AI analysis was implemented.** The existing controller records deaths; analysis and fixes currently require an active assistant session.
+
+At handoff:
+
+- Project: `/Users/edwardzhang/tasproject` on the old Mac. Paths in this document are relative to the project so they work on the new machine.
+- Git branch: `main`; latest commit at inspection: `a318241` (message `a`). Working tree was clean before adding this file. This handoff is newly created and is not committed by this task.
+- Latest observed controller revision in logs: `1b7aab95bffb`. The CLI prints a hash of its runtime source/catalog at startup; this is distinct from the Git commit.
+- No running `src/cli.js` process was found. The last browser observation said `Join a game and select a hero.` These are snapshots of the old machine, not guarantees about current state.
+- The reported P-toggle problem resolved itself. Read-only inspection found one controller key handler; no toggle code change was made for that report.
+
+## Move the evidence as well as the code
+
+**`.gitignore` excludes `logs/` and `artifacts/`. A Git clone alone loses the raw recordings, downloaded public client and video analysis.** Copy those directories separately if moving via Git. Together they were approximately 402 MB at handoff, including about 141 MB in `artifacts/mm-reference/`.
+
+Keep these with the project:
+
+- `src/`, `scripts/`, `data/`, `docs/`, `test/`, `package.json`, `package-lock.json`, `README.md`, `.env.example`, and this file.
+- `logs/`: one-second session records, controller revisions, timings, nearby enemies and candidate choices.
+- `artifacts/death-*.json`: raw pre-death decision histories and final states. Preserve originals when extracting fixtures.
+- `artifacts/enemy-suite*.json`, `artifacts/replay-*.json`, `artifacts/benchmark-*.json`: validation evidence.
+- `artifacts/public-client-index.e75284cc.js`: public client source used to investigate native movement and phase rules.
+- `artifacts/mm-reference/`: downloaded reference video, frame images, contact sheets, area OCR index, current live-area evidence and suite log.
+
+The checked-in `test/fixtures/` contains focused cases, but does not replace all the ignored raw recordings. `node_modules/` can be reinstalled. `.browser-profile/` is not required for attach mode; log into Chrome normally on the new machine. Baseline does not need an API key or `.env`.
+
+## Install and run on the new machine
+
+The package requires Node 22+; the old machine ran Node 25.8.1. Playwright is pinned to 1.63.0. Use a current Google Chrome with the remote-debugging setting below.
+
+From the transferred project directory:
+
+```sh
+npm ci
+npm test
+```
+
+The working browser workflow is attach mode. Previously, guest login stalled in the separately launched browser, while Chrome opened by the user worked. A Cloudflare/rate-limit response was observed during that earlier investigation.
+
+1. Open Chrome yourself, visit `https://evades.io/`, and log in normally. Keep one Evades game tab open.
+2. Open `chrome://inspect/#remote-debugging` and enable **Allow remote debugging for this browser instance**.
+3. Run:
+
+   ```sh
+   npm run baseline -- --attach
+   ```
+
+4. Accept Chrome's connection prompt. Join the game, select a hero, enter MM, click outside chat, release WASD, and press **P**.
+
+If attach reports `DevToolsActivePort file not found`, check that Chrome is running and that its remote-debugging setting is enabled. For an already configured local debugging endpoint, the alternative is `npm run baseline -- --cdp-url http://127.0.0.1:9222`.
+
+Controls and behavior:
+
+- **P** starts/pauses; **Escape** pauses; **Ctrl+C** releases keys and quits. Attach disconnects while leaving the user's Chrome open.
+- Switching windows or hiding the page pauses. WASD pauses for manual steering, including when native WASD state is already held before P. Chat/menu focus, spectating, stale packets and death suspend movement.
+- Use default arrow, Shift, numeric upgrade and X bindings. The controller emits arrows; do not mix physical movement keys into an active attempt.
+- Keep one controller process attached. Restart it after code changes; a running process retains its loaded code.
+- Heading defaults to right. Automatic speed upgrades occur in safe zones up to 510 world units/second (legacy HUD speed 17). `--max-speed` controls upgrade spending, not forced braking. The CLI currently accepts 150–510; the separate simulator has also been tested at 660.
+- Candy's Sweet Tooth uses X automatically when configured conditions permit. `--no-candy` disables this. `--no-upgrades` leaves upgrades to the user. Hero-independent avoidance must not rely on Rameses' abilities from the reference video.
+- Optional Jev policy: configure `TYPESAFE_API_KEY` using `.env.example` and run `npm start`. Use baseline for reproducible local debugging without model/API variability.
+
+## What is implemented
+
+The controller reads native game state through Playwright and plans key presses. This is not a policy that trains itself after each death.
+
+| Component                | File(s)                               | Current behavior                                                                                                                                                                                        |
+| ------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Browser attachment       | `src/browser.js`                      | Attach to the existing Evades tab without navigating it; preserve the browser on disconnect.                                                                                                            |
+| Input and pause handling | `src/controller.js`                   | Page-local JSHandle closures, P/Escape, WASD manual takeover, key reconciliation, navigation-safe handles and a 1.5-second heartbeat release. No named page globals or overlay.                         |
+| Observation              | `src/observe.js`                      | Retains all flagged enemy/projectile bodies, including harmless and unknown types; reads phase/effect fields, live auras and native held keys.                                                          |
+| Enemy catalog            | `data/enemies.json`, `src/enemies.js` | 143 enemy types plus 88 projectile types from public client defaults/schemas. Player projectiles are listed too; live flags decide which are threats.                                                   |
+| Pattern learning         | `src/enemy-motion.js`                 | Fits angular velocity/acceleration or periodic velocity from up to five seconds of past samples. Validates against newer samples, resets after gaps/area changes/effects and falls back when fits fail. |
+| Local planning           | `src/planner.js`, `src/movement.js`   | Full-speed forward shortcut, short action-sequence search, collision margins, retained plans, temporary Shift, stalled-motion escape and recovery search.                                               |
+| Route planning           | `src/navigation.js`                   | Grid routing with arrival times, future enemy geometry and aura costs; forecasts shared with local planning where applicable.                                                                           |
+| Timing                   | `src/timing.js`                       | Packet-based velocity/latency fitting, queued inputs, snapshot age and first-server-update input arrivals.                                                                                              |
+| Recording/runtime        | `src/cli.js`                          | Main loop, revision fingerprint, session logging and death recording.                                                                                                                                   |
+
+Recent enemy/input fixes already on disk:
+
+- Switch: keep harmless enemies visible to the model and reserve collision geometry after timer expiry, allowing for a one-tick early transition.
+- Sizing: model radius growth/reversal and peaks between coarse forecast samples; include growth in spatial bounds.
+- Turning: use observed angular rate and reverse rotation after an outer-zone bounce.
+- Wacky: replace persistently broad forecasts with validated learned motion where possible; preserve the conservative fallback when evidence is insufficient.
+- Slippery: capture its actual aura radius and locked entry angle, model ignored steering/Shift and recovery after leaving or hitting an outer wall.
+- Pumpkin: ignore stale cached velocity during dormancy, model activation countdown and remaining charge duration.
+- Star/Teleporting: model pause timers and discrete landings; Star alternates endpoints. Check intermediate landings within coarse steps without treating the whole teleport gap as occupied.
+- Input: repair desired arrows dropped from native held-key state and pause on manual WASD rather than mixing two movement sources.
+
+Earlier regressions also cover homing pursuit, dash phases, wall corners, timed stops/slows, refuge entrances, mouse drift, delayed inputs, snapshot age and dense spatial indexing. Preserve those while fixing new encounters.
+
+## Validation baseline
+
+Last completed command:
+
+```sh
+npm run simulate:enemies -- --seeds 3
+```
+
+Results: **120 tests passed, 6/6 generated normal/dasher courses cleared, and 6/6 short Wacky comparison windows survived.** The report timestamp is `2026-09-21T20:09:20.154Z` in `artifacts/enemy-suite.json`; terminal output is saved in `artifacts/mm-reference/suite-validation.log`.
+
+The Wacky comparison uses independently recorded enemy positions. In its 1.03-second on-time window, learned motion advances 620 units with two turns and no Shift; broad fallback advances 498.3 units with five turns. Minimum clearance is 90 versus 75.5. These are short counterfactual windows, not a verified live level clear.
+
+Coverage remains partial:
+
+- 124/143 enemy types have no separately listed family check. A listed family check is itself limited and can be shared with Switch variants.
+- The MM reference identifies 25 types; 14 lack separately listed family checks.
+- The 88 projectile entries have no complete per-type validation inventory.
+- No full MM 120 or MM 480 clear has been verified with this revision.
+
+Use `npm test` for regressions. Use `npm run simulate:enemies -- --seeds 10` to increase normal/dasher course seeds; it does not add enemy families or simulate complete MM runs.
+
+## MM reference and missing behavior
+
+User-provided video: https://www.youtube.com/watch?v=wnRV3TGMMsA
+
+It is Fortish's 2019 Rameses run through area 120. We inspected 102 sampled frames and saved nine contact sheets. The timestamped table is in `docs/monumental-migration.md`; its structured data is `data/monumental-migration.json`.
+
+The user reports a repeated enemy-family sequence every 120 areas through 480. This is recorded as four blocks for organizing tests. The video covers only the first block. Current logs independently confirm observed type IDs only through area 44; later identities are visual matches. Do not turn this into an exact modulo spawn table: checkpoints, boss mixtures, live counts, sizes, speeds and phases still matter. The video is edited and has motion trails, so video seconds are not reliable server-time measurements.
+
+Highest-priority gaps:
+
+1. Sniper and Radiating Bullets attacks before newly fired projectiles first appear in telemetry; target selection, spawn geometry, lifetime and projectile effects.
+2. Liquid/Icicle phase changes and acceleration beyond observed-speed fallback bounds.
+3. Draining, Disabling, immunity and hero/stat interactions; body collision avoidance alone does not cover these.
+4. Mixed hazards and later-loop density/radius/speed/phase combinations, including Slippery/Freezing and patterned enemies.
+
+Other limitations include internal-obstacle enemy bounces/teleport collisions, force fields, some abilities and teammate retargeting. A public catalog is not a complete server implementation.
+
+## Continue the run–death–fix cycle
+
+The user explicitly wants repeated MM attempts with analysis after each death. Continue toward that objective after restoring the workspace and browser. No fixed number of attempts or completion time was specified.
+
+1. Start baseline attach, enter MM and confirm the printed revision. Hero selection and automatic navigation/reset after death are not yet implemented; establish the run setup from the actual browser state.
+2. Watch for new `artifacts/death-*.json` while working. Match the trace's `controllerRevision`, area and session log before diagnosing it. Do not mistake the newest non-MM recording for an MM death.
+3. Locate likely colliding bodies and the earliest useful decision before the collision became unavoidable given already queued input. Check missing/incorrect observations, phase changes, aura effects, radius, actual keys, latency and prediction errors before adjusting planner costs or margins.
+4. Preserve the original trace. Extract a small fixture with relevant enemy/phase/player/input history. Explicitly label inferred fields when an older trace omitted them.
+5. Fix the cause and add a regression against independent observed behavior or geometry. A simulator that generates enemy motion from the same forecast under test cannot expose errors in that forecast.
+6. Compare survival, clearance, forward progress, time spent using Shift, unnecessary turns and planning time. The user wants faster safe progress, not avoidance that stalls indefinitely.
+7. Run appropriate existing checks, restart the CLI with the new revision, and attempt MM again. Record confirmed causes and limits in `docs/recent-deaths.md`.
+
+Recording details relevant to the next implementation:
+
+- `src/cli.js` currently keeps the last **200 active decision frames**, often about 3.3 seconds at 60 Hz, not a guaranteed-duration history. Each includes the full observed state, chosen action, candidates, queued-input prediction, timing and route metadata.
+- On the first observed downed state, it saves `{ controllerRevision, frames, finalState }`. Non-downed pauses clear the buffer. Death saves require preceding active frames.
+- One-second logs retain nearby hazards within 500 units, so they are not equivalent to a full-rate replay of a whole successful run.
+- Movement is suspended while downed, but the controller does not automatically return to MM's start. Revival may resume an enabled controller if no pause invalidated it.
+- A longer packet-aware recording window and a persistent attempt/death ledger would improve diagnosis. These were discussed only as possible next work and have not been added.
+- A file watcher can detect a recording; it does not itself perform AI analysis or apply code fixes. Do not claim that this chat keeps analyzing after the active session ends.
+
+## Replay tool limits
+
+`scripts/replay-encounter.js` replays recorded enemy positions with simulated player movement and command delays. Example for a compatible trace:
+
+```sh
+node scripts/replay-encounter.js \
+  --trace artifacts/death-REPLACE_WITH_TIMESTAMP.json \
+  --from-frame 140 --delay-ticks 0 \
+  --output artifacts/replay-review.json
+```
+
+Choose a valid frame index with usable `prediction.pendingInputs`; some short traces have fewer than 140 frames. Vary `--delay-ticks` through -1, 0 and 1 when relevant. The tool rejects area changes, homing and disappearing tracked sources. It interpolates observed positions and does not faithfully reproduce every newer mechanic, including teleport discontinuities, changing harmlessness, Slippery steering or new projectile spawns. Check applicability before using its survival result; extend the replay or use focused mechanics tests when needed.
+
+Useful tests: `test/enemies.test.js`, `test/agent.test.js`, `test/input-replay.test.js`, `test/homing.test.js`, `test/navigation.test.js`, `test/spatial.test.js`, and the corresponding fixtures.
+
+## Evidence index
+
+Resolved/partially addressed causes are explained in `docs/recent-deaths.md`:
+
+| Recording in `artifacts/`  | Encounter            | Relevant finding                                                                                 |
+| -------------------------- | -------------------- | ------------------------------------------------------------------------------------------------ |
+| `death-1790017596998.json` | MM 44                | Switch 1932 omitted during harmlessness; fixture explicitly reconstructs missing pre-death data. |
+| `death-1790016815325.json` | Vicious Valley 1     | Missing native Down key while down-right was requested; Sizing prediction also added.            |
+| `death-1790017820447.json` | Wacky Wonderland 16  | Spiral 1922 invalidated straight-line motion; learned-pattern forecast/replay evidence.          |
+| `death-1790018474906.json` | Restless Ridge 1     | Slippery movement locked despite requested turn; old trace lacks aura radius.                    |
+| `death-1790018889016.json` | Restless Ridge 2     | Manual A/W mixed with bot arrows; WASD takeover added.                                           |
+| `death-1790019055647.json` | Haunted Halls 11     | Dormant Pumpkin with stale nonzero prediction velocity; old trace lacks phase fields.            |
+| `death-1790019636290.json` | Elite Expanse Hard 4 | Star 2046 jumps 120 units every 350 ms; missing timer reconstructed in focused fixture.          |
+
+More recent traces were identified but **not causally analyzed or fixed in this handoff work**:
+
+| Recording                  | Displayed area       | Revision       |
+| -------------------------- | -------------------- | -------------- |
+| `death-1790020438985.json` | Ancient Abyss 17     | `6942a5d6edf0` |
+| `death-1790020647279.json` | Ancient Abyss 20     | `1b7aab95bffb` |
+| `death-1790020717544.json` | Ancient Abyss 22     | `1b7aab95bffb` |
+| `death-1790020736438.json` | Ancient Abyss 22     | `1b7aab95bffb` |
+| `death-1790020776584.json` | Ancient Abyss 23     | `1b7aab95bffb` |
+| `death-1790021332985.json` | Central Core Hard 26 | `1b7aab95bffb` |
+
+Area IDs embed a zero-based index; `state.area.number` is the displayed one-based area. Later recordings establish that AA included Ancient Abyss; an earlier clarification question about AA was never answered directly.
+
+## Reference documents and source refresh
+
+- `README.md`: run options, input behavior and architecture.
+- `docs/enemy-types.md`: generated full enemy/projectile directory.
+- `docs/enemy-catalog.md`: implemented behavior and limits.
+- `docs/enemy-simulations.md`: suite scope and how to extend it.
+- `docs/monumental-migration.md`: video timestamps, MM families and priorities.
+- `docs/recent-deaths.md`: detailed historical diagnoses and validation evidence.
+
+Catalog source: https://evades.io/index.e75284cc.js
+
+Rebuild the same catalog from the copied source:
+
+```sh
+python3 scripts/build-enemy-catalog.py \
+  --source artifacts/public-client-index.e75284cc.js \
+  --url https://evades.io/index.e75284cc.js
+```
+
+Running `python3 scripts/build-enemy-catalog.py` without a local source fetches the currently published client. It parses data literals without executing the client. Review ID/schema changes before using a refreshed catalog with existing code.
+
+Video inspection used temporary `uv` environments for yt-dlp, Pillow and PyObjC Vision, plus ffmpeg. These are not runtime dependencies. The saved frames/index are sufficient to resume the reference review; no need to repeat the download or OCR.
