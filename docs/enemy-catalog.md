@@ -1,5 +1,7 @@
 # Enemy catalog and prediction coverage
 
+**Historical coverage:** the Wacky/MM expansion described below was rolled back at the user's request. The live controller no longer imports this catalog or the broad pattern learner. Targeted Switch activation and bounded Spiral curvature fixes were subsequently added; Sizing/Turning, Slippery, Pumpkin and teleport forecasts remain inactive. See [the current rollback state](pre-wacky-rollback.md); the catalog remains reference data.
+
 [The directory](enemy-types.md) lists 143 enemy types and 88 projectile types extracted from the current public Evades client. [The JSON catalog](../data/enemies.json) includes numeric IDs, default properties, available telemetry schemas, the source URL, retrieval time and source SHA-256. Player projectiles appear in the directory too; the controller uses live `isEnemy` / `isEnemyProjectile` flags to identify threats.
 
 The live entity's radius, velocity, effects and area boundaries take precedence over defaults. A catalog entry does not mean the server's complete behavior is implemented. Generic telemetry schemas only list shared fields. Some special types have no dedicated public schema, and future attacks or newly spawned projectiles cannot be enumerated from the current observation.

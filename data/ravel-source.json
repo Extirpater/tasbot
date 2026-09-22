@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/Pifary-dev/ravel",
+  "commit": "563f5434f68d07b2d70ede3f307f857157d42107",
+  "license": "MIT",
+  "files": {
+    "maps.js": "ecec4383f7e1836ffb0d2bb4653379cd4d1ab6569e604e5a4064f57366424a27",
+    "vector.js": "16fc7f6f77dcee7caa5333420ab2ca9b98b60fd7576073f04d52894ed79bdee3",
+    "utils.js": "b3b7a72e02afec86fec930c600ab321d453d0861da236e640aeccb1dd6b6e784",
+    "entities.js": "b88927d8acad9cff40dfac8bf5794996636b930a55e87c93af1c010cc949c909",
+    "game.js": "4825460bb36864624618da564ff7a3829cd02fb9c5a11776de9ab342246e7ff6"
+  }
+}

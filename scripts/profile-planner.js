@@ -2,6 +2,8 @@ import { parseArgs } from "node:util";
 import { readFile, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import * as current from "../src/planner.js";
+import { prepareLivePlanning } from "../src/live-models.js";
+import { Navigation } from "../src/navigation.js";
 
 const { values } = parseArgs({
   options: {
@@ -9,6 +11,8 @@ const { values } = parseArgs({
     baseline: { type: "string" },
     output: { type: "string" },
     "from-frame": { type: "string", default: "0" },
+    "plan-ms": { type: "string", default: "18" },
+    live: { type: "boolean", default: false },
   },
 });
 if (!values.trace)
@@ -28,11 +32,22 @@ for (const [name, policy] of policies) {
   const times = [];
   let shortcuts = 0;
   for (let repeat = 0; repeat < 4; repeat++) {
+    const navigation = new Navigation();
     for (let i = fromFrame; i < frames.length; i += 3) {
       const start = performance.now();
-      const candidates = policy.planActions(frames[i].state, {
+      const prepared = values.live && name === "current"
+        ? prepareLivePlanning(frames[i].state, {
+            decisionMs: (frames[i].planning?.inputIntervalTicks ?? 3) * 1000 / (frames[i].state.tickRate ?? 60),
+          })
+        : { state: frames[i].state, options: {} };
+      const route = values.live ? navigation.update(prepared.state,
+        frames[i].state.packet * 1000 / (frames[i].state.tickRate ?? 60)) : undefined;
+      const candidates = policy.planActions(prepared.state, {
         previousAction: frames[i - 1]?.action ?? "stay",
         ...frames[i].prediction,
+        ...prepared.options,
+        navigation: route,
+        maxPlanMs: values.live || name === "current" ? Number(values["plan-ms"]) : Infinity,
       });
       if (repeat > 0) {
         times.push(performance.now() - start);
@@ -52,8 +67,10 @@ for (const [name, policy] of policies) {
 const report = {
   trace: values.trace,
   fromFrame,
-  scope:
-    "Local planner with recorded queued inputs; excludes browser I/O and navigation. One warmup pass, three measured passes.",
+  planBudgetMs: Number(values["plan-ms"]),
+  scope: values.live
+    ? "Model preparation, navigation and bounded local planner with recorded queued inputs; both profiles use the same search budget. Excludes browser I/O. One warmup pass, three measured passes."
+    : "Local planner with recorded queued inputs; excludes browser I/O and navigation. One warmup pass, three measured passes.",
   results,
 };
 console.log(JSON.stringify(report, null, 2));

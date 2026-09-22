@@ -1,0 +1,680 @@
+{
+  "state": {
+    "ready": true,
+    "packet": 110535,
+    "time": 1842250,
+    "tickRate": 60,
+    "area": {
+      "id": "ravel-mm:360",
+      "number": 360,
+      "x": 1148032,
+      "y": 0,
+      "width": 3200,
+      "height": 480,
+      "zones": [
+        {
+          "x": 1148032,
+          "y": 0,
+          "width": 64,
+          "height": 480,
+          "type": 2,
+          "friction": 0.75
+        },
+        {
+          "x": 1148096,
+          "y": 0,
+          "width": 256,
+          "height": 480,
+          "type": 4,
+          "friction": 0.75
+        },
+        {
+          "x": 1148352,
+          "y": 0,
+          "width": 2560,
+          "height": 480,
+          "type": 0,
+          "friction": 0.75
+        },
+        {
+          "x": 1150912,
+          "y": 0,
+          "width": 256,
+          "height": 480,
+          "type": 4,
+          "friction": 0.75
+        },
+        {
+          "x": 1151168,
+          "y": 0,
+          "width": 64,
+          "height": 480,
+          "type": 2,
+          "friction": 0.75
+        }
+      ],
+      "walls": []
+    },
+    "player": {
+      "id": "self",
+      "x": 1149553.5756947992,
+      "y": 15,
+      "radius": 15,
+      "speed": 660,
+      "baseSpeed": 510,
+      "speedBonus": 150,
+      "speedBonusWithoutCandy": 0,
+      "speedMultiplier": 1,
+      "immobilized": false,
+      "downed": false,
+      "effectsMultiplier": 1,
+      "energy": 300,
+      "maxEnergy": 300,
+      "upgradePoints": 528,
+      "candy": {
+        "level": 5,
+        "locked": false,
+        "disabled": false,
+        "cooldownMs": 0,
+        "energyCost": 5,
+        "active": true,
+        "remainingMs": 3750.000000000176,
+        "boost": 150
+      },
+      "vx": 660,
+      "vy": 0
+    },
+    "hazards": [
+      {
+        "id": 11481,
+        "family": "dasher",
+        "entityType": 10003,
+        "x": 1149904.7746623792,
+        "y": 103.46220282040363,
+        "radius": 90,
+        "vx": -17.808875976775624,
+        "vy": 94.33368399698895,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 1933.3333333333364,
+          "resting": 0,
+          "peak": 270,
+          "dx": -0.18550912475807996,
+          "dy": 0.9826425416353045,
+          "scale": 1
+        }
+      },
+      {
+        "id": 11486,
+        "family": "dasher",
+        "entityType": 10003,
+        "x": 1150145.2690378083,
+        "y": 92.70457389333056,
+        "radius": 90,
+        "vx": -95.00800196343087,
+        "vy": -13.765157569627055,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 1933.3333333333364,
+          "resting": 0,
+          "peak": 270,
+          "dx": -0.9896666871190745,
+          "dy": -0.14338705801694893,
+          "scale": 1
+        }
+      },
+      {
+        "id": 11487,
+        "family": "dasher",
+        "entityType": 10003,
+        "x": 1150607.850027883,
+        "y": 155.12990266968757,
+        "radius": 90,
+        "vx": 17.12792760369607,
+        "vy": -94.45969561671524,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 1933.3333333333364,
+          "resting": 0,
+          "peak": 270,
+          "dx": 0.17841591253850125,
+          "dy": -0.98395516267412,
+          "scale": 1
+        }
+      },
+      {
+        "id": 11489,
+        "family": "dasher",
+        "entityType": 10003,
+        "x": 1150233.4337167225,
+        "y": 250.1457187641968,
+        "radius": 90,
+        "vx": -90.3712908047254,
+        "vy": 32.38872949480573,
+        "bounce": true,
+        "motion": "bounce",
+        "dash": {
+          "preparing": 0,
+          "dashing": 1933.3333333333364,
+          "resting": 0,
+          "peak": 270,
+          "dx": -0.9413676125492257,
+          "dy": 0.3373825989042274,
+          "scale": 1
+        }
+      },
+      {
+        "id": 11482,
+        "family": "normal",
+        "entityType": 10001,
+        "x": 1149446.1100700903,
+        "y": 296.251738730069,
+        "radius": 90,
+        "vx": 260.02002334099,
+        "vy": 72.7295501275171,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11485,
+        "family": "normal",
+        "entityType": 10001,
+        "x": 1148501.0957339248,
+        "y": 269.60234061294085,
+        "radius": 90,
+        "vx": 136.37477059546845,
+        "vy": -233.0277278459225,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11488,
+        "family": "normal",
+        "entityType": 10001,
+        "x": 1148889.5771927268,
+        "y": 281.3700915375744,
+        "radius": 90,
+        "vx": 134.12349396794514,
+        "vy": 234.33072433172433,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11483,
+        "family": "homing",
+        "entityType": 10004,
+        "x": 1150685.825557156,
+        "y": 188.0385132908076,
+        "radius": 90,
+        "vx": -255.32708033234667,
+        "vy": 87.7956835440068,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": 2.810402009347235,
+          "speed": 270,
+          "turnRate": 1.6666666666666667,
+          "range": 200
+        }
+      },
+      {
+        "id": 11484,
+        "family": "homing",
+        "entityType": 10004,
+        "x": 1149138.393746706,
+        "y": 154.49215540841794,
+        "radius": 90,
+        "vx": -168.5826666716111,
+        "vy": -210.90254739544636,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": -2.2451341924965886,
+          "speed": 270.00000000000006,
+          "turnRate": 1.6666666666666667,
+          "range": 200
+        }
+      },
+      {
+        "id": 11490,
+        "family": "homing",
+        "entityType": 10004,
+        "x": 1149709.507588107,
+        "y": 333.3693638542255,
+        "radius": 90,
+        "vx": -118.30209899913139,
+        "vy": -242.70272633903335,
+        "bounce": true,
+        "motion": "bounce",
+        "homing": {
+          "heading": -2.024342487018676,
+          "speed": 270,
+          "turnRate": 1.6666666666666667,
+          "range": 200
+        }
+      },
+      {
+        "id": 11491,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1150839.5,
+        "y": 30,
+        "radius": 30,
+        "vx": 450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11492,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1150882,
+        "y": 375,
+        "radius": 30,
+        "vx": 0,
+        "vy": 450,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11493,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1150574.5,
+        "y": 450,
+        "radius": 30,
+        "vx": -450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11494,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1150184.5,
+        "y": 450,
+        "radius": 30,
+        "vx": -450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11495,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1149794.5,
+        "y": 450,
+        "radius": 30,
+        "vx": -450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11496,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1149397.8333333333,
+        "y": 450,
+        "radius": 30,
+        "vx": -450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11497,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1149008.5,
+        "y": 450,
+        "radius": 30,
+        "vx": -450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11498,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1148619.1666666667,
+        "y": 450,
+        "radius": 30,
+        "vx": -450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11499,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1148382,
+        "y": 300,
+        "radius": 30,
+        "vx": 0,
+        "vy": -450,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11500,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1148494.5,
+        "y": 30,
+        "radius": 30,
+        "vx": 450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11501,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1148884.5,
+        "y": 30,
+        "radius": 30,
+        "vx": 450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11502,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1149282,
+        "y": 30,
+        "radius": 30,
+        "vx": 450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11503,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1149671.5,
+        "y": 30,
+        "radius": 30,
+        "vx": 450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11504,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1150060.8333333333,
+        "y": 30,
+        "radius": 30,
+        "vx": 450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11505,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 1150450.1666666667,
+        "y": 30,
+        "radius": 30,
+        "vx": 450,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 11506,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1150546.260187518,
+        "y": 64.84479335303696,
+        "radius": 18,
+        "vx": -132.05309334754577,
+        "vy": -122.31917485555715,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11507,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1149726.823858494,
+        "y": 123.55311545399447,
+        "radius": 18,
+        "vx": -92.41019997421562,
+        "vy": 154.46797383511398,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11508,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1148556.349816895,
+        "y": 236.7409554617294,
+        "radius": 18,
+        "vx": 69.28228653308501,
+        "vy": 166.13237123675668,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11509,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1150883.176751377,
+        "y": 283.9640259619173,
+        "radius": 18,
+        "vx": 154.4417081690371,
+        "vy": 92.45409010871288,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11510,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1149222.207728897,
+        "y": 152.37207812914812,
+        "radius": 18,
+        "vx": -96.22737814781634,
+        "vy": 152.1193337311111,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11511,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1149914.1477557682,
+        "y": 235.9391935385891,
+        "radius": 18,
+        "vx": 174.65730014913353,
+        "vy": -43.52961640786057,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11512,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1149873.6691592564,
+        "y": 18,
+        "radius": 18,
+        "vx": -158.93560557106312,
+        "vy": 84.49540390908282,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11513,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1150599.4885303718,
+        "y": 231.98335338557095,
+        "radius": 18,
+        "vx": 175.93554086680382,
+        "vy": 38.035318585562116,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11514,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1149563.7873772206,
+        "y": 314.6479738642347,
+        "radius": 18,
+        "vx": 8.761288973608256,
+        "vy": 179.78665082680897,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11515,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1150126.3811234434,
+        "y": 243.6568850477738,
+        "radius": 18,
+        "vx": -128.57787186662816,
+        "vy": -125.96718170320771,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11516,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1148894.7506644838,
+        "y": 59.499979398158644,
+        "radius": 18,
+        "vx": -27.692384187408837,
+        "vy": 177.8570545635369,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11517,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1150543.3799000196,
+        "y": 353.194344806326,
+        "radius": 18,
+        "vx": -151.3468057469027,
+        "vy": -97.43790017344014,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11518,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1149673.8860245538,
+        "y": 352.212509540552,
+        "radius": 18,
+        "vx": 168.25546498331,
+        "vy": -63.95387793754353,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11519,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1148739.5558350643,
+        "y": 76.89499162360471,
+        "radius": 18,
+        "vx": -118.01719776115822,
+        "vy": 135.91151913139538,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 11520,
+        "family": "disabling",
+        "entityType": 10017,
+        "x": 1148782.5756529418,
+        "y": 309.63742137102963,
+        "radius": 18,
+        "vx": -103.24334614181178,
+        "vy": -147.4476567377116,
+        "bounce": true,
+        "motion": "bounce"
+      }
+    ],
+    "auras": [],
+    "otherPlayers": []
+  },
+  "options": {
+    "margin": 14,
+    "horizon": 0.9,
+    "beamWidth": 3,
+    "commitmentMs": 100,
+    "avoidBackExit": true,
+    "previousAction": "up_right",
+    "continuation": {
+      "areaId": "ravel-mm:360",
+      "packet": 110532,
+      "tickRate": 60,
+      "inputIntervalTicks": 3,
+      "inputs": [
+        {
+          "tick": 10,
+          "action": "up_right"
+        },
+        {
+          "tick": 13,
+          "action": "stay"
+        },
+        {
+          "tick": 22,
+          "action": "stay"
+        },
+        {
+          "tick": 31,
+          "action": "stay"
+        },
+        {
+          "tick": 40,
+          "action": "right"
+        },
+        {
+          "tick": 49,
+          "action": "right"
+        },
+        {
+          "tick": 58,
+          "action": "right"
+        }
+      ]
+    },
+    "fastPath": true,
+    "reactionTime": 0.175,
+    "inputIntervalTicks": 3,
+    "pendingInputs": [
+      {
+        "time": 0,
+        "action": "up_right"
+      }
+    ],
+    "maxPlanMs": null
+  }
+}

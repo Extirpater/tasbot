@@ -1,5 +1,9 @@
 # Monumental Migration reference
 
+**Current status:** the user requested a [pre-Wacky rollback](pre-wacky-rollback.md) to prioritize OOH/Catastrophic Core performance. This video reference is preserved for later research; it does not enable any specialized MM behavior in the active controller.
+
+The September 21 [Ravel audit and MM testing plan](mm-training-plan.md) adds a source-based inventory of 480 areas plus the victory area, repeatability measurements, and a measured simulator/live discrepancy. That inventory is a separate community-simulator reference, not a replacement for live evidence.
+
 The supplied [Fortish run](https://www.youtube.com/watch?v=wnRV3TGMMsA) is a Rameses run through MM 120, published May 1, 2019. I reviewed 102 frames sampled about ten seconds apart, including the area labels. The video and nine contact sheets are saved under `artifacts/mm-reference/`; [the frame index](../artifacts/mm-reference/frame-areas.json) records approximate timestamps and recognized area numbers.
 
 [The machine-readable reference](../data/monumental-migration.json) groups enemy families for simulation coverage. Its early groups are also supported by current live entity IDs from the user's logs through area 44. Later identities are visual matches against public-client colors and observed behavior, and still need current telemetry confirmation. Each range summarizes several encounters; it is not an exact spawn list for every area.

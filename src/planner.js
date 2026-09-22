@@ -1,5 +1,3 @@
-import { learnedVelocity } from "./enemy-motion.js";
-
 export const ACTIONS = {
   stay: { dx: 0, dy: 0, keys: [] },
   up: { dx: 0, dy: -1, keys: ["ArrowUp"] },
@@ -96,44 +94,17 @@ export function sweptClearance(p0, p1, h0, h1, radius) {
   return Math.sqrt((x + dx * t) ** 2 + (y + dy * t) ** 2) - radius;
 }
 
-// Timed harmlessness ends inside a segment, not necessarily on our sample.
-// Growing bodies use the larger endpoint radius, conservatively covering the
-// whole tick. Ordinary constant-radius forecasts retain the original fast path.
-export function trajectoryClearance(p0, p1, h0, h1, trajectory, step, dt) {
-  const end = step * dt;
-  if (trajectory.activeFrom > end) return Infinity;
-  const radius = trajectory.radii
-    ? Math.max(trajectory.radii[step - 1], trajectory.radii[step])
-    : trajectory.radius;
-  if (h1.jumps?.length) {
-    const start = end - dt;
-    const playerAt = (time) => {
-      const f = clamp((time - start) / dt, 0, 1);
-      return { x: p0.x + (p1.x - p0.x) * f, y: p0.y + (p1.y - p0.y) * f };
-    };
-    let at = start,
-      body = h0,
-      gap = Infinity;
-    for (const jump of [...h1.jumps, { time: end, x: h1.x, y: h1.y }]) {
-      const active = Math.max(at, trajectory.activeFrom ?? 0);
-      if (jump.time >= active)
-        gap = Math.min(
-          gap,
-          sweptClearance(
-            playerAt(active),
-            playerAt(jump.time),
-            body,
-            body,
-            radius,
-          ),
-        );
-      at = jump.time;
-      body = jump;
-    }
-    return Math.min(gap, sweptClearance(p1, p1, h1, h1, radius));
-  }
-  if (trajectory.activeFrom > end - dt) {
-    const fraction = clamp((trajectory.activeFrom - (end - dt)) / dt, 0, 1);
+export function hazardActiveFrom(hazard, tickRate = 60) {
+  // Reserve one server tick at activation; never predict a future safe phase.
+  return Math.max(0, (hazard.harmlessUntilMs ?? 0) / 1000 - 1 / tickRate);
+}
+
+// Check only the lethal part of a swept segment. This also handles activation
+// between coarse navigation samples without blocking a completed safe crossing.
+export function trajectoryClearance(p0, p1, h0, h1, trajectory, from, to) {
+  if (trajectory.activeFrom > to) return Infinity;
+  if (trajectory.activeFrom > from) {
+    const fraction = (trajectory.activeFrom - from) / (to - from);
     p0 = {
       x: p0.x + (p1.x - p0.x) * fraction,
       y: p0.y + (p1.y - p0.y) * fraction,
@@ -143,57 +114,7 @@ export function trajectoryClearance(p0, p1, h0, h1, trajectory, step, dt) {
       y: h0.y + (h1.y - h0.y) * fraction,
     };
   }
-  return sweptClearance(p0, p1, h0, h1, radius);
-}
-
-export function forecastHazard(
-  hazard,
-  playerRadius,
-  area,
-  steps,
-  dt,
-  targetAt,
-  tickRate = 60,
-) {
-  const positions = predictHazardPath(
-    hazard,
-    area,
-    steps,
-    dt,
-    targetAt,
-    tickRate,
-  );
-  const shapeScale = hazard.square ? Math.SQRT2 : 1;
-  const radii =
-    positions[0].radius === undefined
-      ? undefined
-      : positions.map(
-          (p) =>
-            playerRadius +
-            Math.max(p.radius, p.intervalRadius ?? 0) * shapeScale,
-        );
-  return {
-    id: hazard.id,
-    positions,
-    radii,
-    radius: radii
-      ? Math.max(...radii)
-      : playerRadius + hazard.radius * shapeScale,
-    // Allow one server tick of timing uncertainty at the harmless transition.
-    activeFrom: Math.max(
-      0,
-      (hazard.harmlessUntilMs ?? 0) / 1000 - 1 / tickRate,
-    ),
-    ...(hazard.teleport
-      ? {
-          queryRadius:
-            playerRadius +
-            hazard.radius * shapeScale +
-            hazard.teleport.distance *
-              (1 + Math.ceil((dt * 1000) / hazard.teleport.intervalMs)),
-        }
-      : {}),
-  };
+  return sweptClearance(p0, p1, h0, h1, trajectory.radius);
 }
 
 export function circleInZone(p, zone, radius = 0) {
@@ -335,7 +256,7 @@ function perimeterPath(hazard, area, steps, dt, tickRate) {
 }
 
 function homingModel(hazard, area, dt) {
-  const h = hazard.homing;
+  const h = hazard.reactive ?? hazard.homing;
   const zone =
     hazard.bounce !== false &&
     area.zones.find((z) => z.type === 0 && circleInZone(hazard, z));
@@ -356,6 +277,7 @@ function homingModel(hazard, area, dt) {
 }
 
 function homingStart(hazard) {
+  if (hazard.reactive) return { ...hazard.reactive.initial };
   const angle =
     hazard.homing.heading ??
     Math.atan2(hazard.vy, hazard.vx) + (hazard.homing.reverse ? Math.PI : 0);
@@ -373,7 +295,9 @@ function homingStart(hazard) {
 
 // Mutate only the branch's private enemy state. A homing enemy reacts to that
 // branch's player path, so a single shared straight forecast cannot check it.
-function stepHoming(position, model, target, dt, scale, timeMs) {
+function stepHoming(position, model, target, dt, scale, timeMs, targetAfter) {
+  if (typeof model.step === "function")
+    return model.step(position, model, target, dt, scale, timeMs, targetAfter);
   const tau = 2 * Math.PI;
   if (timeMs >= (model.stunMs ?? 0) && target) {
     const dx = target.x - position.x,
@@ -427,232 +351,65 @@ function stepHoming(position, model, target, dt, scale, timeMs) {
   }
 }
 
-// Sizing and Turning expose enough state for the public client's tick rules.
-// Sample those ticks even when the route grid requests coarser time intervals.
-function changingBodyPath(hazard, area, steps, dt, tickRate) {
+function spiralPath(hazard, area, steps, dt, tickRate) {
   const zone =
     hazard.bounce !== false &&
     area.zones.find((z) => z.type === 0 && circleInZone(hazard, z));
-  const effects = hazard.motionEffects ?? [];
-  const scale = motionScaleAt(effects, 0);
-  const s = {
-    x: hazard.x,
-    y: hazard.y,
-    radius: hazard.radius,
-    vx: hazard.baseVx ?? (scale > 0 ? hazard.vx / scale : 0),
-    vy: hazard.baseVy ?? (scale > 0 ? hazard.vy / scale : 0),
-    multiplier: hazard.sizing?.multiplier ?? 1,
-    growing: hazard.sizing?.growing,
-    rotation: (hazard.turning?.rate ?? 0) / tickRate,
-  };
-  const advance = (body, fraction, tick, bounce) => {
-    if (hazard.sizing) {
-      body.multiplier += ((body.growing ? 1 : -1) * 1.2 * fraction) / tickRate;
-      if (body.multiplier >= 2.5) body.growing = false;
-      else if (body.multiplier <= 0.4) body.growing = true;
-      body.radius = hazard.sizing.baseRadius * body.multiplier;
-    }
-    const angle = body.rotation * fraction;
-    if (angle) {
-      const vx = body.vx,
-        cos = Math.cos(angle),
-        sin = Math.sin(angle);
-      body.vx = vx * cos - body.vy * sin;
-      body.vy = vx * sin + body.vy * cos;
-    }
-    const amount =
-      (fraction / tickRate) *
-      averageMotionScale(
-        effects,
-        (tick * 1000) / tickRate,
-        ((tick + fraction) * 1000) / tickRate,
-      );
-    body.x += body.vx * amount;
-    body.y += body.vy * amount;
-    if (zone && bounce) {
-      let bounced = false;
-      for (const [axis, velocity, size] of [
-        ["x", "vx", "width"],
-        ["y", "vy", "height"],
-      ]) {
-        const low = zone[axis] + body.radius,
-          high = zone[axis] + zone[size] - body.radius;
-        if (body[axis] < low || body[axis] > high) {
-          body[axis] = reflectedPosition(body[axis], 0, 0, low, high);
-          body[velocity] = -body[velocity];
-          bounced = true;
-        }
-      }
-      if (bounced) body.rotation = -body.rotation;
-    }
-  };
-  const path = [];
-  let tick = 0;
-  for (let i = 0; i <= steps; i++) {
-    const targetTick = i * dt * tickRate,
-      whole = Math.floor(targetTick + 1e-9);
-    let intervalRadius = s.radius;
-    while (tick < whole) {
-      advance(s, 1, tick++, true);
-      intervalRadius = Math.max(intervalRadius, s.radius);
-    }
-    const body = { ...s },
-      fraction = Math.max(0, targetTick - whole);
-    if (fraction > 1e-9) advance(body, fraction, tick, false);
-    path.push({
-      x: body.x,
-      y: body.y,
-      radius: body.radius,
-      intervalRadius: Math.max(intervalRadius, body.radius),
-    });
-  }
-  return path;
-}
-
-// For phase-driven motion with no public phase state, reserve all positions
-// reachable at the greatest speed observed for this entity. This can cause
-// waiting and cannot bound an unseen acceleration or teleport destination.
-function uncertainPath(hazard, steps, dt) {
-  const speed = Math.max(
-    hazard.uncertainSpeed ?? 0,
-    Math.hypot(hazard.vx, hazard.vy),
-  );
-  const effects = hazard.motionEffects ?? [];
-  const path = [{ x: hazard.x, y: hazard.y, radius: hazard.radius }];
-  let movingTime = 0;
-  for (let i = 0; i < steps; i++) {
-    movingTime +=
-      dt * averageMotionScale(effects, i * dt * 1000, (i + 1) * dt * 1000);
-    path.push({
-      x: hazard.x,
-      y: hazard.y,
-      radius: hazard.radius + speed * movingTime,
-    });
-  }
-  return path;
-}
-
-function learnedPath(hazard, area, steps, dt, tickRate) {
-  const zone =
-    hazard.bounce !== false &&
-    area.zones.find((z) => z.type === 0 && circleInZone(hazard, z));
-  const heading = Math.atan2(hazard.vy, hazard.vx),
-    model = hazard.learnedMotion;
+  const model = hazard.spiral,
+    heading = Math.atan2(hazard.vy, hazard.vx);
   let x = hazard.x,
     y = hazard.y,
     tick = 0,
     flipX = 1,
     flipY = 1;
-  const path = [{ x, y, radius: hazard.radius + 2 }];
+  const path = [{ x, y }];
+  const advance = () => {
+    const time = (tick + 1) / tickRate;
+    const angle =
+      heading +
+      model.turnRate * time +
+      (model.turnAcceleration * time * time) / 2;
+    let nx = x + (Math.cos(angle) * model.speed * flipX) / tickRate,
+      ny = y + (Math.sin(angle) * model.speed * flipY) / tickRate;
+    let fx = flipX,
+      fy = flipY;
+    if (zone) {
+      const left = zone.x + hazard.radius,
+        right = zone.x + zone.width - hazard.radius,
+        top = zone.y + hazard.radius,
+        bottom = zone.y + zone.height - hazard.radius;
+      if (nx < left || nx > right) {
+        nx = reflectedPosition(nx, 0, 0, left, right);
+        fx = -fx;
+      }
+      if (ny < top || ny > bottom) {
+        ny = reflectedPosition(ny, 0, 0, top, bottom);
+        fy = -fy;
+      }
+    }
+    return { x: nx, y: ny, flipX: fx, flipY: fy };
+  };
   for (let i = 1; i <= steps; i++) {
     const end = i * dt,
-      target = Math.floor(end * tickRate + 1e-9);
-    while (tick < target) {
-      const velocity = learnedVelocity(model, (tick + 1) / tickRate, heading);
-      x += (velocity.vx * flipX) / tickRate;
-      y += (velocity.vy * flipY) / tickRate;
-      if (zone) {
-        const left = zone.x + hazard.radius,
-          right = zone.x + zone.width - hazard.radius;
-        const top = zone.y + hazard.radius,
-          bottom = zone.y + zone.height - hazard.radius;
-        if (x < left || x > right) {
-          x = reflectedPosition(x, 0, 0, left, right);
-          flipX = -flipX;
-        }
-        if (y < top || y > bottom) {
-          y = reflectedPosition(y, 0, 0, top, bottom);
-          flipY = -flipY;
-        }
-      }
+      until = Math.floor(end * tickRate + 1e-9);
+    while (tick < until) {
+      const next = advance();
+      x = next.x;
+      y = next.y;
+      flipX = next.flipX;
+      flipY = next.flipY;
       tick++;
     }
-    const fraction = Math.max(0, end - tick / tickRate),
-      velocity = learnedVelocity(model, end, heading);
-    path.push({
-      x: x + velocity.vx * flipX * fraction,
-      y: y + velocity.vy * flipY * fraction,
-      radius: hazard.radius + 2 + model.errorSpeed * end,
-    });
-  }
-  return path;
-}
-
-function teleportPath(hazard, area, steps, dt) {
-  const phase = hazard.teleport,
-    zone = area.zones.find((z) => z.type === 0);
-  let x = hazard.x,
-    y = hazard.y,
-    dx = phase.dx,
-    dy = phase.dy;
-  let nextJump = phase.remainingMs / 1000;
-  const interval = phase.intervalMs / 1000;
-  const path = [{ x, y }];
-  for (let i = 1; i <= steps; i++) {
-    const jumps = [];
-    while (nextJump <= i * dt + 1e-9) {
-      const rawX = x + dx * phase.distance,
-        rawY = y + dy * phase.distance;
-      x = zone
-        ? clamp(
-            rawX,
-            zone.x + hazard.radius,
-            zone.x + zone.width - hazard.radius,
-          )
-        : rawX;
-      y = zone
-        ? clamp(
-            rawY,
-            zone.y + hazard.radius,
-            zone.y + zone.height - hazard.radius,
-          )
-        : rawY;
-      if (phase.pingPong) {
-        dx = -dx;
-        dy = -dy;
-      } else {
-        if (x !== rawX) dx = -dx;
-        if (y !== rawY) dy = -dy;
-      }
-      jumps.push({ time: nextJump, x, y });
-      nextJump += interval;
-    }
-    path.push({ x, y, ...(jumps.length ? { jumps } : {}) });
-  }
-  return path;
-}
-
-function pumpkinPath(hazard, area, steps, dt) {
-  const phase = hazard.pumpkin,
-    effects = hazard.motionEffects ?? [];
-  const path = [{ x: hazard.x, y: hazard.y, radius: hazard.radius }];
-  let movingTime = 0;
-  const start = phase.active
-    ? 0
-    : phase.arming
-      ? phase.startsInMs / 1000
-      : Infinity;
-  const stop = start + (phase.active ? phase.remainingMs : 1500) / 1000;
-  const base = { ...hazard, vx: phase.vx, vy: phase.vy };
-  for (let i = 1; i <= steps; i++) {
-    const from = Math.max((i - 1) * dt, start),
-      to = Math.min(i * dt, stop);
-    if (to > from)
-      movingTime +=
-        (to - from) * averageMotionScale(effects, from * 1000, to * 1000);
-    // During windup the server can still aim at a moving player. Until launch,
-    // cover possible charge directions after its countdown, not stale _pred.
-    if (!phase.active)
+    // Coarse navigation samples interpolate the same server-tick path used by
+    // local collision checks, including fractional samples and reflected ticks.
+    const fraction = Math.max(0, end * tickRate - tick);
+    if (fraction > 1e-9) {
+      const next = advance();
       path.push({
-        x: hazard.x,
-        y: hazard.y,
-        radius: hazard.radius + Math.hypot(phase.vx, phase.vy) * movingTime,
+        x: x + (next.x - x) * fraction,
+        y: y + (next.y - y) * fraction,
       });
-    else
-      path.push({
-        ...hazardPosition(base, area, movingTime),
-        radius: hazard.radius,
-      });
+    } else path.push({ x, y });
   }
   return path;
 }
@@ -665,17 +422,16 @@ export function predictHazardPath(
   targetAt,
   tickRate = 60,
 ) {
+  // Optional simulator or live-adapter model; raw observations stay serializable.
+  // Both local search and navigation use this entry point for their forecasts.
+  if (typeof hazard.predictPath === "function")
+    return hazard.predictPath(area, steps, dt, tickRate, targetAt);
   const effects = hazard.motionEffects;
-  if (hazard.teleport) return teleportPath(hazard, area, steps, dt);
-  if (hazard.pumpkin) return pumpkinPath(hazard, area, steps, dt);
-  if (hazard.sizing || hazard.turning)
-    return changingBodyPath(hazard, area, steps, dt, tickRate);
-  if (hazard.learnedMotion)
-    return learnedPath(hazard, area, steps, dt, tickRate);
-  if (hazard.uncertainMotion) return uncertainPath(hazard, steps, dt);
   if (hazard.motion === "perimeter")
     return perimeterPath(hazard, area, steps, dt, tickRate);
-  if (hazard.homing) {
+  if (hazard.spiral && !effects?.length)
+    return spiralPath(hazard, area, steps, dt, tickRate);
+  if (hazard.homing || hazard.reactive) {
     const model = homingModel(hazard, area, dt),
       position = homingStart(hazard);
     const path = [{ x: position.x, y: position.y }];
@@ -683,7 +439,8 @@ export function predictHazardPath(
       const scale = effects?.length
         ? averageMotionScale(effects, i * dt * 1000, (i + 1) * dt * 1000)
         : 1;
-      stepHoming(position, model, targetAt?.(i * dt), dt, scale, i * dt * 1000);
+      stepHoming(position, model, targetAt?.(i * dt), dt, scale, i * dt * 1000,
+        hazard.reactive ? targetAt?.((i + 1) * dt) : undefined);
       path.push({ x: position.x, y: position.y });
     }
     return path;
@@ -785,6 +542,14 @@ export function predictHazardPath(
 // Segment vs. expanded rectangle, conservative at corners. Also catches thin
 // walls that would fall entirely between two simulation samples.
 export function hitsRectangle(from, to, rectangle, radius) {
+  // Most candidate steps are far from any wall (including the backward-exit
+  // guard). Reject disjoint bounds before the more expensive slab intersection.
+  if (
+    Math.max(from.x, to.x) + radius < rectangle.x ||
+    Math.min(from.x, to.x) - radius > rectangle.x + rectangle.width ||
+    Math.max(from.y, to.y) + radius < rectangle.y ||
+    Math.min(from.y, to.y) - radius > rectangle.y + rectangle.height
+  ) return false;
   let enter = 0,
     leave = 1;
   for (const [axis, size] of [
@@ -847,8 +612,10 @@ export function advancePlayer(
   area,
   dt = 1 / 60,
   auraMultiplier = 1,
-  slippery = false,
 ) {
+  // Optional environment-specific movement model (e.g. a slippery floor).
+  if (typeof player.predictStep === "function")
+    return player.predictStep(position, action, player, area, dt, auraMultiplier);
   const direction = ACTIONS[action] ?? ACTIONS.stay;
   const zone = area.zones.find((z) => circleInZone(position, z));
   let speed = player.baseSpeed ?? player.speed;
@@ -877,35 +644,8 @@ export function advancePlayer(
     dy = magnitude > 0 ? player.mouseInput.y / magnitude : 0;
     speed *= Math.min(1, magnitude / 150);
   }
-  const sliding =
-    slippery && !player.ignoreAuras && (player.effectsMultiplier ?? 1) > 0;
-  const wasStationary =
-    position.slideStationary ?? !Math.hypot(position.vx ?? 0, position.vy ?? 0);
-  const slideAngle =
-    position.slideAngle === null
-      ? undefined
-      : (position.slideAngle ??
-        player.slideAngle ??
-        (!wasStationary
-          ? Math.atan2(position.vy ?? 0, position.vx ?? 0)
-          : undefined));
-  let vx, vy;
-  if (sliding) {
-    // Slippery keeps the entry angle. Shift, releasing keys and steering do
-    // not brake or turn it; its diagonal speed is normalized by that angle.
-    speed = player.immobilized
-      ? 0
-      : ((player.baseSpeed ?? player.speed) *
-          (player.speedMultiplier ?? 1) *
-          auraMultiplier +
-          (player.speedBonus ?? 0)) *
-        (position.slideBoost ? 2 : 1);
-    vx = slideAngle === undefined ? 0 : Math.cos(slideAngle) * speed;
-    vy = slideAngle === undefined ? 0 : Math.sin(slideAngle) * speed;
-  } else {
-    vx = clamp(dx * speed + (position.vx ?? 0) * friction, -speed, speed);
-    vy = clamp(dy * speed + (position.vy ?? 0) * friction, -speed, speed);
-  }
+  const vx = clamp(dx * speed + (position.vx ?? 0) * friction, -speed, speed);
+  const vy = clamp(dy * speed + (position.vy ?? 0) * friction, -speed, speed);
   const x = clamp(
     position.x + vx * dt,
     area.x + player.radius,
@@ -916,28 +656,7 @@ export function advancePlayer(
     area.y + player.radius,
     area.y + area.height - player.radius,
   );
-  const result = {
-    x,
-    y,
-    vx: x === position.x ? 0 : vx,
-    vy: y === position.y ? 0 : vy,
-  };
-  if (player.trackSliding || sliding) {
-    const hit =
-      Math.abs(x - (position.x + vx * dt)) > 1e-8 ||
-      Math.abs(y - (position.y + vy * dt)) > 1e-8;
-    const refresh = !sliding || position.slideWallEscape || wasStationary;
-    result.slideAngle = refresh
-      ? dx || dy
-        ? Math.atan2(dy, dx)
-        : null
-      : (slideAngle ?? null);
-    result.slideStationary = Math.hypot(x - position.x, y - position.y) < 0.001;
-    result.slideWallEscape =
-      hit || (!refresh && Boolean(position.slideWallEscape));
-    result.slideBoost = hit || (!sliding && Boolean(position.slideBoost));
-  }
-  return result;
+  return { x, y, vx: x === position.x ? 0 : vx, vy: y === position.y ? 0 : vy };
 }
 
 export function planActions(
@@ -948,6 +667,7 @@ export function planActions(
     margin = 14,
     previousAction = "stay",
     reactionTime = 0.15,
+    inputIntervalTicks = 1,
     pendingInputs = [],
     segmentTime = 0.15,
     firstSegmentTime,
@@ -956,26 +676,39 @@ export function planActions(
     focusRecovery = true,
     navigation,
     continuation,
+    objective,
+    maxPlanMs = Infinity,
+    now = () => performance.now(),
   } = {},
 ) {
+  if (!Number.isInteger(inputIntervalTicks) || inputIntervalTicks < 1)
+    throw new RangeError("inputIntervalTicks must be a positive integer");
+  // A deadline limits optional search, never collision-checking a returned path.
+  const deadline = Number.isFinite(maxPlanMs)
+    ? now() + Math.max(0, maxPlanMs)
+    : Infinity;
+  const expired = () => deadline !== Infinity && now() >= deadline;
   const { player: p, area, hazards } = state;
-  const target = targetFor(state, heading);
+  const target = objective ?? targetFor(state, heading);
   const goal = area.zones.find(
-    (z) => (z.type === 2 || z.type === 6) && circleInZone(target, z),
+    (z) =>
+      !objective && (z.type === 2 || z.type === 6) && circleInZone(target, z),
   );
   const distanceBefore = distance(p, target);
   const routeAge =
     navigation?.packet !== undefined
       ? Math.max(0, (state.packet - navigation.packet) / (state.tickRate ?? 60))
       : 0;
-  const remaining = navigation?.distanceAt
+  const routeRemaining = navigation?.distanceAt
     ? (position, time = 0) => navigation.distanceAt(position, routeAge + time)
     : (position) => distance(position, target);
+  const remaining = objective
+    ? (position, time = 0) =>
+        distance(position, target) <= objective.radius
+          ? 0
+          : routeRemaining(position, time)
+    : routeRemaining;
   const routeBefore = remaining(p);
-  const trackSliding = (state.auras ?? []).some(
-    (aura) => aura.kind === "slippery",
-  );
-  const movementPlayer = trackSliding ? { ...p, trackSliding: true } : p;
   const speed = Math.max(
     0,
     p.speed,
@@ -1005,27 +738,31 @@ export function planActions(
       ? Math.max(0, Math.ceil((p.candy.remainingMs * tickRate) / 1000))
       : Infinity;
   const afterCandy =
-    candyExpires < steps
-      ? { ...movementPlayer, speedBonus: p.speedBonusWithoutCandy }
-      : movementPlayer;
+    candyExpires < steps ? { ...p, speedBonus: p.speedBonusWithoutCandy } : p;
   const totalTime = steps * dt;
-  const reachSpeed = trackSliding ? 2 * speed : speed;
   const queuedActions = Array.from(
     { length: reactionSteps },
     (_, i) =>
       pendingInputs.findLast((input) => input.time <= (i + 1) * dt + 1e-9)
         ?.action ?? previousAction,
   );
-  const segmentSteps = Math.max(1, Math.round(segmentTime / dt));
+  // Follow-up turns must fall on updates where another input can be sent.
+  // Otherwise a retained plan can require a turn between two observations.
+  const alignInput = ticks => Math.max(inputIntervalTicks,
+    Math.ceil(ticks / inputIntervalTicks) * inputIntervalTicks);
+  const segmentSteps = alignInput(Math.max(1, Math.round(segmentTime / dt)));
   // Bound the distance covered before the first possible turn. A 150 ms
   // segment at Candy speed travels 99 units on EACH axis.
   const firstSteps = Math.min(
     segmentSteps,
-    Math.max(1, Math.round((firstSegmentTime ?? 66 / Math.max(1, speed)) / dt)),
+    alignInput(Math.max(1, Math.round((firstSegmentTime ?? 66 / Math.max(1, speed)) / dt))),
   );
   const walls = [
     ...(area.walls ?? []),
     ...area.zones.filter((z) => z.type === 3),
+    ...(objective
+      ? area.zones.filter((z) => z.type === 2 || z.type === 6)
+      : []),
   ];
   const safeZones = area.zones.filter((z) => z.type === 4);
   // Keep the clearance buffer until the retreat is well inside shelter. A
@@ -1050,39 +787,33 @@ export function planActions(
   const aurasAt = indexPaths(auraPaths, area, steps);
   const homing = [];
   const trajectories = hazards
+    .filter((h) => hazardActiveFrom(h, tickRate) <= totalTime)
     .filter(
       (h) =>
         distance(p, h) <=
-        (Math.SQRT2 * reachSpeed +
+        (Math.SQRT2 * speed +
           Math.max(
             Math.hypot(h.vx, h.vy),
             h.dash?.peak ?? 0,
             h.homing?.speed ?? 0,
-            h.uncertainSpeed ?? 0,
-            (h.learnedMotion?.maxSpeed ?? 0) * 1.5,
-            h.pumpkin ? Math.hypot(h.pumpkin.vx, h.pumpkin.vy) : 0,
+            h.reactive?.maxSpeed ?? 0,
           )) *
           totalTime +
-          (h.teleport
-            ? h.teleport.distance *
-              (1 + Math.ceil((totalTime * 1000) / h.teleport.intervalMs))
-            : 0) +
           p.radius +
-          Math.max(
-            h.radius,
-            (h.sizing?.baseRadius ?? 0) * (2.5 + 1.2 / tickRate),
-          ) *
-            (h.square ? Math.SQRT2 : 1) +
+          h.radius +
           margin +
           80,
     )
     .map((h) => {
       const trajectory = {
         id: h.id,
-        radius: p.radius + h.radius * (h.square ? Math.SQRT2 : 1),
-        activeFrom: Math.max(0, (h.harmlessUntilMs ?? 0) / 1000 - dt),
+        radius:
+          p.radius +
+          h.radius * (h.square ? Math.SQRT2 : 1) +
+          (h.spiral?.padding ?? 0),
+        activeFrom: hazardActiveFrom(h, tickRate),
       };
-      if (h.homing) {
+      if (h.homing || h.reactive) {
         const config = {
           id: h.id,
           radius: trajectory.radius,
@@ -1104,7 +835,7 @@ export function planActions(
           homing.push(config);
           trajectory.queryRadius = Math.max(
             trajectory.radius,
-            h.homing.range ?? 200,
+            h.reactive?.range ?? h.homing?.range ?? 200,
           );
         }
         // If it cannot move anywhere in this horizon, its turning cannot alter
@@ -1126,9 +857,13 @@ export function planActions(
           trajectory.positions.push({ ...position });
         }
       } else
-        Object.assign(
-          trajectory,
-          forecastHazard(h, p.radius, area, steps, dt, undefined, tickRate),
+        trajectory.positions = predictHazardPath(
+          h,
+          area,
+          steps,
+          dt,
+          undefined,
+          tickRate,
         );
       return trajectory;
     });
@@ -1140,7 +875,7 @@ export function planActions(
     trajectories,
     area,
     steps,
-    clearanceLimit + reachSpeed * dt,
+    clearanceLimit + speed * dt,
   );
   const score = (node) => {
     const progress = routeBefore - remaining(node, node.time);
@@ -1161,6 +896,9 @@ export function planActions(
       node.dangerCost * 0.04 +
       (node.goalTime !== undefined
         ? 1000 + (horizon - node.goalTime) * 100
+        : 0) +
+      (node.rescueTime !== undefined
+        ? 1000 + (horizon - node.rescueTime) * 100
         : 0) -
       node.turns * 1.5 +
       (node.firstAction === previousAction ? 1 : 0)
@@ -1190,7 +928,6 @@ export function planActions(
         break;
       const time = step * dt;
       let auraMultiplier = 1;
-      let slippery = false;
       const localAuras = p.ignoreAuras ? undefined : aurasAt(child, step - 1);
       if (
         localAuras?.length &&
@@ -1205,19 +942,17 @@ export function planActions(
               aura.queryRadius ** 2
           ) {
             applied.add(aura.type);
-            if (aura.kind === "slippery") slippery = true;
-            else auraMultiplier *= aura.multiplier;
+            auraMultiplier *= aura.multiplier;
           }
         }
       }
       const next = advancePlayer(
         child,
         step <= reactionSteps ? queuedActions[step - 1] : action,
-        step > candyExpires ? afterCandy : movementPlayer,
+        step > candyExpires ? afterCandy : p,
         area,
         dt,
         auraMultiplier,
-        slippery,
       );
       if (
         (area.zones.length &&
@@ -1243,6 +978,7 @@ export function planActions(
           dt,
           config.scales[step - 1],
           (step - 1) * dt * 1000,
+          next,
         );
         if (!sheltered) {
           const separation = trajectoryClearance(
@@ -1251,8 +987,8 @@ export function planActions(
             homingBefore,
             position,
             config,
-            step,
-            dt,
+            time - dt,
+            time,
           );
           if (separation < gap) {
             gap = separation;
@@ -1282,6 +1018,7 @@ export function planActions(
                 dt,
                 config.scales[step - 1],
                 (step - 1) * dt * 1000,
+                next,
               );
               child.homing[i] = after;
               child.homingIndices = [...child.homingIndices, i];
@@ -1294,8 +1031,8 @@ export function planActions(
               before,
               after,
               trajectory,
-              step,
-              dt,
+              time - dt,
+              time,
             );
             if (separation < gap) {
               gap = separation;
@@ -1313,9 +1050,15 @@ export function planActions(
       child.dangerCost +=
         Math.max(0, 40 - (gap - margin)) ** 2 * dt * Math.exp(-time);
       child.progressIntegral += (routeBefore - remaining(next, time)) * dt;
-      Object.assign(child, next);
+      child.x = next.x;
+      child.y = next.y;
+      child.vx = next.vx;
+      child.vy = next.vy;
+      child.motionState = next.motionState;
       child.time = time;
       if (goal && circleInZone(next, goal, p.radius)) child.goalTime = time;
+      if (objective && distance(next, target) <= objective.radius)
+        child.rescueTime ??= time;
     }
     child.score = score(child);
     return child;
@@ -1327,6 +1070,7 @@ export function planActions(
     y: p.y,
     vx: p.vx ?? 0,
     vy: p.vy ?? 0,
+    motionState: p.motionState,
     time: 0,
     clearance: 1000,
     physicalClearance: 1000,
@@ -1377,6 +1121,7 @@ export function planActions(
         areaId: area.id,
         packet: state.packet,
         tickRate,
+        inputIntervalTicks,
         inputs: best.inputs,
       },
     };
@@ -1387,6 +1132,138 @@ export function planActions(
   committed.path = [];
   committed.inputs = [];
   committed.turns = 0;
+  // A nearby rescue is a small contact target, not an exit spanning the map.
+  // Check a direct approach with precisely dated axis releases and braking.
+  // This avoids overshooting a point while repeatedly deferring a coarse
+  // 150 ms follow-up turn. Hold contact until confirmation, and check hazards
+  // throughout that hold; unsafe direct approaches still use the normal beam.
+  if (objective?.kind === "rescue") {
+    const targetKey = `${objective.areaId}:${objective.id}:${objective.x}:${objective.y}:${objective.radius}`;
+    const rescueResult = (action, node, continued = false) => {
+      const result = resultFor(action, node);
+      result.plan.rescueTarget = targetKey;
+      return [
+        {
+          ...result,
+          fastPath: true,
+          rescueDirect: true,
+          continuedPlan: continued,
+        },
+      ];
+    };
+    // Keep already scheduled axis releases when the observed position still
+    // permits safe contact. Recomputing them on every packet turns a one-tick
+    // delay error into alternating corrections before those keys arrive.
+    const elapsed = state.packet - (continuation?.packet ?? NaN);
+    if (
+      continuation?.rescueTarget === targetKey &&
+      (continuation.inputIntervalTicks ?? 1) === inputIntervalTicks &&
+      continuation.areaId === area.id &&
+      continuation.tickRate === tickRate &&
+      elapsed >= 0 &&
+      elapsed < steps
+    ) {
+      const inputs = continuation.inputs.map((input) => ({
+        ...input,
+        tick: input.tick - elapsed,
+      }));
+      const firstAction = inputs.findLast(
+        (input) => input.tick <= reactionSteps,
+      )?.action;
+      if (ACTIONS[firstAction]) {
+        let retained = { ...committed, firstAction },
+          from = reactionSteps,
+          action = firstAction;
+        for (const next of [
+          ...inputs.filter(
+            (input) => input.tick > reactionSteps && input.tick < steps,
+          ),
+          { tick: steps },
+        ]) {
+          retained = extend(retained, action, from, next.tick);
+          if (retained.firstDuration === undefined) {
+            retained.firstDuration = (next.tick - from) * dt;
+            retained.firstMovement = distance(committed, retained);
+            retained.firstProgress =
+              remaining(committed, committed.time) -
+              remaining(retained, retained.time);
+          }
+          from = next.tick;
+          action = next.action;
+        }
+        if (
+          retained.rescueTime !== undefined &&
+          !retained.blocked &&
+          retained.clearance >= 12
+        ) {
+          retained.ineffective =
+            firstAction !== "stay" && retained.firstMovement < 1;
+          retained.score = score(retained);
+          return rescueResult(firstAction, retained, true);
+        }
+      }
+    }
+    let approach = { ...committed };
+    const xSign = Math.sign(target.x - committed.x),
+      ySign = Math.sign(target.y - committed.y);
+    // A body-sized deadband absorbs coasting and a sampled turn arriving one
+    // tick either side of the axis. Chasing the exact centre makes left/right
+    // corrections alternate before the earlier correction has even arrived.
+    const axisTolerance = objective.radius * 0.6;
+    let firstAction, lastAction, firstEnd;
+    let contacted = false;
+    for (let step = reactionSteps; step < steps; step++) {
+      contacted ||= distance(approach, target) <= objective.radius;
+      const dx =
+        !contacted && (target.x - approach.x) * xSign > axisTolerance
+          ? xSign
+          : 0;
+      const dy =
+        !contacted && (target.y - approach.y) * ySign > axisTolerance
+          ? ySign
+          : 0;
+      const action = Object.keys(ACTIONS).find(
+        (name) =>
+          !name.startsWith("focus_") &&
+          ACTIONS[name].dx === dx &&
+          ACTIONS[name].dy === dy,
+      );
+      firstAction ??= action;
+      approach.firstAction = firstAction;
+      if (action !== firstAction && firstEnd === undefined) {
+        firstEnd = step;
+        approach.firstMovement = distance(committed, approach);
+        approach.firstDuration = (step - reactionSteps) * dt;
+        approach.firstProgress =
+          remaining(committed, committed.time) -
+          remaining(approach, approach.time);
+      }
+      approach = extend(approach, action, step, step + 1);
+      if (lastAction === action) {
+        approach.inputs.pop();
+        approach.path.pop();
+      }
+      lastAction = action;
+      if (approach.blocked || approach.clearance < 12) break;
+    }
+    if (
+      approach.rescueTime !== undefined &&
+      !approach.blocked &&
+      approach.clearance >= 12
+    ) {
+      if (firstEnd === undefined) {
+        approach.firstMovement = distance(committed, approach);
+        approach.firstDuration = (steps - reactionSteps) * dt;
+        approach.firstProgress =
+          remaining(committed, committed.time) -
+          remaining(approach, approach.time);
+      }
+      approach.ineffective =
+        firstAction !== "stay" && approach.firstMovement < 1;
+      approach.score = score(approach);
+      return rescueResult(firstAction, approach);
+    }
+  }
   // A clear full-speed forward path already achieves maximal forward speed.
   // A coarse waypoint may bend while this exact straight path remains clear.
   // Also accept it when the timed map says it preserves the route's travel
@@ -1400,6 +1277,7 @@ export function planActions(
   );
   if (
     fastPath &&
+    !objective &&
     ((navigation?.direct ?? true) ||
       (navigation?.timed &&
         remaining(committed, committed.time) - remaining(direct, direct.time) >=
@@ -1410,53 +1288,34 @@ export function planActions(
   ) {
     return [{ ...resultFor(heading, direct), fastPath: true }];
   }
-  // Keep a small, spatially diverse beam for EACH possible first input. This
-  // lets the model compare executable short inputs with feasible follow-ups.
-  // Only the first input is applied; observe and replan before the next turn.
-  const firstNodes = [];
   const firstEnd = Math.min(reactionSteps + firstSteps, steps);
-  const candidates = names.map((action) => {
-    const root = { ...committed, firstAction: action };
-    const first = extend(root, action, reactionSteps, firstEnd);
+  const firstNodes = names.map((action) => {
+    const first = extend(
+      { ...committed, firstAction: action },
+      action,
+      reactionSteps,
+      firstEnd,
+    );
     first.firstMovement = distance(committed, first);
     first.firstDuration = (firstEnd - reactionSteps) * dt;
     first.firstProgress =
       remaining(committed, committed.time) - remaining(first, first.time);
     first.ineffective = action !== "stay" && first.firstMovement < 1;
     first.score = score(first);
-    firstNodes.push(first);
-    let beam = [first];
-    for (let from = firstEnd; from < steps; from += segmentSteps) {
-      const to = Math.min(from + segmentSteps, steps);
-      const expanded = [];
-      for (const node of beam) {
-        for (const next of trajectories.length || walls.length
-          ? node.lastAction.startsWith("focus_")
-            ? [...fullSpeedNames, node.lastAction]
-            : fullSpeedNames
-          : [action])
-          expanded.push(extend(node, next, from, to));
-      }
-      expanded.sort((a, b) => b.score - a.score);
-      const seen = new Set();
-      beam = [];
-      for (const node of expanded) {
-        const key = `${Math.round(node.x / 12)}:${Math.round(node.y / 12)}:${Math.sign(node.vx)}:${Math.sign(node.vy)}`;
-        if (seen.has(key)) continue;
-        seen.add(key);
-        beam.push(node);
-        if (beam.length >= beamWidth) break;
-      }
-    }
-    const best = beam[0];
-    return resultFor(action, best);
+    return first;
   });
+  // Keep complete fallback trajectories for every input before any optional
+  // branching. A deadline must never promote a safe-looking partial escape.
+  const candidates = firstNodes.map((first, index) =>
+    resultFor(names[index], extend(first, names[index], firstEnd, steps)),
+  );
   // Recheck the previously selected sequence against the NEW observation.
   // Its turn deadlines stay anchored to server packets: replanning must not
   // continually push an escape's second turn another 100–150 ms into the future.
   const elapsed = state.packet - (continuation?.packet ?? NaN);
   if (
     continuation &&
+    (continuation.inputIntervalTicks ?? 1) === inputIntervalTicks &&
     continuation.areaId === area.id &&
     continuation.tickRate === tickRate &&
     elapsed >= 0 &&
@@ -1502,48 +1361,169 @@ export function planActions(
         };
     }
   }
+  // Check the old turn sequence BEFORE exploring new alternatives. Its fixed
+  // packet deadlines remain available even when dense pursuit exhausts time.
+  const search = (first, width) => {
+    let beam = [first];
+    for (let from = firstEnd; from < steps; from += segmentSteps) {
+      const expanded = [];
+      for (const node of beam) {
+        if (expired()) return;
+        const actions =
+          trajectories.length || walls.length
+            ? node.lastAction.startsWith("focus_")
+              ? [...fullSpeedNames, node.lastAction]
+              : fullSpeedNames
+            : [first.firstAction];
+        for (const action of actions)
+          expanded.push(
+            extend(node, action, from, Math.min(from + segmentSteps, steps)),
+          );
+      }
+      expanded.sort((a, b) => b.score - a.score);
+      const seen = new Set();
+      beam = [];
+      for (const node of expanded) {
+        const key = `${Math.round(node.x / 12)}:${Math.round(node.y / 12)}:${Math.sign(node.vx)}:${Math.sign(node.vy)}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        beam.push(node);
+        if (beam.length >= width) break;
+      }
+    }
+    return beam[0];
+  };
+  const bounded = deadline !== Infinity;
+  // Sparse, player-independent motion already fits a normal beam cheaply.
+  // Avoid paying for a preliminary pass there; reserve it for pursuit or a
+  // crowded forecast, where completing one wide root can consume the budget.
+  const progressive =
+    bounded &&
+    beamWidth > 1 &&
+    (homing.length > 0 || trajectories.length >= 40);
+  const order = names.map((_, index) => index);
+  if (bounded) order.sort((a, b) => firstNodes[b].score - firstNodes[a].score);
+  let searchedRoots = 0;
   // A full-speed follow-up can miss a narrow escape that needs a DIFFERENT
   // focused direction. If the ordinary search and retained plan are all unsafe,
   // try those finer turns before accepting a graze. Reuse first segments and
   // shared forecasts, keep one continuation per input, and stop at a safe route.
   // Once a committed/first-segment gap is already unsafe, no later turn can
   // repair it; avoid spending another search on those branches.
-  if (
-    focusRecovery &&
-    committed.clearance >= 0 &&
-    candidates.every((candidate) => candidate.collision)
-  ) {
-    const roots = candidates
-      .map((candidate, index) => ({ candidate, index }))
-      .sort((a, b) => b.candidate.score - a.candidate.score);
-    for (const { index } of roots) {
-      let node = firstNodes[index];
-      if (node.clearance < 0 || node.blocked) continue;
-      for (let from = firstEnd; from < steps; from += segmentSteps) {
-        let nextBest;
-        for (const action of names) {
-          const next = extend(
-            node,
-            action,
-            from,
-            Math.min(from + segmentSteps, steps),
-          );
-          if (next.clearance < 0 || next.blocked) continue;
-          if (!nextBest || next.score > nextBest.score) nextBest = next;
+  const recoverFocus = () => {
+    if (
+      focusRecovery &&
+      committed.clearance >= 0 &&
+      candidates.every((candidate) => candidate.collision)
+    ) {
+      const roots = candidates
+        .map((candidate, index) => ({ candidate, index }))
+        .sort((a, b) => b.candidate.score - a.candidate.score);
+      for (const { index } of roots) {
+        if (expired()) break;
+        let node = firstNodes[index];
+        if (node.clearance < 0 || node.blocked) continue;
+        for (let from = firstEnd; from < steps; from += segmentSteps) {
+          if (expired()) {
+            node = undefined;
+            break;
+          }
+          let nextBest;
+          for (const action of names) {
+            const next = extend(
+              node,
+              action,
+              from,
+              Math.min(from + segmentSteps, steps),
+            );
+            if (next.clearance < 0 || next.blocked) continue;
+            if (!nextBest || next.score > nextBest.score) nextBest = next;
+          }
+          node = nextBest;
+          if (!node) break;
         }
-        node = nextBest;
-        if (!node) break;
+        if (node) {
+          candidates[index] = {
+            ...resultFor(names[index], node),
+            recoveredFocusPlan: true,
+          };
+          break;
+        }
       }
-      if (node) {
-        candidates[index] = {
-          ...resultFor(names[index], node),
-          recoveredFocusPlan: true,
-        };
-        break;
-      }
+    }
+  };
+  // First find cheap multi-turn escapes across inputs. Spend remaining time on
+  // wider alternatives instead of fully searching each input in fixed order.
+  for (const width of progressive ? [1, beamWidth] : [beamWidth]) {
+    for (const index of order) {
+      if (expired()) break;
+      const best = search(firstNodes[index], width);
+      if (!best) break;
+      searchedRoots++;
+      if (
+        best.score > candidates[index].score ||
+        (!bounded &&
+          !candidates[index].continuedPlan &&
+          best.score === candidates[index].score)
+      )
+        candidates[index] = resultFor(names[index], best);
+    }
+    // Try precision recovery before widening an entirely unsafe coarse pass.
+    if (progressive && width === 1) recoverFocus();
+  }
+  if (!progressive) recoverFocus();
+  if (bounded) {
+    const searchLimited = expired();
+    for (const candidate of candidates) {
+      candidate.searchLimited = searchLimited;
+      candidate.searchedRoots = searchedRoots;
     }
   }
   return candidates;
+}
+
+// Reserve this calculation's time before predicting key arrival. A slow route
+// map has already finished when this starts, so its actual cost is included.
+// Recheck once when actual timing differs by over a tick. This catches both
+// overruns (e.g. GC) and shortcuts that would otherwise send precise turns
+// earlier than forecast, especially when approaching a rescue target.
+export function planResponsiveActions(
+  state,
+  {
+    predictionAt,
+    inputMs = 5,
+    maxPlanMs = 18,
+    now = () => performance.now(),
+    ...options
+  },
+) {
+  const deliveryMs = Math.max(5, inputMs);
+  let commandAt = now() + maxPlanMs + deliveryMs;
+  let prediction = predictionAt(commandAt);
+  let candidates = planActions(state, {
+    ...options,
+    ...prediction,
+    maxPlanMs,
+    now,
+  });
+  const timingErrorMs = now() + deliveryMs - commandAt;
+  const tickMs = 1000 / (state.tickRate ?? 60);
+  const lagRecheck = timingErrorMs > tickMs;
+  const timingRecheck = Math.abs(timingErrorMs) > tickMs;
+  if (timingRecheck) {
+    const recheckMs = 8;
+    commandAt = now() + recheckMs + deliveryMs;
+    prediction = predictionAt(commandAt);
+    candidates = planActions(state, {
+      ...options,
+      ...prediction,
+      continuation: candidates.find((c) => c.action === bestAction(candidates))
+        .plan,
+      maxPlanMs: recheckMs,
+      now,
+    });
+  }
+  return { candidates, prediction, lagRecheck, timingRecheck, commandAt };
 }
 
 export function bestAction(candidates) {

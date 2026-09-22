@@ -1,8 +1,8 @@
 import {
   ACTIONS,
   circleInZone,
+  hazardActiveFrom,
   hitsRectangle,
-  forecastHazard,
   predictHazardPath,
   trajectoryClearance,
   targetFor,
@@ -22,14 +22,23 @@ export class Navigation {
     this.reset();
   }
 
-  update(state, at, heading = "right") {
-    if (this.areaId !== state.area.id || this.heading !== heading) this.reset();
+  update(state, at, heading = "right", objective) {
+    const objectiveKey = objective
+      ? `${objective.kind}:${objective.id}:${objective.areaId}:${objective.x}:${objective.y}`
+      : "exit";
+    if (
+      this.areaId !== state.area.id ||
+      this.heading !== heading ||
+      this.objectiveKey !== objectiveKey
+    )
+      this.reset();
     if (at - this.updatedAt < 200) return this.route;
     this.areaId = state.area.id;
     this.heading = heading;
+    this.objectiveKey = objectiveKey;
     this.updatedAt = at;
     const { area, player: p } = state;
-    const target = targetFor(state, heading);
+    const target = objective ?? targetFor(state, heading);
     const direction = ACTIONS[heading];
     const padding = p.radius + 2;
     const nx = Math.max(2, Math.ceil((area.width - 2 * padding) / 48) + 1);
@@ -48,6 +57,10 @@ export class Navigation {
     const walls = [
       ...(area.walls ?? []),
       ...area.zones.filter((z) => z.type === 3),
+      // A rescue must not take a shortcut through an area-changing exit.
+      ...(objective
+        ? area.zones.filter((z) => z.type === 2 || z.type === 6)
+        : []),
     ];
     const free = points.map(
       (point) =>
@@ -70,36 +83,25 @@ export class Navigation {
     const stride = Math.min(sx, sy);
     const dt = stride / speed;
     const layers = Math.min(48, Math.ceil(2.4 / dt));
-    const forecasts = state.hazards.map((h) =>
-      forecastHazard(
-        h,
-        p.radius,
-        area,
-        layers,
-        dt,
-        () => p,
-        state.tickRate ?? 60,
-      ),
-    );
+    const forecasts = state.hazards
+      .filter((h) => hazardActiveFrom(h, state.tickRate ?? 60) <= layers * dt)
+      .map((h) => ({
+        id: h.id,
+        radius:
+          p.radius +
+          h.radius * (h.square ? Math.SQRT2 : 1) +
+          (h.spiral?.padding ?? 0),
+        activeFrom: hazardActiveFrom(h, state.tickRate ?? 60),
+        positions: predictHazardPath(
+          h,
+          area,
+          layers,
+          dt,
+          () => p,
+          state.tickRate ?? 60,
+        ),
+      }));
     const count = points.length;
-    // The coarse grid cannot represent locked steering. Prefer routes around
-    // slippery fields; the local search simulates their entry direction.
-    const controlFields =
-      p.ignoreAuras || (p.effectsMultiplier ?? 1) <= 0
-        ? []
-        : (state.auras ?? [])
-            .filter((a) => a.kind === "slippery")
-            .map((a) =>
-              forecastHazard(
-                { ...a, radius: a.auraRadius },
-                p.radius,
-                area,
-                layers,
-                dt,
-                () => p,
-                state.tickRate ?? 60,
-              ),
-            );
     const sheltered = points.map((point) =>
       safeZones.some((z) => circleInZone(point, z, p.radius)),
     );
@@ -109,7 +111,6 @@ export class Navigation {
     const auraTypes = new Map();
     if (!p.ignoreAuras)
       for (const aura of state.auras ?? []) {
-        if (aura.kind === "slippery") continue;
         if (!auraTypes.has(aura.type)) auraTypes.set(aura.type, []);
         auraTypes.get(aura.type).push(aura);
       }
@@ -196,16 +197,12 @@ export class Navigation {
     // crossings while avoiding a cells × ticks × enemies scan.
     const routeBuffer = 70;
     const danger = new Float64Array(count * layers);
-    const dangerFields = [...forecasts, ...controlFields];
     for (let tick = 0; tick < layers; tick++) {
-      for (const h of dangerFields) {
+      for (const h of forecasts) {
         if (h.activeFrom > (tick + 1) * dt) continue;
         const a = h.positions[tick],
           b = h.positions[tick + 1];
-        const reach =
-          (h.queryRadius ??
-            (h.radii ? Math.max(h.radii[tick], h.radii[tick + 1]) : h.radius)) +
-          routeBuffer;
+        const reach = h.radius + routeBuffer;
         const x0 = Math.max(
           0,
           Math.ceil((Math.min(a.x, b.x) - reach - left) / sx),
@@ -232,8 +229,8 @@ export class Navigation {
               a,
               b,
               h,
-              tick + 1,
-              dt,
+              tick * dt,
+              (tick + 1) * dt,
             );
             if (gap < routeBuffer)
               danger[tick * count + id] +=
@@ -279,10 +276,16 @@ export class Navigation {
     const next = new Int32Array(points.length).fill(-1);
     const queue = new MinHeap();
     const goal = area.zones.find(
-      (z) => (z.type === 2 || z.type === 6) && circleInZone(target, z),
+      (z) =>
+        !objective && (z.type === 2 || z.type === 6) && circleInZone(target, z),
     );
     const goals = points.flatMap((point, i) =>
-      free[i] && goal && circleInZone(point, goal, p.radius) ? [i] : [],
+      free[i] &&
+      (objective
+        ? Math.hypot(point.x - target.x, point.y - target.y) <= target.radius
+        : goal && circleInZone(point, goal, p.radius))
+        ? [i]
+        : [],
     );
     if (!goals.length) {
       let nearest = -1,

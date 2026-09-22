@@ -1,0 +1,415 @@
+{
+  "schema": 1,
+  "environment": "ravel-only",
+  "ravelCommit": "563f5434f68d07b2d70ede3f307f857157d42107",
+  "policyRevision": "a6841643e4d2",
+  "policy": {
+    "margin": 14,
+    "horizon": 0.9,
+    "beamWidth": 3,
+    "commitmentMs": 100,
+    "avoidBackExit": true
+  },
+  "trained": true,
+  "validation": {
+    "accepted": true,
+    "regressions": []
+  },
+  "trainingSeeds": [
+    1,
+    2,
+    3
+  ],
+  "validationSeeds": [
+    10001,
+    10002,
+    10003
+  ],
+  "areas": [
+    30,
+    45,
+    105,
+    120,
+    240,
+    360,
+    475,
+    480
+  ],
+  "config": {
+    "hero": "Candy",
+    "speed": 17,
+    "delayMs": 125,
+    "jitterMs": 0,
+    "computeMs": 50,
+    "maxSeconds": 15,
+    "warmupTicks": 0,
+    "entryY": 0.5,
+    "autoCandy": true
+  },
+  "report": "../artifacts/ravel/mm-training-01/report.json",
+  "liveValidated": false,
+  "evidence": {
+    "baseline": {
+      "trials": 24,
+      "cleared": 22,
+      "clearRate": 0.9166666666666666,
+      "penalizedSeconds": 203.33333333333331,
+      "meanClearSeconds": 6.969696969696969,
+      "deaths": 0,
+      "timeouts": 0,
+      "wrongExits": 2,
+      "meanProgress": 0.9166666666666666,
+      "computeBudgetMisses": 34
+    },
+    "candidate-1": {
+      "trials": 24,
+      "cleared": 24,
+      "clearRate": 1,
+      "penalizedSeconds": 179.23333333333332,
+      "meanClearSeconds": 7.468055555555555,
+      "deaths": 0,
+      "timeouts": 0,
+      "wrongExits": 0,
+      "meanProgress": 1,
+      "computeBudgetMisses": 5
+    },
+    "validation-baseline": {
+      "trials": 24,
+      "cleared": 23,
+      "clearRate": 0.9583333333333334,
+      "penalizedSeconds": 189.88333333333333,
+      "meanClearSeconds": 7.168840579710144,
+      "deaths": 0,
+      "timeouts": 0,
+      "wrongExits": 1,
+      "meanProgress": 0.9583333333333334,
+      "computeBudgetMisses": 14
+    },
+    "validation-candidate": {
+      "trials": 24,
+      "cleared": 24,
+      "clearRate": 1,
+      "penalizedSeconds": 175.7,
+      "meanClearSeconds": 7.320833333333333,
+      "deaths": 0,
+      "timeouts": 0,
+      "wrongExits": 0,
+      "meanProgress": 1,
+      "computeBudgetMisses": 19
+    }
+  },
+  "followupValidation": {
+    "continuous": {
+      "areas": [
+        1,
+        80
+      ],
+      "seed": 20001,
+      "outcome": "cleared",
+      "seconds": 402.23333333333335,
+      "report": "../artifacts/ravel/mm-icicle80-02/report.json",
+      "policyRevision": "c4ec32c23fb2"
+    },
+    "icicleFreshSeeds": {
+      "areas": [
+        76,
+        80,
+        200,
+        320,
+        440
+      ],
+      "seeds": [
+        30001,
+        30002
+      ],
+      "cleared": 9,
+      "trials": 10,
+      "unresolved": [],
+      "report": "../artifacts/ravel/icicle-holdout-01/report.json",
+      "resolvedBy": "icicleCompleteModel"
+    },
+    "mechanics": [
+      "Icicle current wall pause expiry and nominal restart velocity.",
+      "Source-derived Icicle forecasts include future wall pauses, restarts and clamped bounce positions; used only by the Ravel runner."
+    ],
+    "fullMapPerfected": false,
+    "icicleCompleteModel": {
+      "areas": [
+        76,
+        80,
+        200,
+        320,
+        440
+      ],
+      "regressionSeeds": [
+        30001,
+        30002
+      ],
+      "regressionCleared": 10,
+      "regressionTrials": 10,
+      "heldOutSeeds": [
+        30003,
+        30004
+      ],
+      "heldOutCleared": 10,
+      "heldOutTrials": 10,
+      "report": "../artifacts/ravel/icicle-complete-model-01/report.json",
+      "policyRevision": "e41ea64847c3"
+    },
+    "slippery": {
+      "areas": [
+        82,
+        85,
+        202,
+        322,
+        442
+      ],
+      "regressionSeeds": [
+        31001,
+        31002
+      ],
+      "regressionCleared": 10,
+      "regressionTrials": 10,
+      "heldOutSeeds": [
+        31003,
+        31004
+      ],
+      "heldOutCleared": 10,
+      "heldOutTrials": 10,
+      "report": "../artifacts/ravel/slippery-holdout-01/report.json",
+      "regressionReport": "../artifacts/ravel/slippery-02/report.json",
+      "policyRevision": "8a1b7f8fd1e0",
+      "lookaheadSeconds": 2,
+      "failureAnalysis": "../artifacts/ravel/slippery82-review.json"
+    },
+    "liquid": {
+      "areas": [
+        71,
+        75,
+        91,
+        191,
+        311,
+        431
+      ],
+      "seeds": [
+        32101,
+        32102,
+        32103,
+        32104
+      ],
+      "cleared": 24,
+      "trials": 24,
+      "report": "../artifacts/ravel/liquid-complete-01/report.json",
+      "policyRevision": "9f9b6b63b776",
+      "failureAnalysis": "../artifacts/ravel/liquid91-review.json"
+    },
+    "decisionCadence": {
+      "inputIntervalTicks": 3,
+      "regressionFixture": "../test/fixtures/ravel-slip84.json",
+      "areas": [
+        84,
+        85,
+        204,
+        324,
+        444
+      ],
+      "seeds": [
+        33001,
+        33002
+      ],
+      "speed": 13,
+      "cleared": 9,
+      "trials": 10,
+      "report": "../artifacts/ravel/slippery-cadence-01/report.json",
+      "unresolved": [
+        {
+          "area": 324,
+          "seed": 33001,
+          "cause": "Previously inactive Candy is collected immediately before Slippery entry; pickup acceleration is not forecast."
+        }
+      ]
+    },
+    "wavy": {
+      "areas": [
+        26,
+        30,
+        146,
+        266,
+        386
+      ],
+      "seeds": [
+        34001,
+        34002
+      ],
+      "cleared": 10,
+      "trials": 10,
+      "report": "../artifacts/ravel/wavy-01/report.json",
+      "policyRevision": "94be24af591c",
+      "mechanics": "Curved trajectories, phase timer reversals and wall-triggered reversals; forecast tested against native engine for all Wavies in five areas."
+    },
+    "speedRestoration": {
+      "enabled": true,
+      "method": "Native 1-key upgrade while waiting in shelter, spending available points; no direct stat reset."
+    },
+    "curves": {
+      "families": [
+        "wavy",
+        "turning",
+        "spiral"
+      ],
+      "nativeAgreementAreas": [
+        26,
+        30,
+        146,
+        266,
+        386,
+        31,
+        35,
+        51,
+        55,
+        151,
+        171,
+        271,
+        291,
+        391,
+        411
+      ],
+      "nativeForecastSeconds": 3,
+      "nativeMaximumErrorTolerance": 0.000001
+    },
+    "finalCombatAreas": {
+      "range": [
+        362,
+        480
+      ],
+      "excludedCheckpoints": [
+        401,
+        441
+      ],
+      "seed": 20001,
+      "firstPassCleared": 116,
+      "trials": 117,
+      "timeout": {
+        "area": 465,
+        "limitSeconds": 20,
+        "resolvedSeconds": 32.45,
+        "report": "../artifacts/ravel/area465-extended-01/report.json"
+      },
+      "report": "../artifacts/ravel/final-block-02/report.json",
+      "continuous": false
+    },
+    "dasher": {
+      "nativeAgreementAreas": [
+        6,
+        10,
+        120,
+        240,
+        360,
+        480
+      ],
+      "nativeForecastSeconds": 6,
+      "nativeMaximumErrorTolerance": 0.000001,
+      "mechanics": "Move with current speed before phase updates; strict phase clocks and clamped wall contacts."
+    },
+    "giantDasherTrap": {
+      "regressionFixture": "../test/fixtures/ravel-dasher360.json",
+      "condition": "Dasher diameter is at least one quarter of room height",
+      "lookaheadSeconds": 1.5,
+      "currentAffectedAreas": [
+        120,
+        240,
+        360,
+        480
+      ],
+      "shortForecastClearance": 31.765544021229573,
+      "extendedForecastClearance": -0.3305015383536656,
+      "safeAlternativeFound": true,
+      "report": "../artifacts/ravel/dasher360-horizon15/report.json",
+      "mode": "recorded prefix through area 359, then new planning in area 360"
+    },
+    "iceSniperFailure": {
+      "area": 455,
+      "seed": 20001,
+      "report": "../artifacts/ravel/final-continuous-prefix-01/report.json",
+      "analysis": "../artifacts/ravel/ice455-review.json",
+      "mode": "prefix-debug",
+      "cause": "New projectile appears 100 ms before freezing the player, inside the 175 ms response window; future firing remains unmodeled.",
+      "resolvedBy": "iceSniperForecast"
+    },
+    "continuousTail": {
+      "areas": [
+        420,
+        480
+      ],
+      "seed": 20001,
+      "outcome": "cleared",
+      "seconds": 405.9166666666667,
+      "deaths": 0,
+      "reachedArea": 481,
+      "policyRevision": "a6841643e4d2",
+      "config": {
+        "area": 420,
+        "endArea": 480,
+        "seed": 20001,
+        "hero": "Candy",
+        "speed": 17,
+        "maxStats": true,
+        "entryY": 0.5,
+        "delayMs": 125,
+        "jitterMs": 0,
+        "maxSeconds": 900,
+        "decisionTicks": 2,
+        "computeMs": 50,
+        "warmupTicks": 0,
+        "autoCandy": true,
+        "autoUpgrade": true
+      },
+      "summary": {
+        "area": 420,
+        "endArea": 480,
+        "seed": 20001,
+        "outcome": "cleared",
+        "seconds": 405.9166666666667,
+        "reachedArea": 481,
+        "decisions": 8119,
+        "changes": 1248,
+        "reversals": 425,
+        "replayedDecisions": 0,
+        "focusFraction": 0.16492178839758592,
+        "pathLength": 253091.15752357699,
+        "peakSpeed": 660,
+        "progress": 1,
+        "medianPlanMs": 22.98712499999965,
+        "p95PlanMs": 52.798249999999825,
+        "computeBudgetMisses": 514,
+        "wallSeconds": 206.196481916
+      },
+      "report": "../artifacts/ravel/mm-420-480-01/report.json",
+      "verification": "../artifacts/ravel/mm-420-480-01/verification.json",
+      "requestedRangeVerified": true,
+      "fullCourseVerified": false
+    },
+    "iceSniperForecast": {
+      "nativeTimingVerified": true,
+      "spawnTimingPaddingTicks": 1,
+      "areas": [
+        86,
+        90,
+        95,
+        206,
+        326,
+        450,
+        455
+      ],
+      "seeds": [
+        36001,
+        36002
+      ],
+      "trials": 14,
+      "cleared": 14,
+      "report": "../artifacts/ravel/ice-sniper-holdout-01/report.json",
+      "regressionReport": "../artifacts/ravel/ice450-prefix-01/report.json"
+    }
+  },
+  "trainingPolicyRevision": "dc568a144c00"
+}

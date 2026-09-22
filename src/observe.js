@@ -1,7 +1,5 @@
-import { EnemyMotionTracker } from "./enemy-motion.js";
-
 // Runs in the page. Read only: no patching the client, packets, or game rules.
-export function observeGame(enemyTypes = {}) {
+export function observeGame() {
   const candidates = document.querySelectorAll(".no-scroll, #root, #app");
   let component;
   for (const element of candidates) {
@@ -92,40 +90,6 @@ export function observeGame(enemyTypes = {}) {
     ["reduced", 0.5],
   ];
   const motionFor = (e) => {
-    const type = enemyTypes[e.entityType];
-    const teleportSpeed = Math.hypot(e.velocityX ?? 0, e.velocityY ?? 0);
-    const pingPong = type?.name === "star_enemy";
-    const teleport =
-      Number.isFinite(e.pauseTime) &&
-      e.pauseInterval > 0 &&
-      (pingPong || type?.name === "teleporting_enemy")
-        ? {
-            remainingMs: Math.max(0, e.pauseTime),
-            intervalMs: e.pauseInterval,
-            distance:
-              e.teleportDistance ?? e._pred?.teleportDist ?? teleportSpeed,
-            dx:
-              (pingPong ? -1 : 1) *
-              (e._pred?.teleportDirX ??
-                (teleportSpeed ? e.velocityX / teleportSpeed : 0)),
-            dy:
-              (pingPong ? -1 : 1) *
-              (e._pred?.teleportDirY ??
-                (teleportSpeed ? e.velocityY / teleportSpeed : 0)),
-            pingPong,
-          }
-        : undefined;
-    const pumpkin =
-      type?.name === "pumpkin_enemy" || typeof e.pumpkinActivated === "boolean"
-        ? {
-            active: Boolean(e.pumpkinActivated),
-            arming: e.imageName === "pumpkin_on",
-            startsInMs: Math.max(0, e.pumpkinActivationTimer ?? 1000),
-            remainingMs: Math.max(0, 1500 - (e.movementTime ?? 0)),
-            vx: (e.velocityX ?? 0) * tickRate,
-            vy: (e.velocityY ?? 0) * tickRate,
-          }
-        : undefined;
     const motionEffects = [];
     for (const [name, scale] of timedMotionEffects) {
       if (Number.isFinite(e[name]) && e[name] > 0)
@@ -146,18 +110,12 @@ export function observeGame(enemyTypes = {}) {
     return {
       // _pred reflects current stops/slows; velocityX/Y retain the nominal
       // direction needed to forecast movement after a timed effect expires.
-      vx:
-        pumpkin && !pumpkin.active
-          ? 0
-          : Number.isFinite(e._pred?.vx ?? e.velocityX)
-            ? (e._pred?.vx ?? e.velocityX) * tickRate
-            : undefined,
-      vy:
-        pumpkin && !pumpkin.active
-          ? 0
-          : Number.isFinite(e._pred?.vy ?? e.velocityY)
-            ? (e._pred?.vy ?? e.velocityY) * tickRate
-            : undefined,
+      vx: Number.isFinite(e._pred?.vx ?? e.velocityX)
+        ? (e._pred?.vx ?? e.velocityX) * tickRate
+        : undefined,
+      vy: Number.isFinite(e._pred?.vy ?? e.velocityY)
+        ? (e._pred?.vy ?? e.velocityY) * tickRate
+        : undefined,
       baseVx:
         motionEffects.length && Number.isFinite(e.velocityX)
           ? e.velocityX * tickRate
@@ -172,26 +130,6 @@ export function observeGame(enemyTypes = {}) {
         typeof e.resolveClockwise === "function" && e.zonePolicy === "clamp"
           ? "perimeter"
           : "bounce",
-      typeName: type?.name,
-      pumpkin,
-      teleport,
-      uncertainMotion: (type?.uncertainMotion && !teleport) || undefined,
-      uncertainSpeed: type?.uncertainMotion
-        ? Math.hypot(e.velocityX ?? 0, e.velocityY ?? 0) * tickRate
-        : undefined,
-      turning:
-        typeof e.trackTurningDirection === "function" &&
-        Number.isFinite(e._pred?.turnMag)
-          ? { rate: (e._pred.turnSign || 1) * e._pred.turnMag * tickRate }
-          : undefined,
-      sizing:
-        Number.isFinite(e.sizingMultiplier) && e.sizingMultiplier > 0
-          ? {
-              baseRadius: e.radius / e.sizingMultiplier,
-              multiplier: e.sizingMultiplier,
-              growing: Boolean(e.growing),
-            }
-          : undefined,
       homing:
         typeof e.trackHomingState === "function"
           ? {
@@ -224,11 +162,35 @@ export function observeGame(enemyTypes = {}) {
               scale,
             }
           : undefined,
+      // Public-client telemetry, kept separate from Ravel's phase fields.
+      icicle:
+        e.entityType === 79 && Number.isFinite(e._pred?.moveVx) &&
+        Number.isFinite(e._pred?.moveVy) && Number.isFinite(e.wallTimeLeft)
+          ? { paused: e.wallHit === true, remainingMs: e.wallTimeLeft,
+              vx: e._pred.moveVx * tickRate, vy: e._pred.moveVy * tickRate }
+          : undefined,
+      liquid:
+        e.entityType === 96 && Number.isFinite(e.playerDetectionRadius) &&
+        Number.isFinite(e._pred?.baseSpeed) &&
+        Number.isFinite(e._pred?.baseDirX) && Number.isFinite(e._pred?.baseDirY)
+          ? { active: e.activated === true, range: e.playerDetectionRadius,
+              vx: e._pred.baseDirX * e._pred.baseSpeed * tickRate,
+              vy: e._pred.baseDirY * e._pred.baseSpeed * tickRate }
+          : undefined,
+      turning:
+        typeof e.trackTurningDirection === "function" &&
+        Number.isFinite(e._pred?.turnMag)
+          ? { rate: (e._pred.turnSign || 1) * e._pred.turnMag * tickRate }
+          : undefined,
+      iceSniper:
+        e.entityType === 77 && Number.isFinite(e.releaseTime)
+          ? { remainingMs: Math.max(0, e.releaseTime), speed: 480, radius: 10 }
+          : undefined,
     };
   };
   // These are effect IDs from the current public client configuration, not
   // the separate alphabetically sorted EffectType enum.
-  const movementEffects = {
+  const slowEffects = {
     48: { reduction: 0.3, scanner: 1 },
     52: { reduction: 0.85, scanner: 5 },
     53: { reduction: 0, scanner: 6, kind: "slippery" },
@@ -240,13 +202,12 @@ export function observeGame(enemyTypes = {}) {
       (e.effects?.list?.() ?? [])
         .filter(
           (effect) =>
-            movementEffects[effect.effectType] &&
+            slowEffects[effect.effectType] &&
             effect.radius > 0 &&
             !effect.removed &&
             !(
               (!player.abilityOne || !player.abilityOne.disabled) &&
-              player.roboScannerId ===
-                movementEffects[effect.effectType].scanner
+              player.roboScannerId === slowEffects[effect.effectType].scanner
             ),
         )
         .map((effect) => ({
@@ -259,14 +220,20 @@ export function observeGame(enemyTypes = {}) {
           vy: (e._pred?.vy ?? e.velocityY ?? 0) * tickRate,
           type: effect.effectType,
           auraRadius: effect.radius,
-          reduction: movementEffects[effect.effectType].reduction,
-          kind: movementEffects[effect.effectType].kind,
+          reduction: slowEffects[effect.effectType].reduction,
+          kind: slowEffects[effect.effectType].kind,
         })),
     );
   const hazards = entities
     .filter(
       (e) =>
         (e.isEnemy || e.isEnemyProjectile) &&
+        ((!e.isHarmless && !e.grassHarmless) ||
+          e.switchedHarmless === true ||
+          e.entityType === 217 ||
+          e.entityType === 207 ||
+          e.entityType === 242 ||
+          e.entityType === 78) &&
         !e.removed &&
         Number.isFinite(e.x) &&
         Number.isFinite(e.y),
@@ -279,18 +246,24 @@ export function observeGame(enemyTypes = {}) {
       ...motionFor(e),
       entityType: e.entityType,
       square: Boolean(e.square),
-      harmless: Boolean(e.isHarmless || e.grassHarmless || e.switchedHarmless),
-      // Track the body even while harmless. Known remaining times allow a
-      // harmless crossing; missing phase data is treated conservatively.
-      harmlessUntilMs: Math.max(
-        0,
-        e.isHarmless && Number.isFinite(e.harmlessTime) ? e.harmlessTime : 0,
-        e.switchedHarmless && Number.isFinite(e.switchTime) ? e.switchTime : 0,
-        e.grassHarmless && Number.isFinite(e.grassTime) ? e.grassTime : 0,
-      ),
-      switchState: Number.isFinite(e.switchTime)
-        ? { remainingMs: e.switchTime, harmless: Boolean(e.switchedHarmless) }
-        : undefined,
+      // Switch bodies must remain visible before they become lethal. Missing
+      // countdown data grants no safe crossing; other harmless filtering stays.
+      harmlessUntilMs:
+        e.switchedHarmless && Number.isFinite(e.switchTime)
+          ? Math.max(0, e.switchTime)
+          : undefined,
+      switchState:
+        e.switchedHarmless !== undefined ||
+        e.entityType === 217 ||
+        e.entityType === 207 ||
+        e.entityType === 242
+          ? {
+              harmless: Boolean(e.switchedHarmless),
+              remainingMs: Number.isFinite(e.switchTime)
+                ? e.switchTime
+                : undefined,
+            }
+          : undefined,
     }));
   const area = game.area;
   return {
@@ -332,11 +305,9 @@ export function observeGame(enemyTypes = {}) {
       // resumes analog steering instead of stopping, including gamepad input.
       mouseInput,
       baseSpeed: player.speed,
-      // The client seeds its slippery direction from this shared movement
-      // angle when available, otherwise from acknowledged displacement.
-      slideAngle: Number.isFinite(player.shieldAngle)
-        ? player.shieldAngle
-        : undefined,
+      slideAngle: Number.isFinite(player.shieldAngle) ? player.shieldAngle : undefined,
+      auraImmune: Boolean(player.isInvulnerable),
+      untargetable: Boolean(player.nightActivated || player.isDeparted || player.voidTime > 0),
       speedMultiplier:
         (player.inStreamPath
           ? 1
@@ -405,9 +376,18 @@ export function observeGame(enemyTypes = {}) {
         y: e.y,
         radius: e.radius,
         downed: Number.isFinite(e.deathTimer) && e.deathTimer !== -1,
+        untargetable: Boolean(e.nightActivated || e.isDeparted || e.voidTime > 0),
+        rescueable: e.rescueable !== false,
+        // game.entities is the current area roster, not the world-map list.
+        areaId: `${area.regionName}:${area.index}:${area.x}:${area.y}`,
       })),
     input: {
       heldKeys: [...(game.keys?.get?.() ?? [])],
+      // Native submission is not server acknowledgement or confirmed movement.
+      sentSequence: Number.isFinite(game.sequence) ? game.sequence : undefined,
+      sentKeys: game.previousKeys?.get
+        ? [...game.previousKeys.get()]
+        : undefined,
       manualDirectionHeld: [...(game.keys?.get?.() ?? [])].some((key) =>
         [5, 7, 11, 20].includes(key),
       ),
@@ -432,26 +412,150 @@ export function observeGame(enemyTypes = {}) {
 export class MotionTracker {
   previous;
   velocities = new Map();
-  peakSpeeds = new Map();
-  enemyMotion = new EnemyMotionTracker();
+  spirals = new Map();
+  zoning = new Map();
+
+  zoningFor(h, packet, tickRate) {
+    if (h.entityType !== 249) return;
+    let track = this.zoning.get(h.id);
+    if (track?.samples.at(-1).packet === packet) return track.model;
+    const sample = { packet, x: h.x, y: h.y, vx: h.vx, vy: h.vy };
+    const reset = () => {
+      this.zoning.set(h.id, { samples: [sample], tickRate });
+      return undefined;
+    };
+    const before = track?.samples.at(-1), ticks = packet - before?.packet;
+    if (!before || track.tickRate !== tickRate || ticks < 1 || ticks > 6 ||
+      !Number.isFinite(h.vx) || !Number.isFinite(h.vy) || h.motionEffects?.length ||
+      Math.hypot(h.vx, h.vy) < 1 || Math.min(Math.abs(h.vx), Math.abs(h.vy)) > 0.01)
+      return reset();
+    const ax = (h.vx - before.vx) * tickRate / ticks;
+    const ay = (h.vy - before.vy) * tickRate / ticks;
+    // Validate the velocity slope against actual displacement. This rejects
+    // wall bounces, 90-degree turns, stops and non-constant phase changes.
+    const endX = before.x + before.vx * ticks / tickRate + ax * ticks * (ticks + 1) / (2 * tickRate ** 2);
+    const endY = before.y + before.vy * ticks / tickRate + ay * ticks * (ticks + 1) / (2 * tickRate ** 2);
+    const acceleration = Math.hypot(ax, ay);
+    if (!(acceleration > 1 && acceleration < 10000) || ax * h.vx + ay * h.vy >= 0 ||
+      Math.abs(ax * h.vy - ay * h.vx) > 0.01 || Math.hypot(endX - h.x, endY - h.y) > 0.12)
+      return reset();
+    track.samples.push(sample);
+    if (track.samples.length > 3) track.samples.shift();
+    const previousSlope = track.slope;
+    track.slope = { ax, ay };
+    track.model = undefined;
+    if (previousSlope && Math.hypot(ax - previousSlope.ax, ay - previousSlope.ay) < Math.max(1, acceleration * 0.01))
+      track.model = { deceleration: acceleration };
+    return track.model;
+  }
+
+  spiralFor(hazard, packet, tickRate) {
+    if (hazard.entityType !== 206 && hazard.entityType !== 207) return;
+    if (
+      !Number.isFinite(hazard.vx) ||
+      !Number.isFinite(hazard.vy) ||
+      !Number.isFinite(packet) ||
+      hazard.motionEffects?.length ||
+      Math.hypot(hazard.vx, hazard.vy) < 1
+    ) {
+      this.spirals.delete(hazard.id);
+      return;
+    }
+    let track = this.spirals.get(hazard.id);
+    const previous = track?.samples.at(-1);
+    if (previous?.packet === packet) return track.model;
+    if (
+      !previous ||
+      packet < previous.packet ||
+      packet - previous.packet > 3 ||
+      track.tickRate !== tickRate ||
+      track.type !== hazard.entityType
+    )
+      track = { samples: [], tickRate, type: hazard.entityType };
+    track.samples.push({
+      packet,
+      angle: Math.atan2(hazard.vy, hazard.vx),
+      speed: Math.hypot(hazard.vx, hazard.vy),
+    });
+    if (track.samples.length > 9) track.samples.shift();
+    track.model = undefined;
+    this.spirals.set(hazard.id, track);
+    if (track.samples.length < 7) return;
+    const speed = track.samples.at(-1).speed;
+    if (
+      track.samples.some(
+        (s) => Math.abs(s.speed - speed) > Math.max(1, speed * 0.01),
+      )
+    )
+      return;
+    const rates = [];
+    for (let i = 1; i < track.samples.length; i++) {
+      const a = track.samples[i - 1],
+        b = track.samples[i];
+      const turn = Math.atan2(
+        Math.sin(b.angle - a.angle),
+        Math.cos(b.angle - a.angle),
+      );
+      // Large ambiguous turns, bounces and phase changes must not keep a stale fit.
+      if (Math.abs(turn) > 2.5) return;
+      rates.push({
+        x: ((a.packet + b.packet) / 2 - packet) / tickRate,
+        y: (turn * tickRate) / (b.packet - a.packet),
+      });
+    }
+    const fit = (points) => {
+      let sx = 0,
+        sy = 0,
+        sxx = 0,
+        sxy = 0;
+      for (const { x, y } of points) {
+        sx += x;
+        sy += y;
+        sxx += x * x;
+        sxy += x * y;
+      }
+      const n = points.length;
+      const acceleration = (sxy - (sx * sy) / n) / (sxx - (sx * sx) / n);
+      const rate = (sy - acceleration * sx) / n;
+      return { rate, acceleration };
+    };
+    const residual = (model, points) =>
+      Math.max(
+        ...points.map(({ x, y }) =>
+          Math.abs(y - model.rate - model.acceleration * x),
+        ),
+      );
+    // Fit older intervals, then validate two newer intervals before using it.
+    // Nine observations per Spiral; no period search or work for other families.
+    const training = fit(rates.slice(0, -2));
+    if (
+      !Number.isFinite(training.rate) ||
+      !Number.isFinite(training.acceleration) ||
+      residual(training, rates) > 0.05
+    )
+      return;
+    const model = fit(rates);
+    if (Math.abs(model.rate) > 60 || Math.abs(model.acceleration) > 60) return;
+    track.model = {
+      turnRate: model.rate,
+      turnAcceleration: model.acceleration,
+      speed,
+      padding: 3,
+    };
+    return track.model;
+  }
 
   update(state) {
     const previous = this.previous;
-    if (!previous || previous.area.id !== state.area.id) {
+    if (
+      !previous ||
+      previous.area.id !== state.area.id ||
+      state.packet < previous.packet
+    ) {
       this.velocities.clear();
-      this.peakSpeeds.clear();
-      this.enemyMotion.reset();
+      this.spirals.clear();
+      this.zoning.clear();
     }
-    for (const h of state.hazards)
-      if (h.uncertainMotion)
-        this.peakSpeeds.set(
-          h.id,
-          Math.max(
-            this.peakSpeeds.get(h.id) ?? 0,
-            h.uncertainSpeed ?? 0,
-            Math.hypot(h.vx ?? 0, h.vy ?? 0),
-          ),
-        );
     if (
       previous?.area.id === state.area.id &&
       previous.packet !== state.packet
@@ -467,22 +571,11 @@ export class MotionTracker {
         const old = new Map(previous.hazards.map((h) => [h.id, h]));
         for (const hazard of state.hazards) {
           const before = old.get(hazard.id);
-          if (before) {
-            const vx = (hazard.x - before.x) / dt,
-              vy = (hazard.y - before.y) / dt;
+          if (before)
             this.velocities.set(hazard.id, {
-              vx,
-              vy,
+              vx: (hazard.x - before.x) / dt,
+              vy: (hazard.y - before.y) / dt,
             });
-            if (hazard.uncertainMotion)
-              this.peakSpeeds.set(
-                hazard.id,
-                Math.max(
-                  this.peakSpeeds.get(hazard.id) ?? 0,
-                  Math.hypot(vx, vy),
-                ),
-              );
-          }
         }
         this.velocities.set("player", {
           vx: (state.player.x - previous.player.x) / dt,
@@ -499,9 +592,10 @@ export class MotionTracker {
       const ids = new Set(["player", ...state.hazards.map((h) => h.id)]);
       for (const id of this.velocities.keys())
         if (!ids.has(id)) this.velocities.delete(id);
-      for (const id of this.peakSpeeds.keys())
-        if (!ids.has(id)) this.peakSpeeds.delete(id);
-      this.enemyMotion.prune(ids);
+      for (const id of this.spirals.keys())
+        if (!ids.has(id)) this.spirals.delete(id);
+      for (const id of this.zoning.keys())
+        if (!ids.has(id)) this.zoning.delete(id);
     }
     return {
       ...state,
@@ -514,16 +608,16 @@ export class MotionTracker {
         ...h,
         vx: Number.isFinite(h.vx) ? h.vx : (this.velocities.get(h.id)?.vx ?? 0),
         vy: Number.isFinite(h.vy) ? h.vy : (this.velocities.get(h.id)?.vy ?? 0),
-        ...(h.uncertainMotion
+        ...(h.entityType === 206 || h.entityType === 207
           ? {
-              uncertainSpeed: this.peakSpeeds.get(h.id),
-              learnedMotion: this.enemyMotion.update(
-                { ...h, uncertainSpeed: this.peakSpeeds.get(h.id) },
+              spiral: this.spiralFor(
+                h,
                 state.packet,
-                state.tickRate ?? 60,
+                state.tickRate > 0 ? state.tickRate : 60,
               ),
             }
           : {}),
+        ...(h.entityType === 249 ? { zoning: this.zoningFor(h, state.packet, state.tickRate ?? 60) } : {}),
       })),
     };
   }

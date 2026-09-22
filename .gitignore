@@ -4,3 +4,5 @@ node_modules/
 logs/
 artifacts/
 .DS_Store
+
+.ravel-browser-profile/

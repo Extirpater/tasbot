@@ -21,6 +21,7 @@ const { values } = parseArgs({
     scenario: { type: "string", default: "normal" },
     hz: { type: "string", default: "60" },
     "delay-ms": { type: "string", default: "50" },
+    "plan-ms": { type: "string", default: "18" },
     output: { type: "string", default: "artifacts/benchmark.json" },
   },
 });
@@ -209,13 +210,19 @@ for (const [name, policy] of policies) {
       if (ticks % Math.max(1, Math.round(60 / Number(values.hz))) === 0) {
         const now = (ticks / 60) * 1000;
         timing.observe(structuredClone(s), now);
-        movement?.observe?.(s, now);
+        movement?.observe?.(s, now, timing.delayMs);
         const start = performance.now();
         const route = navigation?.update(s, now);
         const candidates = policy.planActions(s, {
           previousAction: requested,
           ...movement?.planOptions(now),
           navigation: route,
+          maxPlanMs:
+            name === "current"
+              ? Number(values["plan-ms"])
+              : policy.planResponsiveActions
+                ? 24
+                : Infinity,
           maxSpeed: Number(values["max-speed"]),
           ...(name === "current" || values["baseline-timing"]
             ? timing.pending(now)

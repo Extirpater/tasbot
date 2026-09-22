@@ -3,6 +3,7 @@ import { parseArgs } from "node:util";
 import { pathToFileURL } from "node:url";
 import { advancePlayer, circleInZone, sweptClearance } from "../src/planner.js";
 import { Navigation } from "../src/navigation.js";
+import { prepareLivePlanning } from "../src/live-models.js";
 
 // Counterfactual local controller replay. Enemy positions come from the recorded
 // observations, independently of the planner's enemy forecast. Interpolate only
@@ -12,7 +13,8 @@ export function replayEncounter(
   trace,
   planner,
   MovementPolicy,
-  { fromFrame = 140, delayTicks = 0, NavigationClass = Navigation } = {},
+  { fromFrame = 140, delayTicks = 0, NavigationClass = Navigation,
+    prepare = state => ({ state, options: {} }), planOptions = {} } = {},
 ) {
   const first = trace.frames[fromFrame];
   const rows = trace.frames
@@ -25,10 +27,12 @@ export function replayEncounter(
   if (
     rows.some(
       ({ state: s }) =>
-        s.area.id !== first.state.area.id || s.hazards.some((h) => h.homing),
+        s.area.id !== first.state.area.id ||
+        s.hazards.some((h) => h.homing || h.liquid || h.iceSniper) ||
+        s.auras?.some(a => a.kind === "slippery"),
     )
   )
-    throw new Error("Replay requires one area and player-independent enemies");
+    throw new Error("Replay requires one area, player-independent enemies and supported player physics; use native simulation for pursuit, firing or Slippery encounters");
   const rate = first.state.tickRate ?? 60,
     dt = 1 / rate;
   const packet0 = first.state.packet;
@@ -39,7 +43,7 @@ export function replayEncounter(
       f.action,
       f.appliedAt - (first.capturedAt ?? first.observedAt),
     );
-    navigation.update(f.state, (f.state.packet - packet0) * dt * 1000);
+    navigation.update(prepare(f.state, f).state, (f.state.packet - packet0) * dt * 1000);
   }
   let player = Object.fromEntries(
     ["x", "y", "vx", "vy"].map((key) => [key, first.state.player[key]]),
@@ -81,11 +85,14 @@ export function replayEncounter(
           action: c.action,
         })),
     ];
-    movement.observe(state, at);
+    movement.observe(state, at, frame.inputDelayMs ?? 0);
     const started = performance.now();
-    const route = navigation.update(state, at);
-    const candidates = planner.planActions(state, {
+    const prepared = prepare(state, frame);
+    const route = navigation.update(prepared.state, at);
+    const candidates = planner.planActions(prepared.state, {
       ...movement.planOptions(at),
+      ...prepared.options,
+      ...planOptions,
       reactionTime,
       pendingInputs,
       navigation: route,
@@ -211,6 +218,7 @@ if (
       "from-frame": { type: "string", default: "140" },
       "delay-ticks": { type: "string", default: "0" },
       output: { type: "string" },
+      live: { type: "boolean", default: false },
     },
   });
   if (!values.trace) throw new Error("Pass --trace artifacts/death-....json");
@@ -231,6 +239,11 @@ if (
         fromFrame: Number(values["from-frame"]),
         delayTicks: Number(values["delay-ticks"]),
         NavigationClass,
+        ...(values.live && name === "current" ? {
+          prepare: (state, frame) => prepareLivePlanning(state, {
+            decisionMs: (frame.planning?.inputIntervalTicks ?? 3) * 1000 / (state.tickRate ?? 60),
+          }),
+        } : {}),
       }),
     });
   }

@@ -72,6 +72,29 @@ test("local debugging endpoints attach without launching or navigating", async (
   await session.close();
 });
 
+test("Ravel attach selects only the Ravel game and preserves the Evades tab", async () => {
+  const browser = existingBrowser(["https://evades.io/", "https://pifary-dev.github.io/ravel/",
+    "https://pifary-dev.github.io/", "https://pifary-dev.github.io/ravel.example/",
+    "https://pifary-dev.github.io.evil.example/ravel/"]);
+  const session = await openGameBrowser({ attach:true, game:"ravel" }, browser.browserType);
+  assert.equal(session.page, browser.pages[1]);
+  await session.close();
+  const missing = existingBrowser(["https://evades.io/"]);
+  await assert.rejects(openGameBrowser({ attach:true, game:"ravel" }, missing.browserType), /No Ravel/);
+});
+
+test("Ravel launch uses its own profile and URL", async () => {
+  let opened;
+  const session = await openGameBrowser({ game:"ravel" }, {
+    launchPersistentContext: async (profile) => {
+      assert.ok(profile.endsWith(".ravel-browser-profile"));
+      return { pages:()=>[{goto:async url=>{opened=url;}}],close:async()=>{} };
+    },
+  });
+  assert.equal(opened,"https://pifary-dev.github.io/ravel/");
+  await session.close();
+});
+
 test("invalid attach options are rejected before connecting", async () => {
   for (const options of [
     { attach: true, cdpUrl: "http://127.0.0.1:9222" },

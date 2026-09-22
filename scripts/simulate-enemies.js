@@ -6,11 +6,7 @@ import { parseArgs } from "node:util";
 import { dirname, resolve } from "node:path";
 import catalog from "../data/enemies.json" with { type: "json" };
 import monumentalMigration from "../data/monumental-migration.json" with { type: "json" };
-import { ENEMY_TYPES } from "../src/enemies.js";
-import { MotionTracker } from "../src/observe.js";
-import * as planner from "../src/planner.js";
-import { MovementPolicy } from "../src/movement.js";
-import { replayEncounter } from "./replay-encounter.js";
+import { LIVE_PROFILE } from "../src/live-models.js";
 
 const { values } = parseArgs({
   options: {
@@ -57,65 +53,18 @@ for (const scenario of ["normal", "dash"]) {
   });
 }
 
-const f = JSON.parse(
-  readFileSync(new URL("../test/fixtures/wacky-spiral.json", import.meta.url)),
-);
-const tracker = new MotionTracker();
-const frames = f.history.map((row) => ({
-  ...row,
-  state: tracker.update({
-    ...f.state,
-    packet: row.packet,
-    player: row.player,
-    hazards: row.hazards.map((h) => ({
-      ...h,
-      uncertainMotion: ENEMY_TYPES[h.entityType]?.uncertainMotion,
-    })),
-  }),
-}));
-const trace = { frames, finalState: f.finalState };
-const broad = {
-  ...trace,
-  frames: frames.map((f) => ({
-    ...f,
-    state: {
-      ...f.state,
-      hazards: f.state.hazards.map((h) => ({ ...h, learnedMotion: undefined })),
-    },
-  })),
-};
-const replays = [];
-for (const delayTicks of [-1, 0, 1])
-  for (const [model, input] of [
-    ["broad fallback", broad],
-    ["learned patterns", trace],
-  ]) {
-    const result = {
-      model,
-      ...replayEncounter(input, planner, MovementPolicy, {
-        fromFrame: 140,
-        delayTicks,
-      }),
-    };
-    replays.push(result);
-    console.log(JSON.stringify(result));
-  }
-
 const checks = {
   normal: "seeded courses",
   wall: "seeded courses and recorded corner checks",
   dasher: "seeded courses and phase checks",
   homing: "recorded pursuit checks",
-  switch: "timer checks and reconstructed encounter",
-  sizing: "growth/reversal checks",
-  turning: "angular motion and wall checks",
-  slippery: "recorded locked steering and synthetic entry/exit",
-  pumpkin: "dormancy, windup and charge-duration checks",
-  star: "landing checks and reconstructed encounter",
-  teleporting: "landing and boundary checks",
-  wavy: "synthetic repeating-wave forecasts",
-  spiral: "recorded future forecasts and encounter replays",
-  zoning: "included in recorded Wacky encounter replays",
+  icicle: "public-client tick parity, wall pauses and corners",
+  liquid: "public-client tick parity and candidate-dependent activation",
+  turning: "public-client tick parity and reflected curves",
+  slippery: "public-client slide lock, delayed steering and wall boost",
+  ice_sniper: "forecast behavior tests; server firing and targeting unverified",
+  spiral: "causal fit and recorded trajectory checks",
+  zoning: "recorded deceleration and short packet-gap replay; later turns unverified",
 };
 const coverage = catalog.entities
   .filter((e) => e.name.endsWith("_enemy"))
@@ -124,7 +73,9 @@ const coverage = catalog.entities
     return {
       id: e.id,
       name: e.name,
-      validation: checks[family] ?? "not separately validated",
+      validation: e.name.endsWith("_switch_enemy")
+        ? "not separately validated"
+        : (checks[family] ?? "not separately validated"),
       switchVariant: e.name.endsWith("_switch_enemy"),
     };
   });
@@ -141,12 +92,12 @@ if (unknownMMTypes.length)
   );
 const report = {
   generatedAt: new Date().toISOString(),
+  controllerProfile: LIVE_PROFILE,
   source: catalog.source,
   scope:
-    "Behavior regressions, simplified normal/dasher courses, and short Wacky recorded-window replays. Family-level checks do not certify every variant, level, effect, or full live run.",
+    "Live controller regression and public-client model parity tests, plus simplified normal/dasher courses. Forecast tests and catalog entries do not establish complete live-level survival.",
   testsPassed: true,
   courses,
-  replays,
   coverage,
   monumentalMigration: {
     reference: "data/monumental-migration.json",
@@ -178,8 +129,4 @@ console.log(`Report: ${output}`);
 console.log(
   `MM reference families without separate checks: ${report.monumentalMigration.unvalidatedEnemyTypes.length}/${mmCoverage.length}.`,
 );
-if (
-  runs.some((r) => r.outcome !== "cleared") ||
-  replays.some((r) => !r.survivedRecordedWindow)
-)
-  process.exitCode = 1;
+if (runs.some((r) => r.outcome !== "cleared")) process.exitCode = 1;

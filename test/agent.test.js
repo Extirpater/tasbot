@@ -96,12 +96,14 @@ test("velocity estimates survive repeat reads but reset on area transitions", ()
   );
 });
 
-test("observer finds React component state and retains harmless enemies", () => {
+test("observer finds React component state and excludes currently harmless enemies", () => {
   const gameState = {
     self: {
       entity: { id: 1, x: 100, y: 200, radius: 10, speed: 150, deathTimer: -1 },
     },
     packetNumber: 5,
+    sequence: 12,
+    previousKeys: { get: () => [10, 19] },
     mouseDown: { x: 239, y: -4 },
     keys: { get: () => [4, 5] },
     serverTickRate: 60,
@@ -149,14 +151,16 @@ test("observer finds React component state and retains harmless enemies", () => 
     performance: { now: () => 1000 },
   });
   assert.equal(result.ready, true);
-  assert.equal(result.hazards.length, 2);
-  assert.equal(result.hazards[1].id, 3);
-  assert.equal(result.hazards[1].harmless, true);
-  assert.equal(result.hazards[1].harmlessUntilMs, 0);
+  assert.equal(result.input.sentSequence, 12);
+  assert.deepEqual(Array.from(result.input.sentKeys), [10, 19]);
+  assert.equal(result.hazards.length, 1);
+  assert.ok(!result.hazards.some((h) => h.id === 3));
   assert.equal(result.hazards[0].id, 2);
   assert.equal(result.otherPlayers.length, 1);
   assert.equal(result.otherPlayers[0].id, 6);
   assert.equal(result.otherPlayers[0].downed, false);
+  assert.equal(result.otherPlayers[0].areaId, result.area.id);
+  assert.equal(result.otherPlayers[0].rescueable, true);
   assert.equal(result.hazards[0].vx, -180);
   assert.equal(result.hazards[0].vy, 120);
   assert.equal(result.hazards[0].bounce, true);
@@ -429,6 +433,54 @@ function route(action, score, overrides = {}) {
     ...overrides,
   };
 }
+
+test("safe discretionary turns wait for an in-flight input before changing again", () => {
+  const movement = new MovementPolicy();
+  movement.observe(state(), 0, 150);
+  movement.record("up_right", 0);
+  const candidates = [route("up_right", 200), route("down_right", 300)];
+  assert.equal(movement.select(candidates, undefined, 110), "up_right");
+  assert.equal(movement.reason, "let input arrive");
+  assert.equal(movement.select(candidates, undefined, 151), "down_right");
+});
+
+test("input settling never blocks a dangerous route override or a scheduled turn", () => {
+  const movement = new MovementPolicy();
+  movement.observe(state(), 0, 200);
+  movement.select(
+    [route("up_right", 200, { firstDuration: 0.05 })],
+    undefined,
+    0,
+  );
+  movement.record("up_right", 0);
+  assert.equal(
+    movement.select(
+      [
+        route("up_right", 200, {
+          physicalClearance: -1,
+          clearance: -10,
+          collision: true,
+        }),
+        route("down_right", 300),
+      ],
+      undefined,
+      25,
+    ),
+    "down_right",
+  );
+  assert.equal(movement.reason, "safety override");
+  assert.equal(
+    movement.select(
+      [
+        route("up_right", 200),
+        route("down_right", 300, { continuedPlan: true }),
+      ],
+      undefined,
+      75,
+    ),
+    "down_right",
+  );
+});
 
 test("small alternating route advantages do not reverse a committed dodge", () => {
   const movement = new MovementPolicy();
@@ -860,7 +912,7 @@ test("delay fitting detects 125ms lag despite distant auras in the same area", (
   assert.equal(timing.delayMs, 125);
 });
 
-test("delay fitting skips movement that could cross a slowing aura", () => {
+test("delay fitting skips nearby auras with unknown slow parameters", () => {
   const timing = new InputTiming();
   timing.record("right", 0);
   timing.record("up", 300);
@@ -894,6 +946,13 @@ function controlsHarness() {
   };
   const document = {
     hidden: false,
+    body: { append() {} },
+    createElement: () => ({
+      style: {},
+      addEventListener() {},
+      remove() {},
+      blur() {},
+    }),
     addEventListener: (name, fn) => {
       documentListeners[name] = fn;
     },
@@ -948,6 +1007,102 @@ function controlsHarness() {
   };
 }
 
+test("batched input keeps held keys, repairs missing keys, and releases reversals once", () => {
+  const h = controlsHarness();
+  h.listeners.keydown(h.event);
+  const { epoch } = h.controls.read().control;
+  assert.equal(
+    h.controls.apply(epoch, true, ["Shift", "ArrowUp", "ArrowRight"], [])
+      .changes,
+    3,
+  );
+  h.events.length = 0;
+  assert.equal(
+    h.controls.apply(
+      epoch,
+      true,
+      ["Shift", "ArrowUp", "ArrowRight"],
+      ["Shift", "ArrowUp", "ArrowRight"],
+    ).changes,
+    0,
+  );
+  assert.equal(
+    h.controls.apply(
+      epoch,
+      true,
+      ["ArrowDown", "ArrowLeft"],
+      ["Shift", "ArrowUp", "ArrowRight"],
+    ).changes,
+    5,
+  );
+  assert.deepEqual(
+    h.events.map((e) => [e.type, e.key]),
+    [
+      ["keyup", "Shift"],
+      ["keyup", "ArrowUp"],
+      ["keyup", "ArrowRight"],
+      ["keydown", "ArrowDown"],
+      ["keydown", "ArrowLeft"],
+    ],
+  );
+  assert.ok(
+    h.events
+      .filter((e) => e.type === "keydown")
+      .every((e) => !e.shiftKey && !e.repeat),
+  );
+  h.events.length = 0;
+  h.controls.apply(epoch, true, ["ArrowDown", "ArrowLeft"], ["ArrowLeft"]);
+  assert.deepEqual(
+    h.events.map((e) => [e.type, e.key]),
+    [
+      ["keyup", "ArrowDown"],
+      ["keydown", "ArrowDown"],
+    ],
+  );
+});
+
+test("batched input rejects a pause between planning and applying, including candy", () => {
+  const h = controlsHarness();
+  h.listeners.keydown(h.event);
+  const { epoch } = h.controls.read().control;
+  h.controls.apply(epoch, true, ["ArrowRight", "x"], []);
+  h.listeners.keydown(h.event);
+  h.events.length = 0;
+  assert.equal(
+    h.controls.apply(epoch, true, ["ArrowDown", "x"], ["ArrowRight"]).active,
+    false,
+  );
+  assert.ok(h.events.every((e) => e.type === "keyup"));
+  h.listeners.keydown(h.event);
+  h.events.length = 0;
+  assert.equal(h.controls.apply(epoch, true, ["ArrowDown"], []).active, false);
+  assert.equal(h.events.length, 0);
+});
+
+test("batched input pauses if chat gains focus while planning", () => {
+  const h = controlsHarness();
+  h.listeners.keydown(h.event);
+  const { epoch } = h.controls.read().control;
+  h.document.activeElement = { matches: () => true };
+  assert.equal(h.controls.apply(epoch, true, ["ArrowRight"], []).active, false);
+  assert.equal(h.controls.read().control.enabled, false);
+  assert.ok(h.events.every((e) => e.type === "keyup"));
+});
+
+test("paused batches leave manually held arrows alone", () => {
+  const h = controlsHarness();
+  const { epoch } = h.controls.read().control;
+  const result = h.controls.apply(
+    epoch,
+    false,
+    [],
+    ["ArrowDown", "ArrowRight"],
+  );
+  assert.equal(result.active, false);
+  h.controls.release();
+  assert.equal(h.events.length, 0);
+});
+
 test("P still pauses when the bot holds Shift, releases Shift, and ignores chat", () => {
   const { controls, listeners, target, event, events } = controlsHarness();
   listeners.keydown(event);
@@ -967,7 +1122,33 @@ test("P still pauses when the bot holds Shift, releases Shift, and ignores chat"
   assert.equal(controls.isActive(active.epoch), false);
 });
 
-test("control watchdog releases movement after a lost heartbeat without an overlay", () => {
+test("R requests and cancels rescue while preserving pause and typing controls", () => {
+  const h = controlsHarness();
+  const press = (extra = {}) =>
+    h.listeners.keydown({ ...h.event, code: "KeyR", ...extra });
+  press();
+  assert.equal(h.controls.read().control.enabled, false);
+  assert.equal(h.controls.read().control.rescueRequest, 1);
+  h.listeners.keydown(h.event);
+  const active = h.controls.read().control;
+  press();
+  const rescue = h.controls.read().control;
+  assert.equal(rescue.enabled, true);
+  assert.equal(rescue.rescueRequest, 2);
+  assert.equal(h.controls.isActive(active.epoch), false);
+  press({ repeat: true });
+  press({ ctrlKey: true });
+  h.target.typing = true;
+  press();
+  h.target.typing = false;
+  assert.equal(h.controls.read().control.rescueRequest, 2);
+  press();
+  assert.equal(h.controls.read().control.rescueRequest, 3);
+  h.listeners.keydown({ ...h.event, code: "Escape" });
+  assert.equal(h.controls.isActive(rescue.epoch), false);
+});
+
+test("control watchdog releases movement after a lost heartbeat", () => {
   const { controls, listeners, event, events, advance } = controlsHarness();
   advance(5000);
   listeners.keydown(event);
@@ -1105,5 +1286,35 @@ test("keyboard releases old directions and all movement on pause", async () => {
   await keyboard.set("focus_right");
   await keyboard.release();
   assert.ok(events.some(([event, key]) => event === "up" && key === "Shift"));
+  assert.equal(keyboard.held.size, 0);
+});
+
+test("keyboard repairs the Vicious Valley missing Down key without resetting held Right", async () => {
+  // The recording selected down_right while game.keys contained only native ID 10.
+  const events = [],
+    keyboard = new KeyboardController({
+      up: async (key) => events.push(["up", key]),
+      down: async (key) => events.push(["down", key]),
+    });
+  await keyboard.set("down_right");
+  events.length = 0;
+  await keyboard.set("down_right", [], ["ArrowRight"]);
+  assert.deepEqual(events, [
+    ["up", "ArrowDown"],
+    ["down", "ArrowDown"],
+  ]);
+  events.length = 0;
+  await keyboard.set("down_right", [], ["ArrowRight", "ArrowDown"]);
+  assert.equal(events.length, 0);
+  await keyboard.set(
+    "down_right",
+    [],
+    ["ArrowRight", "ArrowDown", "ArrowUp", "Shift"],
+  );
+  assert.deepEqual(events, [
+    ["up", "ArrowUp"],
+    ["up", "Shift"],
+  ]);
+  await keyboard.release();
   assert.equal(keyboard.held.size, 0);
 });

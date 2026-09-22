@@ -13,7 +13,12 @@
     "baseline": "node --env-file-if-exists=.env src/cli.js --policy baseline",
     "test": "node --test",
     "benchmark": "node scripts/benchmark.js",
-    "simulate:enemies": "node scripts/simulate-enemies.js"
+    "simulate:enemies": "node scripts/simulate-enemies.js",
+    "ravel:play": "node --env-file-if-exists=.env src/cli.js --policy baseline --game ravel",
+    "ravel:setup": "node scripts/setup-ravel.js",
+    "ravel:eval": "node scripts/train-ravel.js",
+    "ravel:verify": "node scripts/verify-ravel-run.js",
+    "ravel:train": "node scripts/train-ravel.js --train"
   },
   "dependencies": {
     "playwright": "1.63.0"

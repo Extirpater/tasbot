@@ -1,6 +1,5 @@
 import { ACTIONS } from "./planner.js";
 import { observeGame } from "./observe.js";
-import { ENEMY_TYPES } from "./enemies.js";
 
 export class KeyboardController {
   held = new Set();
@@ -114,14 +113,86 @@ export class DecisionLoop {
 }
 
 // The returned object is kept by a JSHandle, never assigned to the page's
-// globals or DOM. Emergency releases remain local so a stalled Node process
-// cannot leave the last movement command held indefinitely.
-export function installControls(observe) {
+// globals. The rescue button is ordinary UI. Emergency releases remain local
+// so a stalled Node process cannot leave the last movement command held.
+export function installControls(observe, { rescue = true, keyTarget = "window", pauseOnDeath = false,
+  exclusive = false, manualCodes = ["KeyW", "KeyA", "KeyS", "KeyD"] } = {}) {
+  let owner;
+  if (exclusive) {
+    if (document.querySelector("[data-ravel-assist-owner]")) {
+      observe.dispose?.();
+      throw new Error("Ravel assist is already attached. Stop its terminal first, or reload after a crashed session.");
+    }
+    owner = document.createElement("span");
+    owner.hidden = true;
+    owner.setAttribute("data-ravel-assist-owner", "");
+    document.body.append(owner);
+  }
+  const inputTarget = keyTarget === "document" ? document : window;
   const control = {
     enabled: false,
     epoch: 0,
+    rescueRequest: 0,
     heartbeat: performance.now(),
   };
+  let rescuing = false;
+  const held = new Set();
+  const keyCodes = {
+    ArrowUp: 38,
+    ArrowDown: 40,
+    ArrowLeft: 37,
+    ArrowRight: 39,
+    Shift: 16,
+    x: 88,
+  };
+  const dispatchKey = (type, key) => {
+    if (type === "keydown") held.add(key);
+    else held.delete(key);
+    inputTarget.dispatchEvent(
+      new KeyboardEvent(type, {
+        key,
+        code: key === "Shift" ? "ShiftLeft" : key === "x" ? "KeyX" : key,
+        keyCode: keyCodes[key],
+        which: keyCodes[key],
+        shiftKey: held.has("Shift"),
+        repeat: false,
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+  };
+  const rescueButton = document.createElement("button");
+  rescueButton.type = "button";
+  rescueButton.textContent = "Rescue nearest (R)";
+  rescueButton.hidden = true;
+  Object.assign(rescueButton.style, {
+    position: "fixed",
+    top: "12px",
+    right: "12px",
+    zIndex: "2147483647",
+    padding: "9px 14px",
+    borderRadius: "6px",
+    border: "1px solid #8293ad",
+    background: "#182234",
+    color: "#fff",
+    font: "14px system-ui",
+    cursor: "pointer",
+  });
+  if (rescue) document.body.append(rescueButton);
+  const requestRescue = () => {
+    control.rescueRequest++;
+    control.epoch++;
+    control.heartbeat = performance.now();
+  };
+  const rescueClick = (event) => {
+    event.stopImmediatePropagation();
+    if (control.enabled) requestRescue();
+    rescueButton.blur();
+  };
+  const stopPointer = (event) => event.stopPropagation();
+  rescueButton.addEventListener("click", rescueClick);
+  for (const name of ["pointerdown", "pointerup", "mousedown", "mouseup"])
+    rescueButton.addEventListener(name, stopPointer);
   const releaseKeys = () => {
     for (const [key, keyCode] of [
       ["ArrowUp", 38],
@@ -131,7 +202,7 @@ export function installControls(observe) {
       ["Shift", 16],
       ["x", 88],
     ]) {
-      window.dispatchEvent(
+      inputTarget.dispatchEvent(
         new KeyboardEvent("keyup", {
           key,
           code: key === "Shift" ? "ShiftLeft" : key === "x" ? "KeyX" : key,
@@ -141,9 +212,12 @@ export function installControls(observe) {
         }),
       );
     }
+    held.clear();
   };
   const pause = () => {
     control.enabled = false;
+    rescuing = false;
+    rescueButton.disabled = true;
     control.epoch++;
     releaseKeys();
   };
@@ -158,11 +232,11 @@ export function installControls(observe) {
     if (
       control.enabled &&
       !typing &&
-      ["KeyW", "KeyA", "KeyS", "KeyD"].includes(event.code)
+      manualCodes.includes(event.code)
     )
       pause();
     if (
-      event.code === "KeyP" &&
+      (event.code === "KeyP" || rescue && event.code === "KeyR") &&
       !typing &&
       !event.isComposing &&
       !event.ctrlKey &&
@@ -172,8 +246,13 @@ export function installControls(observe) {
       event.preventDefault();
       event.stopImmediatePropagation();
       if (!event.repeat) {
-        control.enabled = !control.enabled;
-        control.epoch++;
+        if (event.code === "KeyR") {
+          requestRescue();
+        } else {
+          control.enabled = !control.enabled;
+          control.epoch++;
+          if (control.enabled) observe.resume?.();
+        }
         control.heartbeat = performance.now();
         if (!control.enabled) releaseKeys();
       }
@@ -196,21 +275,85 @@ export function installControls(observe) {
       control.heartbeat = performance.now();
       const raw = observe();
       if (control.enabled && raw.input?.manualDirectionHeld) pause();
+      if (control.enabled && pauseOnDeath && (!raw.ready || raw.player?.downed)) pause();
+      const available =
+        raw.ready &&
+        raw.otherPlayers?.some(
+          (p) =>
+            p.downed &&
+            p.rescueable !== false &&
+            p.areaId === raw.area.id &&
+            p.x >= raw.area.x &&
+            p.x <= raw.area.x + raw.area.width &&
+            p.y >= raw.area.y &&
+            p.y <= raw.area.y + raw.area.height,
+        );
+      rescueButton.hidden = !raw.ready || (!available && !rescuing);
+      rescueButton.disabled = !control.enabled || raw.player?.downed;
+      rescueButton.textContent = rescuing
+        ? "Cancel rescue (R)"
+        : "Rescue nearest (R)";
+      rescueButton.title = control.enabled
+        ? "Rescue the nearest downed player in this area"
+        : "Press P to enable the controller first";
       return {
-        control: { enabled: control.enabled, epoch: control.epoch },
+        control: {
+          enabled: control.enabled,
+          epoch: control.epoch,
+          rescueRequest: control.rescueRequest,
+        },
         raw,
       };
     },
-    isActive(epoch) {
-      return control.enabled && control.epoch === epoch;
+    isActive(epoch, rescue = false) {
+      const active = control.enabled && control.epoch === epoch;
+      if (active) rescuing = rescue;
+      return active;
+    },
+    apply(epoch, active, keys, observedKeys, rescue = false) {
+      // One synchronous batch: the game's input sampler cannot see only half
+      // of a reversal, and a pause cannot race a separate key-down RPC.
+      const typing = document.activeElement?.matches?.(
+        'input, textarea, select, [contenteditable]:not([contenteditable="false"])',
+      );
+      if (control.enabled && (typing || document.hidden)) pause();
+      active = active && control.enabled && control.epoch === epoch;
+      if (active) rescuing = rescue;
+      const next = new Set(active ? keys.filter((key) => keyCodes[key]) : []);
+      const observed = active && observedKeys ? new Set(observedKeys) : held;
+      const releases = new Set(
+        [...held, ...observed].filter(
+          (key) =>
+            keyCodes[key] &&
+            (!next.has(key) || (held.has(key) && !observed.has(key))),
+        ),
+      );
+      let changes = 0;
+      for (const key of releases) {
+        dispatchKey("keyup", key);
+        changes++;
+      }
+      for (const key of next)
+        if (!held.has(key)) {
+          dispatchKey("keydown", key);
+          changes++;
+        }
+      control.heartbeat = performance.now();
+      return { active, changes };
+    },
+    release() {
+      for (const key of [...held]) dispatchKey("keyup", key);
     },
     dispose() {
       pause();
       clearInterval(watchdog);
+      rescueButton.remove();
       window.removeEventListener("keydown", keydown, true);
       window.removeEventListener("blur", pause);
       window.removeEventListener("pagehide", pause);
       document.removeEventListener("visibilitychange", visibilitychange);
+      observe.dispose?.();
+      owner?.remove();
     },
   };
 }
@@ -221,8 +364,9 @@ export class PageController {
   handle = null;
   document = 0;
 
-  constructor(page) {
+  constructor(page, { installScript } = {}) {
     this.page = page;
+    this.installScript = installScript ?? `(${installControls.toString()})(() => (${observeGame.toString()})())`;
     this.onNavigation = (frame) => {
       if (frame !== page.mainFrame()) return;
       this.document++;
@@ -240,10 +384,7 @@ export class PageController {
           await this.page.waitForLoadState("domcontentloaded");
           this.handleDocument = this.document;
           this.handle = await this.page.evaluateHandle(
-            `(() => {
-              const types = ${JSON.stringify(ENEMY_TYPES)};
-              return (${installControls.toString()})(() => (${observeGame.toString()})(types));
-            })()`,
+            this.installScript,
           );
         }
         const document = this.handleDocument;
@@ -259,18 +400,56 @@ export class PageController {
     }
   }
 
-  async isActive(control, active) {
+  async isActive(control, active, rescuing = false) {
     if (!active || !this.handle || control.document !== this.document)
       return false;
     try {
       return await this.handle.evaluate(
-        (controls, epoch) => controls.isActive(epoch),
-        control.epoch,
+        (controls, { epoch, rescuing }) => controls.isActive(epoch, rescuing),
+        { epoch: control.epoch, rescuing },
       );
     } catch (error) {
       if (this.navigationInterrupted(error, control.document)) return false;
       throw error;
     }
+  }
+
+  async apply(
+    control,
+    active,
+    action,
+    auxiliaryKeys = [],
+    observedKeys,
+    rescuing = false,
+  ) {
+    if (!this.handle || control.document !== this.document)
+      return { active: false, changes: 0 };
+    try {
+      return await this.handle.evaluate(
+        (controls, args) => controls.apply(...args),
+        [
+          control.epoch,
+          active,
+          [...ACTIONS[action].keys, ...auxiliaryKeys],
+          observedKeys,
+          rescuing,
+        ],
+      );
+    } catch (error) {
+      if (this.navigationInterrupted(error, control.document))
+        return { active: false, changes: 0 };
+      throw error;
+    }
+  }
+
+  async release() {
+    if (this.handle)
+      await this.handle
+        .evaluate((controls) => controls.release())
+        .catch((error) => {
+          if (!this.navigationInterrupted(error, this.handleDocument))
+            throw error;
+        });
   }
 
   navigationInterrupted(error, document) {

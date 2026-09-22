@@ -1,0 +1,3657 @@
+{
+  "source": "artifacts/death-1790057484504.json",
+  "collider": 457,
+  "warmup": [
+    {
+      "ready": true,
+      "time": 99174.19999998808,
+      "packet": 5778,
+      "tickRate": 60,
+      "area": {
+        "x": 57632,
+        "y": 16000,
+        "width": 3200,
+        "height": 480,
+        "id": "Wacky Wonderland:18:57632:16000",
+        "number": 19,
+        "zones": [
+          {
+            "x": 57632,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 57696,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 57952,
+            "y": 16000,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 60512,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 60768,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 729,
+        "heroType": 17,
+        "x": 57728.375,
+        "y": 16465.00390625,
+        "radius": 15,
+        "speed": 690,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "slideAngle": 0,
+        "auraImmune": false,
+        "untargetable": false,
+        "speedMultiplier": 1,
+        "speedBonus": 180,
+        "speedBonusWithoutCandy": 180,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 6,
+        "downed": false,
+        "level": 41,
+        "energy": 23.270000457763672,
+        "maxEnergy": 30,
+        "vx": 0,
+        "vy": 0
+      },
+      "hazards": [
+        {
+          "id": 37,
+          "x": 58253.66796875,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 61,
+          "x": 59884.9296875,
+          "y": 16248.84765625,
+          "radius": 18,
+          "vx": 142.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 98,
+          "x": 60200.33203125,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 180,
+          "x": 60440.8359375,
+          "y": 16085.583984375,
+          "radius": 18,
+          "vx": 8.7256085268843e-15,
+          "vy": 142.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 200,
+          "x": 60049.6796875,
+          "y": 16156.3876953125,
+          "radius": 18,
+          "vx": 9.64409346779983e-15,
+          "vy": 157.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 219,
+          "x": 59237,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 249,
+          "x": 60210.33203125,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 304,
+          "x": 59555.13671875,
+          "y": 16092.923828125,
+          "radius": 18,
+          "vx": -142.5,
+          "vy": 1.74512170537686e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 316,
+          "x": 60139.86328125,
+          "y": 16343.052734375,
+          "radius": 18,
+          "vx": -142.5,
+          "vy": 1.74512170537686e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 337,
+          "x": 58019.2109375,
+          "y": 16126.71875,
+          "radius": 18,
+          "vx": 157.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 399,
+          "x": 58187.05859375,
+          "y": 16225.271484375,
+          "radius": 18,
+          "vx": -2.6176824786559513e-14,
+          "vy": -142.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 418,
+          "x": 58923.125,
+          "y": 16257.875,
+          "radius": 18,
+          "vx": 8.7256085268843e-15,
+          "vy": 142.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 457,
+          "x": 58028.33984375,
+          "y": 16326.1103515625,
+          "radius": 18,
+          "vx": -157.5,
+          "vy": 1.928818693559966e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 479,
+          "x": 58756.73828125,
+          "y": 16381.802734375,
+          "radius": 18,
+          "vx": 8.7256085268843e-15,
+          "vy": 142.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 481,
+          "x": 58535.828125,
+          "y": 16040.849609375,
+          "radius": 18,
+          "vx": 142.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 519,
+          "x": 58288.42578125,
+          "y": 16365.7646484375,
+          "radius": 18,
+          "vx": 157.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 558,
+          "x": 58756.55078125,
+          "y": 16350.115234375,
+          "radius": 18,
+          "vx": -142.5,
+          "vy": 1.74512170537686e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 570,
+          "x": 59227,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 578,
+          "x": 59027.60546875,
+          "y": 16407.357421875,
+          "radius": 18,
+          "vx": -2.8932281197492876e-14,
+          "vy": -157.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 595,
+          "x": 59884.4765625,
+          "y": 16228.0849609375,
+          "radius": 18,
+          "vx": -157.5,
+          "vy": 1.928818693559966e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 675,
+          "x": 58846.21875,
+          "y": 16142.0078125,
+          "radius": 18,
+          "vx": -142.5,
+          "vy": 1.74512170537686e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 714,
+          "x": 59534.82421875,
+          "y": 16152.99609375,
+          "radius": 18,
+          "vx": -157.5,
+          "vy": 1.928818693559966e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 820,
+          "x": 58263.66796875,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 824,
+          "x": 60357.37890625,
+          "y": 16346.306640625,
+          "radius": 18,
+          "vx": -2.6176824786559513e-14,
+          "vy": -142.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          10
+        ],
+        "sentSequence": 250,
+        "sentKeys": [
+          10
+        ],
+        "manualDirectionHeld": false,
+        "controllerKeys": [
+          "ArrowRight"
+        ],
+        "usingGamepad": false
+      }
+    },
+    {
+      "ready": true,
+      "time": 99210.89999997616,
+      "packet": 5779,
+      "tickRate": 60,
+      "area": {
+        "x": 57632,
+        "y": 16000,
+        "width": 3200,
+        "height": 480,
+        "id": "Wacky Wonderland:18:57632:16000",
+        "number": 19,
+        "zones": [
+          {
+            "x": 57632,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 57696,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 57952,
+            "y": 16000,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 60512,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 60768,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 729,
+        "heroType": 17,
+        "x": 57739.875,
+        "y": 16465.00390625,
+        "radius": 15,
+        "speed": 690,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "slideAngle": 0,
+        "auraImmune": false,
+        "untargetable": false,
+        "speedMultiplier": 1,
+        "speedBonus": 180,
+        "speedBonusWithoutCandy": 180,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 6,
+        "downed": false,
+        "level": 41,
+        "energy": 23.27833366394043,
+        "maxEnergy": 30,
+        "vx": 690,
+        "vy": 0
+      },
+      "hazards": [
+        {
+          "id": 37,
+          "x": 58251.16796875,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 61,
+          "x": 59887.1796875,
+          "y": 16248.84765625,
+          "radius": 18,
+          "vx": 135,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 98,
+          "x": 60197.83203125,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 180,
+          "x": 60440.8359375,
+          "y": 16087.833984375,
+          "radius": 18,
+          "vx": 8.266366056426536e-15,
+          "vy": 135,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 200,
+          "x": 60049.6796875,
+          "y": 16159.1376953125,
+          "radius": 18,
+          "vx": 1.0103335938257594e-14,
+          "vy": 165,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 219,
+          "x": 59239.5,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 249,
+          "x": 60212.83203125,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 304,
+          "x": 59552.88671875,
+          "y": 16092.923828125,
+          "radius": 18,
+          "vx": -135,
+          "vy": 1.6532732112853072e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 316,
+          "x": 60137.61328125,
+          "y": 16343.052734375,
+          "radius": 18,
+          "vx": -135,
+          "vy": 1.6532732112853072e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 337,
+          "x": 58021.9609375,
+          "y": 16126.71875,
+          "radius": 18,
+          "vx": 165,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 399,
+          "x": 58187.05859375,
+          "y": 16223.021484375,
+          "radius": 18,
+          "vx": -2.4799098169279608e-14,
+          "vy": -135,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 418,
+          "x": 58923.125,
+          "y": 16260.125,
+          "radius": 18,
+          "vx": 8.266366056426536e-15,
+          "vy": 135,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 457,
+          "x": 58025.58984375,
+          "y": 16326.1103515625,
+          "radius": 18,
+          "vx": -165,
+          "vy": 2.0206671876515188e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 479,
+          "x": 58756.73828125,
+          "y": 16384.052734375,
+          "radius": 18,
+          "vx": 8.266366056426536e-15,
+          "vy": 135,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 481,
+          "x": 58535.828125,
+          "y": 16043.099609375,
+          "radius": 18,
+          "vx": 8.266366056426536e-15,
+          "vy": 135,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 519,
+          "x": 58291.17578125,
+          "y": 16365.7646484375,
+          "radius": 18,
+          "vx": 165,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 558,
+          "x": 58754.30078125,
+          "y": 16350.115234375,
+          "radius": 18,
+          "vx": -135,
+          "vy": 1.6532732112853072e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 570,
+          "x": 59224.5,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 578,
+          "x": 59027.60546875,
+          "y": 16404.607421875,
+          "radius": 18,
+          "vx": -3.031000781477278e-14,
+          "vy": -165,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 595,
+          "x": 59881.7265625,
+          "y": 16228.0849609375,
+          "radius": 18,
+          "vx": -165,
+          "vy": 2.0206671876515188e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 675,
+          "x": 58843.96875,
+          "y": 16142.0078125,
+          "radius": 18,
+          "vx": -135,
+          "vy": 1.6532732112853072e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 714,
+          "x": 59532.07421875,
+          "y": 16152.99609375,
+          "radius": 18,
+          "vx": -165,
+          "vy": 2.0206671876515188e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 820,
+          "x": 58266.16796875,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 824,
+          "x": 60355.12890625,
+          "y": 16346.306640625,
+          "radius": 18,
+          "vx": -135,
+          "vy": 1.6532732112853072e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          10
+        ],
+        "sentSequence": 251,
+        "sentKeys": [],
+        "manualDirectionHeld": false,
+        "controllerKeys": [
+          "ArrowRight"
+        ],
+        "usingGamepad": false
+      }
+    },
+    {
+      "ready": true,
+      "time": 99549.5,
+      "packet": 5800,
+      "tickRate": 60,
+      "area": {
+        "x": 57632,
+        "y": 16000,
+        "width": 3200,
+        "height": 480,
+        "id": "Wacky Wonderland:18:57632:16000",
+        "number": 19,
+        "zones": [
+          {
+            "x": 57632,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 57696,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 57952,
+            "y": 16000,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 60512,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 60768,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 729,
+        "heroType": 17,
+        "x": 57801.2109375,
+        "y": 16465.00390625,
+        "radius": 15,
+        "speed": 690,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "slideAngle": 0,
+        "auraImmune": false,
+        "untargetable": false,
+        "speedMultiplier": 1,
+        "speedBonus": 180,
+        "speedBonusWithoutCandy": 180,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 6,
+        "downed": false,
+        "level": 41,
+        "energy": 23.453332901000977,
+        "maxEnergy": 30,
+        "vx": 175.24553571428572,
+        "vy": 0
+      },
+      "hazards": [
+        {
+          "id": 37,
+          "x": 58198.66796875,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 61,
+          "x": 59906.3046875,
+          "y": 16248.84765625,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 98,
+          "x": 60145.33203125,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 180,
+          "x": 60483.5,
+          "y": 16087.833984375,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 200,
+          "x": 60049.6796875,
+          "y": 16188.0126953125,
+          "radius": 18,
+          "vx": 4.592425697194379e-16,
+          "vy": 7.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 219,
+          "x": 59292,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 249,
+          "x": 60265.33203125,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 304,
+          "x": 59539.38671875,
+          "y": 16070.048828125,
+          "radius": 18,
+          "vx": -2.755455140383942e-14,
+          "vy": -150,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 316,
+          "x": 60118.48828125,
+          "y": 16343.052734375,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 337,
+          "x": 58080.4609375,
+          "y": 16126.71875,
+          "radius": 18,
+          "vx": 105,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 399,
+          "x": 58187.05859375,
+          "y": 16203.896484375,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 418,
+          "x": 58923.125,
+          "y": 16279.25,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 457,
+          "x": 57983.625,
+          "y": 16326.1103515625,
+          "radius": 18,
+          "vx": 195,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 479,
+          "x": 58759.48828125,
+          "y": 16402.802734375,
+          "radius": 18,
+          "vx": 45,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 481,
+          "x": 58535.828125,
+          "y": 16109.724609375,
+          "radius": 18,
+          "vx": 1.2858791555097568e-14,
+          "vy": 210,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 519,
+          "x": 58362.67578125,
+          "y": 16365.7646484375,
+          "radius": 18,
+          "vx": 202.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 558,
+          "x": 58738.67578125,
+          "y": 16334.865234375,
+          "radius": 18,
+          "vx": -2.2043641758346245e-14,
+          "vy": -120,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 570,
+          "x": 59172,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 578,
+          "x": 59027.60546875,
+          "y": 16332.982421875,
+          "radius": 18,
+          "vx": -3.857637387119932e-14,
+          "vy": -210,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 595,
+          "x": 59829.1015625,
+          "y": 16228.0849609375,
+          "radius": 18,
+          "vx": -82.5,
+          "vy": 1.0103335938257594e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 675,
+          "x": 58824.84375,
+          "y": 16142.0078125,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 714,
+          "x": 59460.44921875,
+          "y": 16152.99609375,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 820,
+          "x": 58318.66796875,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 824,
+          "x": 60288.50390625,
+          "y": 16346.306640625,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          10
+        ],
+        "sentSequence": 252,
+        "sentKeys": [
+          10
+        ],
+        "manualDirectionHeld": false,
+        "controllerKeys": [
+          "ArrowRight"
+        ],
+        "usingGamepad": false
+      }
+    },
+    {
+      "ready": true,
+      "time": 99591.80000001192,
+      "packet": 5803,
+      "tickRate": 60,
+      "area": {
+        "x": 57632,
+        "y": 16000,
+        "width": 3200,
+        "height": 480,
+        "id": "Wacky Wonderland:18:57632:16000",
+        "number": 19,
+        "zones": [
+          {
+            "x": 57632,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 57696,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 57952,
+            "y": 16000,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 60512,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 60768,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 729,
+        "heroType": 17,
+        "x": 57801.2109375,
+        "y": 16465.00390625,
+        "radius": 15,
+        "speed": 690,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "slideAngle": 0,
+        "auraImmune": false,
+        "untargetable": false,
+        "speedMultiplier": 1,
+        "speedBonus": 180,
+        "speedBonusWithoutCandy": 180,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 6,
+        "downed": false,
+        "level": 41,
+        "energy": 23.47833251953125,
+        "maxEnergy": 30,
+        "vx": 0,
+        "vy": 0
+      },
+      "hazards": [
+        {
+          "id": 37,
+          "x": 58191.16796875,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 61,
+          "x": 59906.3046875,
+          "y": 16248.84765625,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 98,
+          "x": 60137.83203125,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 180,
+          "x": 60473,
+          "y": 16087.833984375,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 200,
+          "x": 60049.6796875,
+          "y": 16188.0126953125,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 219,
+          "x": 59299.5,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 249,
+          "x": 60272.83203125,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 304,
+          "x": 59539.38671875,
+          "y": 16061.798828125,
+          "radius": 18,
+          "vx": -3.1687734432052687e-14,
+          "vy": -172.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 316,
+          "x": 60118.48828125,
+          "y": 16343.052734375,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 337,
+          "x": 58084.9609375,
+          "y": 16126.71875,
+          "radius": 18,
+          "vx": 82.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 399,
+          "x": 58187.05859375,
+          "y": 16203.896484375,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 418,
+          "x": 58923.875,
+          "y": 16279.25,
+          "radius": 18,
+          "vx": 22.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 457,
+          "x": 57992.625,
+          "y": 16326.1103515625,
+          "radius": 18,
+          "vx": 172.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 479,
+          "x": 58762.48828125,
+          "y": 16402.802734375,
+          "radius": 18,
+          "vx": 67.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 481,
+          "x": 58535.828125,
+          "y": 16120.224609375,
+          "radius": 18,
+          "vx": 1.2858791555097568e-14,
+          "vy": 210,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 519,
+          "x": 58372.05078125,
+          "y": 16365.7646484375,
+          "radius": 18,
+          "vx": 180,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 558,
+          "x": 58738.67578125,
+          "y": 16328.115234375,
+          "radius": 18,
+          "vx": -2.6176824786559513e-14,
+          "vy": -142.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 570,
+          "x": 59164.5,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 578,
+          "x": 59027.60546875,
+          "y": 16322.857421875,
+          "radius": 18,
+          "vx": -3.5820917460265955e-14,
+          "vy": -195,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 595,
+          "x": 59825.7265625,
+          "y": 16228.0849609375,
+          "radius": 18,
+          "vx": -60,
+          "vy": 7.347881115511007e-15,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 675,
+          "x": 58824.84375,
+          "y": 16142.0078125,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 714,
+          "x": 59449.94921875,
+          "y": 16152.99609375,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 820,
+          "x": 58326.16796875,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 824,
+          "x": 60278.00390625,
+          "y": 16346.306640625,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          10,
+          19
+        ],
+        "sentSequence": 252,
+        "sentKeys": [
+          10
+        ],
+        "manualDirectionHeld": false,
+        "controllerKeys": [
+          "ArrowRight",
+          "ArrowUp"
+        ],
+        "usingGamepad": false
+      }
+    },
+    {
+      "ready": true,
+      "time": 99611.09999996424,
+      "packet": 5804,
+      "tickRate": 60,
+      "area": {
+        "x": 57632,
+        "y": 16000,
+        "width": 3200,
+        "height": 480,
+        "id": "Wacky Wonderland:18:57632:16000",
+        "number": 19,
+        "zones": [
+          {
+            "x": 57632,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 57696,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 57952,
+            "y": 16000,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 60512,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 60768,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 729,
+        "heroType": 17,
+        "x": 57801.2109375,
+        "y": 16465.00390625,
+        "radius": 15,
+        "speed": 690,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "slideAngle": 0,
+        "auraImmune": false,
+        "untargetable": false,
+        "speedMultiplier": 1,
+        "speedBonus": 180,
+        "speedBonusWithoutCandy": 180,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 6,
+        "downed": false,
+        "level": 41,
+        "energy": 23.486665725708008,
+        "maxEnergy": 30,
+        "vx": 0,
+        "vy": 0
+      },
+      "hazards": [
+        {
+          "id": 37,
+          "x": 58188.66796875,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 61,
+          "x": 59906.3046875,
+          "y": 16248.72265625,
+          "radius": 18,
+          "vx": -1.3777276098966403e-15,
+          "vy": -7.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 98,
+          "x": 60135.33203125,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 180,
+          "x": 60469.5,
+          "y": 16087.833984375,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 200,
+          "x": 60049.6796875,
+          "y": 16188.0126953125,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 219,
+          "x": 59302,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 249,
+          "x": 60275.33203125,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 304,
+          "x": 59539.38671875,
+          "y": 16058.798828125,
+          "radius": 18,
+          "vx": -3.3065464225706144e-14,
+          "vy": -180,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 316,
+          "x": 60118.48828125,
+          "y": 16343.052734375,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 337,
+          "x": 58086.2109375,
+          "y": 16126.71875,
+          "radius": 18,
+          "vx": 75,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 399,
+          "x": 58187.05859375,
+          "y": 16203.896484375,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 418,
+          "x": 58924.375,
+          "y": 16279.25,
+          "radius": 18,
+          "vx": 30,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 457,
+          "x": 57995.375,
+          "y": 16326.1103515625,
+          "radius": 18,
+          "vx": 165,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 479,
+          "x": 58763.73828125,
+          "y": 16402.802734375,
+          "radius": 18,
+          "vx": 75,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 481,
+          "x": 58535.828125,
+          "y": 16123.724609375,
+          "radius": 18,
+          "vx": 1.2858791555097568e-14,
+          "vy": 210,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 519,
+          "x": 58374.92578125,
+          "y": 16365.7646484375,
+          "radius": 18,
+          "vx": 172.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 558,
+          "x": 58738.67578125,
+          "y": 16325.615234375,
+          "radius": 18,
+          "vx": -2.755455140383942e-14,
+          "vy": -150,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 570,
+          "x": 59162,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 578,
+          "x": 59027.60546875,
+          "y": 16319.732421875,
+          "radius": 18,
+          "vx": -3.444319084298605e-14,
+          "vy": -187.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 595,
+          "x": 59824.8515625,
+          "y": 16228.0849609375,
+          "radius": 18,
+          "vx": -52.5,
+          "vy": 6.429395777548784e-15,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 675,
+          "x": 58824.84375,
+          "y": 16142.0078125,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 714,
+          "x": 59446.44921875,
+          "y": 16152.99609375,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 820,
+          "x": 58328.66796875,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 824,
+          "x": 60274.50390625,
+          "y": 16346.306640625,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          10,
+          19
+        ],
+        "sentSequence": 253,
+        "sentKeys": [
+          10,
+          19
+        ],
+        "manualDirectionHeld": false,
+        "controllerKeys": [
+          "ArrowRight",
+          "ArrowUp"
+        ],
+        "usingGamepad": false
+      }
+    },
+    {
+      "ready": true,
+      "time": 99630.30000001192,
+      "packet": 5805,
+      "tickRate": 60,
+      "area": {
+        "x": 57632,
+        "y": 16000,
+        "width": 3200,
+        "height": 480,
+        "id": "Wacky Wonderland:18:57632:16000",
+        "number": 19,
+        "zones": [
+          {
+            "x": 57632,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 57696,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 57952,
+            "y": 16000,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 60512,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 60768,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 729,
+        "heroType": 17,
+        "x": 57801.2109375,
+        "y": 16465.00390625,
+        "radius": 15,
+        "speed": 690,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "slideAngle": 0,
+        "auraImmune": false,
+        "untargetable": false,
+        "speedMultiplier": 1,
+        "speedBonus": 180,
+        "speedBonusWithoutCandy": 180,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 6,
+        "downed": false,
+        "level": 41,
+        "energy": 23.4950008392334,
+        "maxEnergy": 30,
+        "vx": 0,
+        "vy": 0
+      },
+      "hazards": [
+        {
+          "id": 37,
+          "x": 58186.16796875,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 61,
+          "x": 59906.3046875,
+          "y": 16248.47265625,
+          "radius": 18,
+          "vx": -2.7554552197932807e-15,
+          "vy": -15,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 98,
+          "x": 60132.83203125,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 180,
+          "x": 60466,
+          "y": 16087.833984375,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 200,
+          "x": 60049.6796875,
+          "y": 16188.0126953125,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 219,
+          "x": 59304.5,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 249,
+          "x": 60277.83203125,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 304,
+          "x": 59539.38671875,
+          "y": 16055.673828125,
+          "radius": 18,
+          "vx": -3.444319084298605e-14,
+          "vy": -187.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 316,
+          "x": 60118.48828125,
+          "y": 16343.052734375,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 337,
+          "x": 58087.3359375,
+          "y": 16126.71875,
+          "radius": 18,
+          "vx": 67.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 399,
+          "x": 58187.05859375,
+          "y": 16203.896484375,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 418,
+          "x": 58925,
+          "y": 16279.25,
+          "radius": 18,
+          "vx": 37.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 457,
+          "x": 57998,
+          "y": 16326.1103515625,
+          "radius": 18,
+          "vx": 157.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 479,
+          "x": 58765.11328125,
+          "y": 16402.802734375,
+          "radius": 18,
+          "vx": 82.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 481,
+          "x": 58535.828125,
+          "y": 16127.224609375,
+          "radius": 18,
+          "vx": 1.2858791555097568e-14,
+          "vy": 210,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 519,
+          "x": 58377.67578125,
+          "y": 16365.7646484375,
+          "radius": 18,
+          "vx": 165,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 558,
+          "x": 58738.67578125,
+          "y": 16322.990234375,
+          "radius": 18,
+          "vx": -2.8932281197492876e-14,
+          "vy": -157.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 570,
+          "x": 59159.5,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 578,
+          "x": 59027.60546875,
+          "y": 16316.732421875,
+          "radius": 18,
+          "vx": -3.3065464225706144e-14,
+          "vy": -180,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 595,
+          "x": 59824.1015625,
+          "y": 16228.0849609375,
+          "radius": 18,
+          "vx": -45,
+          "vy": 5.510910439586561e-15,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 675,
+          "x": 58824.84375,
+          "y": 16142.0078125,
+          "radius": 18,
+          "vx": 0,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 714,
+          "x": 59443.07421875,
+          "y": 16152.99609375,
+          "radius": 18,
+          "vx": -202.5,
+          "vy": 2.4799098169279608e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 820,
+          "x": 58331.16796875,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 824,
+          "x": 60271.00390625,
+          "y": 16346.306640625,
+          "radius": 18,
+          "vx": -210,
+          "vy": 2.5717583110195137e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          10,
+          19
+        ],
+        "sentSequence": 253,
+        "sentKeys": [
+          10,
+          19
+        ],
+        "manualDirectionHeld": false,
+        "controllerKeys": [
+          "ArrowRight",
+          "ArrowUp"
+        ],
+        "usingGamepad": false
+      }
+    }
+  ],
+  "state": {
+    "ready": true,
+    "time": 99648.39999997616,
+    "packet": 5806,
+    "tickRate": 60,
+    "area": {
+      "x": 57632,
+      "y": 16000,
+      "width": 3200,
+      "height": 480,
+      "id": "Wacky Wonderland:18:57632:16000",
+      "number": 19,
+      "zones": [
+        {
+          "x": 57632,
+          "y": 16000,
+          "width": 64,
+          "height": 480,
+          "type": 2,
+          "friction": 0.75
+        },
+        {
+          "x": 57696,
+          "y": 16000,
+          "width": 256,
+          "height": 480,
+          "type": 4,
+          "friction": 0.75
+        },
+        {
+          "x": 57952,
+          "y": 16000,
+          "width": 2560,
+          "height": 480,
+          "type": 0,
+          "friction": 0.75
+        },
+        {
+          "x": 60512,
+          "y": 16000,
+          "width": 256,
+          "height": 480,
+          "type": 4,
+          "friction": 0.75
+        },
+        {
+          "x": 60768,
+          "y": 16000,
+          "width": 64,
+          "height": 480,
+          "type": 2,
+          "friction": 0.75
+        }
+      ],
+      "walls": []
+    },
+    "player": {
+      "id": 729,
+      "heroType": 17,
+      "x": 57801.2109375,
+      "y": 16465.00390625,
+      "radius": 15,
+      "speed": 690,
+      "mouseInput": null,
+      "baseSpeed": 510,
+      "slideAngle": 0,
+      "auraImmune": false,
+      "untargetable": false,
+      "speedMultiplier": 1,
+      "speedBonus": 180,
+      "speedBonusWithoutCandy": 180,
+      "ignoreAuras": false,
+      "immobilized": false,
+      "effectsMultiplier": 1,
+      "upgradePoints": 6,
+      "downed": false,
+      "level": 41,
+      "energy": 23.503334045410156,
+      "maxEnergy": 30,
+      "vx": 0,
+      "vy": 0
+    },
+    "hazards": [
+      {
+        "id": 37,
+        "x": 58183.66796875,
+        "y": 16450,
+        "radius": 30,
+        "vx": -150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 61,
+        "x": 59906.3046875,
+        "y": 16248.09765625,
+        "radius": 18,
+        "vx": -4.133183028213268e-15,
+        "vy": -22.5,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 98,
+        "x": 60130.33203125,
+        "y": 16450,
+        "radius": 30,
+        "vx": -150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 180,
+        "x": 60462.5,
+        "y": 16087.833984375,
+        "radius": 18,
+        "vx": -210,
+        "vy": 2.5717583110195137e-14,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 200,
+        "x": 60049.6796875,
+        "y": 16188.0126953125,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 219,
+        "x": 59307,
+        "y": 16030,
+        "radius": 30,
+        "vx": 150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 249,
+        "x": 60280.33203125,
+        "y": 16030,
+        "radius": 30,
+        "vx": 150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 304,
+        "x": 59539.38671875,
+        "y": 16052.423828125,
+        "radius": 18,
+        "vx": -3.5820917460265955e-14,
+        "vy": -195,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 316,
+        "x": 60118.48828125,
+        "y": 16343.052734375,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 337,
+        "x": 58088.3359375,
+        "y": 16126.71875,
+        "radius": 18,
+        "vx": 60,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 399,
+        "x": 58187.05859375,
+        "y": 16203.896484375,
+        "radius": 18,
+        "vx": 0,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 418,
+        "x": 58925.75,
+        "y": 16279.25,
+        "radius": 18,
+        "vx": 45,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 457,
+        "x": 58000.5,
+        "y": 16326.1103515625,
+        "radius": 18,
+        "vx": 150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 479,
+        "x": 58766.61328125,
+        "y": 16402.802734375,
+        "radius": 18,
+        "vx": 90,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 481,
+        "x": 58535.828125,
+        "y": 16130.724609375,
+        "radius": 18,
+        "vx": 1.2858791555097568e-14,
+        "vy": 210,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 519,
+        "x": 58380.30078125,
+        "y": 16365.7646484375,
+        "radius": 18,
+        "vx": 157.5,
+        "vy": 0,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 558,
+        "x": 58738.67578125,
+        "y": 16320.240234375,
+        "radius": 18,
+        "vx": -3.031000781477278e-14,
+        "vy": -165,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 570,
+        "x": 59157,
+        "y": 16450,
+        "radius": 30,
+        "vx": -150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 578,
+        "x": 59027.60546875,
+        "y": 16313.857421875,
+        "radius": 18,
+        "vx": -3.1687734432052687e-14,
+        "vy": -172.5,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 595,
+        "x": 59823.4765625,
+        "y": 16228.0849609375,
+        "radius": 18,
+        "vx": -37.5,
+        "vy": 4.5924254986710324e-15,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 675,
+        "x": 58824.84375,
+        "y": 16141.8828125,
+        "radius": 18,
+        "vx": -1.3777276098966403e-15,
+        "vy": -7.5,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 714,
+        "x": 59439.82421875,
+        "y": 16152.99609375,
+        "radius": 18,
+        "vx": -195,
+        "vy": 2.388061322836408e-14,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      },
+      {
+        "id": 820,
+        "x": 58333.66796875,
+        "y": 16030,
+        "radius": 30,
+        "vx": 150,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter",
+        "entityType": 240,
+        "square": false
+      },
+      {
+        "id": 824,
+        "x": 60267.50390625,
+        "y": 16346.306640625,
+        "radius": 18,
+        "vx": -210,
+        "vy": 2.5717583110195137e-14,
+        "bounce": true,
+        "motion": "bounce",
+        "entityType": 249,
+        "square": false
+      }
+    ],
+    "auras": [],
+    "otherPlayers": [],
+    "input": {
+      "heldKeys": [
+        10,
+        19
+      ],
+      "sentSequence": 253,
+      "sentKeys": [
+        10,
+        19
+      ],
+      "manualDirectionHeld": false,
+      "controllerKeys": [
+        "ArrowRight",
+        "ArrowUp"
+      ],
+      "usingGamepad": false
+    }
+  },
+  "options": {
+    "previousAction": "up_right",
+    "inputIntervalTicks": 2,
+    "reactionTime": 0.15204272903577656,
+    "pendingInputs": [
+      {
+        "time": 0,
+        "action": "right"
+      },
+      {
+        "time": 0.06640631203577504,
+        "action": "up_right"
+      }
+    ],
+    "lagRecheck": false,
+    "timingRecheck": false
+  },
+  "recordedPlan": {
+    "areaId": "Wacky Wonderland:18:57632:16000",
+    "packet": 5806,
+    "tickRate": 60,
+    "inputIntervalTicks": 2,
+    "inputs": [
+      {
+        "tick": 9,
+        "action": "up_right"
+      },
+      {
+        "tick": 13,
+        "action": "up"
+      },
+      {
+        "tick": 23,
+        "action": "up"
+      },
+      {
+        "tick": 33,
+        "action": "up_right"
+      },
+      {
+        "tick": 43,
+        "action": "up_right"
+      },
+      {
+        "tick": 53,
+        "action": "down_right"
+      }
+    ]
+  },
+  "capturedAt": 182216.45202096424,
+  "commands": [
+    {
+      "at": 182157.858333,
+      "action": "up_right"
+    }
+  ],
+  "future": [
+    {
+      "ready": true,
+      "time": 99893.69999998808,
+      "packet": 5821,
+      "tickRate": 60,
+      "area": {
+        "x": 57632,
+        "y": 16000,
+        "width": 3200,
+        "height": 480,
+        "id": "Wacky Wonderland:18:57632:16000",
+        "number": 19,
+        "zones": [
+          {
+            "x": 57632,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 57696,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 57952,
+            "y": 16000,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 60512,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 60768,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 729,
+        "heroType": 17,
+        "x": 57973.7109375,
+        "y": 16338.50390625,
+        "radius": 15,
+        "speed": 690,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "slideAngle": -0.7853981852531433,
+        "auraImmune": false,
+        "untargetable": false,
+        "speedMultiplier": 1,
+        "speedBonus": 180,
+        "speedBonusWithoutCandy": 180,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 6,
+        "downed": false,
+        "level": 41,
+        "energy": 23.628334045410156,
+        "maxEnergy": 30,
+        "vx": 690,
+        "vy": -506
+      },
+      "hazards": [
+        {
+          "id": 37,
+          "x": 58146.16796875,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 61,
+          "x": 59906.3046875,
+          "y": 16227.47265625,
+          "radius": 18,
+          "vx": -2.4799098169279608e-14,
+          "vy": -135,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 98,
+          "x": 60092.83203125,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 180,
+          "x": 60416.875,
+          "y": 16087.833984375,
+          "radius": 18,
+          "vx": -135,
+          "vy": 1.6532732112853072e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 200,
+          "x": 60056.5546875,
+          "y": 16188.0126953125,
+          "radius": 18,
+          "vx": 75,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 219,
+          "x": 59344.5,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 249,
+          "x": 60317.83203125,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 304,
+          "x": 59539.38671875,
+          "y": 16035.125,
+          "radius": 18,
+          "vx": 1.194030661418204e-14,
+          "vy": 195,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 316,
+          "x": 60118.48828125,
+          "y": 16333.302734375,
+          "radius": 18,
+          "vx": -1.6532732112853072e-14,
+          "vy": -90,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 337,
+          "x": 58091.8359375,
+          "y": 16127.46875,
+          "radius": 18,
+          "vx": 1.3777276098966403e-15,
+          "vy": 22.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 399,
+          "x": 58175.68359375,
+          "y": 16203.896484375,
+          "radius": 18,
+          "vx": -97.5,
+          "vy": 1.194030661418204e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 418,
+          "x": 58952,
+          "y": 16279.25,
+          "radius": 18,
+          "vx": 157.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 457,
+          "x": 58023,
+          "y": 16326.1103515625,
+          "radius": 18,
+          "vx": 37.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 479,
+          "x": 58804.11328125,
+          "y": 16402.802734375,
+          "radius": 18,
+          "vx": 202.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 481,
+          "x": 58535.828125,
+          "y": 16174.974609375,
+          "radius": 18,
+          "vx": 7.807123585968772e-15,
+          "vy": 127.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 519,
+          "x": 58404.67578125,
+          "y": 16365.7646484375,
+          "radius": 18,
+          "vx": 45,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 558,
+          "x": 58738.67578125,
+          "y": 16269.615234375,
+          "radius": 18,
+          "vx": -3.857637387119932e-14,
+          "vy": -210,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 570,
+          "x": 59119.5,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 578,
+          "x": 59027.60546875,
+          "y": 16285.732421875,
+          "radius": 18,
+          "vx": -1.1021820879173123e-14,
+          "vy": -60,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 595,
+          "x": 59822.2265625,
+          "y": 16229.9599609375,
+          "radius": 18,
+          "vx": 2.2962127493355162e-15,
+          "vy": 37.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 675,
+          "x": 58824.84375,
+          "y": 16125.0078125,
+          "radius": 18,
+          "vx": -2.2043641758346245e-14,
+          "vy": -120,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 714,
+          "x": 59406.07421875,
+          "y": 16152.99609375,
+          "radius": 18,
+          "vx": -82.5,
+          "vy": 1.0103335938257594e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 820,
+          "x": 58371.16796875,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 824,
+          "x": 60223.25390625,
+          "y": 16346.306640625,
+          "radius": 18,
+          "vx": -127.5,
+          "vy": 1.5614247171937543e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          10,
+          19
+        ],
+        "sentSequence": 253,
+        "sentKeys": [
+          10,
+          19
+        ],
+        "manualDirectionHeld": false,
+        "controllerKeys": [
+          "ArrowRight",
+          "ArrowUp"
+        ],
+        "usingGamepad": false
+      }
+    },
+    {
+      "ready": true,
+      "time": 99946.19999998808,
+      "packet": 5824,
+      "tickRate": 60,
+      "area": {
+        "x": 57632,
+        "y": 16000,
+        "width": 3200,
+        "height": 480,
+        "id": "Wacky Wonderland:18:57632:16000",
+        "number": 19,
+        "zones": [
+          {
+            "x": 57632,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          },
+          {
+            "x": 57696,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 57952,
+            "y": 16000,
+            "width": 2560,
+            "height": 480,
+            "type": 0,
+            "friction": 0.75
+          },
+          {
+            "x": 60512,
+            "y": 16000,
+            "width": 256,
+            "height": 480,
+            "type": 4,
+            "friction": 0.75
+          },
+          {
+            "x": 60768,
+            "y": 16000,
+            "width": 64,
+            "height": 480,
+            "type": 2,
+            "friction": 0.75
+          }
+        ],
+        "walls": []
+      },
+      "player": {
+        "id": 729,
+        "heroType": 17,
+        "x": 57996.7109375,
+        "y": 16315.50390625,
+        "radius": 15,
+        "speed": 690,
+        "mouseInput": null,
+        "baseSpeed": 510,
+        "slideAngle": -0.7853981852531433,
+        "auraImmune": false,
+        "untargetable": false,
+        "speedMultiplier": 1,
+        "speedBonus": 0,
+        "speedBonusWithoutCandy": 0,
+        "ignoreAuras": false,
+        "immobilized": false,
+        "effectsMultiplier": 1,
+        "upgradePoints": 6,
+        "downed": true,
+        "level": 41,
+        "energy": 23.678333282470703,
+        "maxEnergy": 30,
+        "vx": 460,
+        "vy": -460
+      },
+      "hazards": [
+        {
+          "id": 37,
+          "x": 58138.66796875,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 61,
+          "x": 59906.3046875,
+          "y": 16219.97265625,
+          "radius": 18,
+          "vx": -2.8932281197492876e-14,
+          "vy": -157.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 98,
+          "x": 60085.33203125,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 180,
+          "x": 60410.875,
+          "y": 16087.833984375,
+          "radius": 18,
+          "vx": -112.5,
+          "vy": 1.377727570191971e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 200,
+          "x": 60061.0546875,
+          "y": 16188.0126953125,
+          "radius": 18,
+          "vx": 97.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 219,
+          "x": 59352,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 249,
+          "x": 60325.33203125,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 304,
+          "x": 59539.38671875,
+          "y": 16044.125,
+          "radius": 18,
+          "vx": 1.0562578408715358e-14,
+          "vy": 172.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 316,
+          "x": 60118.48828125,
+          "y": 16328.052734375,
+          "radius": 18,
+          "vx": -2.066591514106634e-14,
+          "vy": -112.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 337,
+          "x": 58091.8359375,
+          "y": 16129.34375,
+          "radius": 18,
+          "vx": 2.7554552197932807e-15,
+          "vy": 45,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 399,
+          "x": 58170.05859375,
+          "y": 16203.896484375,
+          "radius": 18,
+          "vx": -120,
+          "vy": 1.4695762231022014e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 418,
+          "x": 58960.625,
+          "y": 16279.25,
+          "radius": 18,
+          "vx": 180,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 457,
+          "x": 58024.125,
+          "y": 16326.1103515625,
+          "radius": 18,
+          "vx": 15,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 479,
+          "x": 58814.61328125,
+          "y": 16402.802734375,
+          "radius": 18,
+          "vx": 210,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 481,
+          "x": 58535.828125,
+          "y": 16180.599609375,
+          "radius": 18,
+          "vx": 6.429395777548784e-15,
+          "vy": 105,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 519,
+          "x": 58406.17578125,
+          "y": 16365.7646484375,
+          "radius": 18,
+          "vx": 22.5,
+          "vy": 0,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 558,
+          "x": 58738.67578125,
+          "y": 16259.865234375,
+          "radius": 18,
+          "vx": -3.444319084298605e-14,
+          "vy": -187.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 570,
+          "x": 59112,
+          "y": 16450,
+          "radius": 30,
+          "vx": -150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 578,
+          "x": 59027.60546875,
+          "y": 16283.482421875,
+          "radius": 18,
+          "vx": -6.888637850959855e-15,
+          "vy": -37.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 595,
+          "x": 59822.2265625,
+          "y": 16232.5849609375,
+          "radius": 18,
+          "vx": 3.6739405577555036e-15,
+          "vy": 60,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 675,
+          "x": 58824.84375,
+          "y": 16118.2578125,
+          "radius": 18,
+          "vx": -2.6176824786559513e-14,
+          "vy": -142.5,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 714,
+          "x": 59402.69921875,
+          "y": 16152.99609375,
+          "radius": 18,
+          "vx": -60,
+          "vy": 7.347881115511007e-15,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        },
+        {
+          "id": 820,
+          "x": 58378.66796875,
+          "y": 16030,
+          "radius": 30,
+          "vx": 150,
+          "vy": 0,
+          "bounce": true,
+          "motion": "perimeter",
+          "entityType": 240,
+          "square": false
+        },
+        {
+          "id": 824,
+          "x": 60217.62890625,
+          "y": 16346.306640625,
+          "radius": 18,
+          "vx": -105,
+          "vy": 1.2858791555097568e-14,
+          "bounce": true,
+          "motion": "bounce",
+          "entityType": 249,
+          "square": false
+        }
+      ],
+      "auras": [],
+      "otherPlayers": [],
+      "input": {
+        "heldKeys": [
+          10,
+          6
+        ],
+        "sentSequence": 253,
+        "sentKeys": [
+          10,
+          19
+        ],
+        "manualDirectionHeld": false,
+        "controllerKeys": [
+          "ArrowRight",
+          "ArrowDown"
+        ],
+        "usingGamepad": false
+      }
+    }
+  ],
+  "gapReads": [
+    {
+      "packet": 5806,
+      "capturedAt": 182216.45202096424,
+      "receivedAt": 182220.459833
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182233.45202096424,
+      "receivedAt": 182237.488042
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182250.25202097616,
+      "receivedAt": 182254.190542
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182267.852021,
+      "receivedAt": 182271.964
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182285.15202095232,
+      "receivedAt": 182290.512083
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182302.352021,
+      "receivedAt": 182308.06691700002
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182319.852021,
+      "receivedAt": 182325.431
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182337.352021,
+      "receivedAt": 182343.45712500002
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182354.65202095232,
+      "receivedAt": 182361.40050000002
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182370.95202096424,
+      "receivedAt": 182375.681625
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182388.95202096424,
+      "receivedAt": 182397.055375
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182405.45202096424,
+      "receivedAt": 182414.14575
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182422.352021,
+      "receivedAt": 182431.943917
+    },
+    {
+      "packet": 5806,
+      "capturedAt": 182438.55202098808,
+      "receivedAt": 182455.789667
+    },
+    {
+      "packet": 5821,
+      "capturedAt": 182461.75202097616,
+      "receivedAt": 182472.13525000002
+    }
+  ]
+}

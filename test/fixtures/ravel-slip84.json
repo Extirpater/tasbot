@@ -1,0 +1,334 @@
+{
+  "source": "Ravel continuous attempt mm-full-03, area 84, seed 20001",
+  "state": {
+    "ready": true,
+    "packet": 25212,
+    "time": 420200,
+    "tickRate": 60,
+    "area": {
+      "id": "ravel-mm:84",
+      "number": 84,
+      "x": 265408,
+      "y": 0,
+      "width": 3200,
+      "height": 480,
+      "zones": [
+        {
+          "x": 265408,
+          "y": 0,
+          "width": 64,
+          "height": 480,
+          "type": 2,
+          "friction": 0.75
+        },
+        {
+          "x": 265472,
+          "y": 0,
+          "width": 256,
+          "height": 480,
+          "type": 4,
+          "friction": 0.75
+        },
+        {
+          "x": 265728,
+          "y": 0,
+          "width": 2560,
+          "height": 480,
+          "type": 0,
+          "friction": 0.75
+        },
+        {
+          "x": 268288,
+          "y": 0,
+          "width": 256,
+          "height": 480,
+          "type": 4,
+          "friction": 0.75
+        },
+        {
+          "x": 268544,
+          "y": 0,
+          "width": 64,
+          "height": 480,
+          "type": 2,
+          "friction": 0.75
+        }
+      ],
+      "walls": []
+    },
+    "player": {
+      "id": "self",
+      "x": 265890.11663058965,
+      "y": 333.9494338696544,
+      "radius": 15,
+      "speed": 540,
+      "baseSpeed": 390,
+      "speedBonus": 150,
+      "speedBonusWithoutCandy": 0,
+      "speedMultiplier": 1,
+      "immobilized": false,
+      "downed": false,
+      "effectsMultiplier": 1,
+      "energy": 300,
+      "maxEnergy": 300,
+      "slip": {
+        "active": false,
+        "locked": false,
+        "angle": -0.7853981633974483,
+        "dx": 1,
+        "dy": -1,
+        "carryVx": 540,
+        "carryVy": -540,
+        "wallBoost": 1
+      },
+      "candy": {
+        "level": 5,
+        "locked": false,
+        "disabled": false,
+        "cooldownMs": 2483.3333333333317,
+        "energyCost": 5,
+        "active": true,
+        "remainingMs": 12533.333333333423,
+        "boost": 150
+      },
+      "vx": 540,
+      "vy": -540
+    },
+    "hazards": [
+      {
+        "id": 1826,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 267111.95,
+        "y": 30,
+        "radius": 30,
+        "vx": 99,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 1827,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 268085.2833333333,
+        "y": 30,
+        "radius": 30,
+        "vx": 99,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 1828,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 267877.3833333333,
+        "y": 450,
+        "radius": 30,
+        "vx": -99,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 1829,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 266904.05,
+        "y": 450,
+        "radius": 30,
+        "vx": -99,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 1830,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 265930.7166666667,
+        "y": 450,
+        "radius": 30,
+        "vx": -99,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 1831,
+        "family": "wall",
+        "entityType": 10002,
+        "x": 266138.61666666664,
+        "y": 30,
+        "radius": 30,
+        "vx": 99,
+        "vy": 0,
+        "bounce": true,
+        "motion": "perimeter"
+      },
+      {
+        "id": 1832,
+        "family": "normal",
+        "entityType": 10001,
+        "x": 267509.0262998413,
+        "y": 83.31180739836306,
+        "radius": 18,
+        "vx": 88.48705335080749,
+        "vy": 156.7483377560712,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 1833,
+        "family": "normal",
+        "entityType": 10001,
+        "x": 265801.8269958411,
+        "y": 278.11161643599723,
+        "radius": 18,
+        "vx": 40.93300379090049,
+        "vy": 175.28402437373887,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 1836,
+        "family": "normal",
+        "entityType": 10001,
+        "x": 267275.75522797165,
+        "y": 78.49599369606915,
+        "radius": 18,
+        "vx": 3.4947350876562324,
+        "vy": -179.9660713208662,
+        "bounce": true,
+        "motion": "bounce"
+      },
+      {
+        "id": 1834,
+        "family": "slippery",
+        "entityType": 10033,
+        "x": 266289.6985819387,
+        "y": 245.99927261439439,
+        "radius": 18,
+        "vx": 172.1004418319674,
+        "vy": 52.739339408468204,
+        "bounce": true,
+        "motion": "bounce",
+        "auraRadius": 165
+      },
+      {
+        "id": 1835,
+        "family": "slippery",
+        "entityType": 10033,
+        "x": 268156.081904981,
+        "y": 268.0751345945889,
+        "radius": 18,
+        "vx": -170.87714252846848,
+        "vy": -56.577399739696155,
+        "bounce": true,
+        "motion": "bounce",
+        "auraRadius": 165
+      },
+      {
+        "id": 1837,
+        "family": "slippery",
+        "entityType": 10033,
+        "x": 266219.2944979985,
+        "y": 269.3796303497978,
+        "radius": 18,
+        "vx": 105.08247553065584,
+        "vy": 146.14264721958858,
+        "bounce": true,
+        "motion": "bounce",
+        "auraRadius": 165
+      },
+      {
+        "id": 1838,
+        "family": "slippery",
+        "entityType": 10033,
+        "x": 267411.34881738725,
+        "y": 134.32124812516795,
+        "radius": 18,
+        "vx": -85.08661740273162,
+        "vy": 158.61988380704733,
+        "bounce": true,
+        "motion": "bounce",
+        "auraRadius": 165
+      },
+      {
+        "id": 1839,
+        "family": "slippery",
+        "entityType": 10033,
+        "x": 267623.11929655337,
+        "y": 171.90451284141034,
+        "radius": 18,
+        "vx": -171.70902773754506,
+        "vy": -54.00009067980333,
+        "bounce": true,
+        "motion": "bounce",
+        "auraRadius": 165
+      },
+      {
+        "id": 1840,
+        "family": "slippery",
+        "entityType": 10033,
+        "x": 266667.6241986758,
+        "y": 31.18129914406141,
+        "radius": 18,
+        "vx": -179.90519516553417,
+        "vy": 5.841297154832878,
+        "bounce": true,
+        "motion": "bounce",
+        "auraRadius": 165
+      },
+      {
+        "id": 1841,
+        "family": "slippery",
+        "entityType": 10033,
+        "x": 266088.2437902224,
+        "y": 124.91673110579657,
+        "radius": 18,
+        "vx": 39.30645920074112,
+        "vy": -175.655920096934,
+        "bounce": true,
+        "motion": "bounce",
+        "auraRadius": 165
+      }
+    ],
+    "auras": [],
+    "otherPlayers": []
+  },
+  "options": {
+    "horizon": 2,
+    "margin": 14,
+    "beamWidth": 3,
+    "reactionTime": 0.175,
+    "previousAction": "up_right",
+    "fastPath": false,
+    "pendingInputs": [
+      {
+        "time": 0,
+        "action": "up_right"
+      }
+    ],
+    "continuation": {
+      "areaId": "ravel-mm:84",
+      "packet": 25209,
+      "tickRate": 60,
+      "inputs": [
+        {
+          "tick": 10,
+          "action": "up_right"
+        },
+        {
+          "tick": 14,
+          "action": "stay"
+        },
+        {
+          "tick": 23,
+          "action": "right"
+        }
+      ]
+    }
+  }
+}

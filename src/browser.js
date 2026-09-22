@@ -1,12 +1,14 @@
 import { resolve } from "node:path";
 import { chromium } from "playwright";
 
-const gameURL = "https://evades.io/";
+export const GAME_URLS = { evades: "https://evades.io/", ravel: "https://pifary-dev.github.io/ravel/" };
 
-function isGamePage(page) {
+function isGamePage(page, gameURL) {
   try {
     const url = new URL(page.url());
-    return url.origin === "https://evades.io" && url.pathname === "/";
+    const target = new URL(gameURL);
+    return url.origin === target.origin &&
+      (url.pathname === target.pathname || url.pathname === `${target.pathname}index.html`);
   } catch {
     return false;
   }
@@ -30,9 +32,11 @@ function localEndpoint(value) {
 }
 
 export async function openGameBrowser(
-  { attach = false, cdpUrl, headless = false, channel = "chrome" } = {},
+  { attach = false, cdpUrl, headless = false, channel = "chrome", game = "evades" } = {},
   browserType = chromium,
 ) {
+  const gameURL = GAME_URLS[game], name = game === "ravel" ? "Ravel" : "Evades";
+  if (!gameURL) throw new Error("--game must be evades or ravel.");
   if (attach && cdpUrl)
     throw new Error("Use either --attach or --cdp-url, not both.");
   if ((attach || cdpUrl) && headless)
@@ -47,14 +51,14 @@ export async function openGameBrowser(
     });
     try {
       const pages = browser.contexts().flatMap((context) => context.pages());
-      const matches = pages.filter(isGamePage);
+      const matches = pages.filter(page => isGamePage(page, gameURL));
       if (!matches.length)
         throw new Error(
-          "No Evades game tab found. Open https://evades.io/ in that browser, log in, and run again.",
+          `No ${name} game tab found. Open ${gameURL} in that browser and run again.`,
         );
       if (matches.length > 1)
         throw new Error(
-          "Multiple Evades game tabs found. Keep one game tab open before attaching.",
+          `Multiple ${name} game tabs found. Keep one game tab open before attaching.`,
         );
       const page = matches[0];
       return {
@@ -72,7 +76,7 @@ export async function openGameBrowser(
   }
 
   const context = await browserType.launchPersistentContext(
-    resolve(".browser-profile"),
+    resolve(game === "ravel" ? ".ravel-browser-profile" : ".browser-profile"),
     { channel, headless, viewport: { width: 1440, height: 900 } },
   );
   try {

@@ -1,4 +1,4 @@
-import { advancePlayer } from "./planner.js";
+import { advancePlayer, circleInZone } from "./planner.js";
 
 // Browser and Node performance clocks have different origins. Use the fastest
 // observation round trip to align them, then date each snapshot at capture,
@@ -25,6 +25,21 @@ export class ObservationClock {
     // outside the request interval. A capture cannot precede its request.
     const at = Math.max(sentAt, Math.min(receivedAt, sampledAt + this.offset));
     return { at, ageMs: receivedAt - at, roundTripMs };
+  }
+}
+
+// Re-reading a packet does not make its positions newer. Preserve the first
+// capture time so queued inputs and planned follow-up turns keep their deadlines
+// during short packet gaps, even while browser reads continue to return quickly.
+export class PacketClock {
+  observe(state, capturedAt, receivedAt = capturedAt) {
+    const repeat = Boolean(state.ready && this.areaId === state.area?.id && this.packet === state.packet);
+    if (!repeat) {
+      this.areaId = state.ready ? state.area?.id : undefined;
+      this.packet = state.ready ? state.packet : undefined;
+      this.at = capturedAt;
+    }
+    return { at: this.at, repeat, ageMs: Math.max(0, receivedAt - this.at) };
   }
 }
 
@@ -80,6 +95,8 @@ export class InputTiming {
       previous.state.player.speedMultiplier !== state.player.speedMultiplier ||
       previous.state.player.immobilized !== state.player.immobilized ||
       previous.state.player.ignoreAuras !== state.player.ignoreAuras ||
+      previous.state.player.effectsMultiplier !==
+        state.player.effectsMultiplier ||
       previous.state.player.mouseInput?.x !== state.player.mouseInput?.x ||
       previous.state.player.mouseInput?.y !== state.player.mouseInput?.y ||
       !this.commands.length ||
@@ -87,19 +104,44 @@ export class InputTiming {
     )
       return;
     const rate = state.tickRate ?? 60;
-    // An aura elsewhere in the area must not freeze the delay estimate. Skip
-    // only samples whose possible movement could intersect an aura, including
-    // the aura's own travel during the observed packet interval.
+    // Keep calibrating inside supported slowing fields. Skipping every nearby
+    // aura left the delay frozen throughout dense areas such as Cata 37.
+    // Reconstruct their observed movement once, then sample it for each possible
+    // queued path. Unknown or disappearing nearby fields remain unfit samples.
+    const beforeAuras = previous.state.auras ?? [];
+    const afterAuras = state.auras ?? [];
+    const fields = beforeAuras.map((a) => ({
+      before: a,
+      after: afterAuras.find((b) => b.id === a.id && b.type === a.type),
+    }));
+    const known = (a) => {
+      // A steering lock is not a zero-strength slowing field. Preserve the
+      // calibrated delay while sliding instead of fitting network latency to
+      // motion that ignores the current keys and can boost off walls.
+      if (a.kind === "slippery") return false;
+      const pair = fields.find(
+        (f) => f.before.id === a.id && f.before.type === a.type,
+      );
+      return (
+        pair?.after &&
+        a.id !== undefined &&
+        a.type !== undefined &&
+        Number.isFinite(a.reduction) &&
+        pair.before.reduction === pair.after.reduction &&
+        pair.before.auraRadius === pair.after.auraRadius
+      );
+    };
     if (
       [previous.state, state].some((sample) => {
         const p = sample.player;
-        if (p.ignoreAuras) return false;
+        if (p.ignoreAuras && !sample.auras?.some(a => a.kind === "slippery")) return false;
         const speed = Math.max(
           p.speed,
           (p.baseSpeed ?? p.speed) * (p.speedMultiplier ?? 1) +
             (p.speedBonus ?? 0),
         );
         return sample.auras?.some((aura) => {
+          if (known(aura)) return false;
           const reach =
             p.radius +
             aura.auraRadius +
@@ -122,12 +164,41 @@ export class InputTiming {
       let position = previous.state.player;
       for (let tick = 1; tick <= ticks; tick++) {
         const commandAt = previous.at + (elapsed * tick) / ticks - fit.ms;
+        let auraMultiplier = 1;
+        if (
+          !previous.state.player.ignoreAuras &&
+          !state.area.zones.some(
+            (z) =>
+              z.type === 4 &&
+              circleInZone(position, z, position.radius ?? state.player.radius),
+          )
+        ) {
+          const applied = new Set();
+          for (const { before: a, after: b } of fields) {
+            if (!b || applied.has(a.type) || !Number.isFinite(a.reduction))
+              continue;
+            const fraction = (tick - 1) / ticks;
+            const x = a.x + (b.x - a.x) * fraction,
+              y = a.y + (b.y - a.y) * fraction;
+            if (
+              Math.hypot(position.x - x, position.y - y) <
+              a.auraRadius + state.player.radius
+            ) {
+              auraMultiplier *= Math.max(
+                0,
+                1 - a.reduction * (state.player.effectsMultiplier ?? 1),
+              );
+              applied.add(a.type);
+            }
+          }
+        }
         position = advancePlayer(
           position,
           this.actionAt(commandAt),
           previous.state.player,
           state.area,
           1 / rate,
+          auraMultiplier,
         );
       }
       return (
@@ -156,7 +227,10 @@ export class InputTiming {
       pendingInputs: [
         { time: 0, action: this.actionAt(start) },
         ...this.commands
-          .filter((c) => c.at > start && c.at <= at)
+          // Commands sent AFTER this snapshot may already be in flight when
+          // a duplicate packet is replanned. Keep their arrival times relative
+          // to the original snapshot rather than silently dropping them.
+          .filter((c) => c.at > start && c.at <= at + Math.max(0, extraMs))
           .map((c) => ({ time: (c.at - start) / 1000, action: c.action })),
       ],
     };

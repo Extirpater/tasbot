@@ -7,6 +7,117 @@ import { InputTiming, ObservationClock } from "../src/timing.js";
 const fixture = (name) =>
   JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url)));
 
+test("Cata 37 continues fitting delay in slow fields and rejects the falsely safe downward turn", () => {
+  const f = fixture("cata-delay");
+  for (const [index, run] of f.runs.entries()) {
+    const timing = new InputTiming();
+    timing.delayMs = 125;
+    for (const [
+      i,
+      [packet, at, appliedAt, action, player, auras],
+    ] of run.rows.entries()) {
+      timing.observe(
+        { packet, player, auras, tickRate: run.tickRate, area: run.area },
+        at,
+      );
+      if (index === 0 && i === f.turn.frame) {
+        assert.equal(timing.delayMs, 150);
+        const options = {
+          previousAction: f.turn.previousAction,
+          fastPath: false,
+        };
+        const stale = planActions(f.turn.state, {
+          ...options,
+          ...f.turn.prediction,
+        });
+        const updated = planActions(f.turn.state, {
+          ...options,
+          ...timing.pending(at, f.turn.extraMs),
+        });
+        assert.ok(
+          stale.find((c) => c.action === f.turn.action).physicalClearance > 20,
+        );
+        assert.ok(
+          updated.find((c) => c.action === f.turn.action).physicalClearance < 0,
+        );
+        assert.notEqual(bestAction(updated), f.turn.action);
+        assert.ok(
+          updated.find((c) => c.action === bestAction(updated))
+            .physicalClearance > 20,
+        );
+      }
+      timing.record(action, appliedAt);
+    }
+    assert.ok(timing.samples > (index === 0 ? 60 : 150));
+    assert.equal(timing.delayMs, 150);
+  }
+});
+
+test("delay adapts after lag changes while overlapping slowing fields remain active", () => {
+  const timing = new InputTiming(),
+    commands = [],
+    sequence = ["right", "down", "left", "up"];
+  const vectors = {
+    right: [1, 0],
+    down: [0, 1],
+    left: [-1, 0],
+    up: [0, -1],
+    stay: [0, 0],
+  };
+  let x = 1000,
+    y = 1000;
+  for (let at = 0; at <= 7000; at += 25) {
+    const lag = at < 3000 ? 125 : 225;
+    const action = commands.findLast((c) => c.at <= at - lag)?.action ?? "stay";
+    const [dx, dy] = vectors[action];
+    // Known physical speed: 510 * .7 + 150 = 507, even with two same-type auras.
+    x += (dx * 507) / 40;
+    y += (dy * 507) / 40;
+    const aura = {
+      id: 1,
+      type: 48,
+      reduction: 0.3,
+      auraRadius: 900,
+      x: 1000 + at / 100,
+      y: 1000,
+      vx: 10,
+      vy: 0,
+    };
+    timing.observe(
+      {
+        packet: at / 25,
+        tickRate: 40,
+        area: {
+          id: "slowed",
+          x: 0,
+          y: 0,
+          width: 3000,
+          height: 3000,
+          zones: [],
+        },
+        player: {
+          x,
+          y,
+          radius: 15,
+          speed: 507,
+          baseSpeed: 510,
+          speedBonus: 150,
+          vx: dx * 507,
+          vy: dy * 507,
+        },
+        auras: [aura, { ...aura, id: 2 }],
+      },
+      at,
+    );
+    const next = sequence[Math.floor(at / 200) % sequence.length];
+    commands.push({ at, action: next });
+    timing.record(next, at);
+    if (at === 2900) assert.equal(timing.delayMs, 125);
+  }
+  assert.equal(timing.delayMs, 225);
+  assert.ok(timing.samples > 100);
+});
+
 test("releasing directions resumes active pointer steering; arrows override it", () => {
   const { state } = fixture("pointer-drift");
   const p = { ...state.player, mouseInput: { x: 300, y: 0 }, vx: 270, vy: 0 };

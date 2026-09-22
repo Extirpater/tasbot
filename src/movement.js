@@ -17,9 +17,21 @@ export class MovementPolicy {
     this.plan = undefined;
     this.pendingPlan = undefined;
     this.commitUntil = -Infinity;
+    this.inputDelayMs = 0;
   }
 
-  observe(state, at) {
+  // A new destination invalidates the old route, not the movement already in
+  // flight. Preserve the held direction without preserving its turn commitment.
+  retarget() {
+    this.plan = undefined;
+    this.pendingPlan = undefined;
+    this.commitUntil = -Infinity;
+    this.changedAt = undefined;
+    this.reason = "new target";
+  }
+
+  observe(state, at, inputDelayMs = 0) {
+    this.inputDelayMs = Math.max(0, Math.min(300, inputDelayMs));
     if (this.observations.at(-1)?.packet === state.packet) return;
     this.observations.push({
       at,
@@ -130,6 +142,19 @@ export class MovementPolicy {
     ) {
       this.reason = "safety override";
       return proposed.action;
+    }
+    // Avoid another discretionary turn while the last command is still likely
+    // in flight. Both routes must be safe. Emergencies, scheduled follow-ups,
+    // full-speed shortcuts and stalled movement retain their earlier exits.
+    if (
+      this.age(at) < this.inputDelayMs &&
+      !current.collision &&
+      !proposed.collision &&
+      !proposed.continuedPlan &&
+      !this.stalled
+    ) {
+      this.reason = "let input arrive";
+      return current.action;
     }
     if (at < this.commitUntil) {
       this.reason = "finish dodge";
